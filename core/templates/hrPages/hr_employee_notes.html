@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>HR Employees Info</title>
+  </head>
+
+  <body class="bg-gray-100">
+    <!-- Topbar -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white border-b">
+      <div class="flex items-center justify-between px-6 h-16">
+        <!-- Logo -->
+        <div class="flex items-center gap-3">
+          <img
+            src="static/assets/img/brand/OfficeFlowAi.png"
+            class="h-20 w-20"
+          />
+        </div>
+
+        <!-- Search + Settings -->
+        <div class="flex items-center gap-3">
+          <div
+            class="hidden md:flex items-center bg-gray-100 rounded-full px-4 py-2 w-72"
+          >
+            <input
+              type="text"
+              placeholder="Search for something"
+              class="bg-transparent outline-none text-sm w-full"
+            />
+          </div>
+
+          <button
+            class="w-10 h-10 flex items-center justify-center border rounded-full"
+          >
+            <img
+              src="static/assets/img/icons/common/settings 1.png"
+              class="w-5"
+            />
+          </button>
+
+          <button
+            class="w-10 h-10 flex items-center justify-center border rounded-full"
+          >
+            <img
+              src="static/assets/img/icons/common/002-notification-1.png"
+              class="w-5"
+            />
+          </button>
+
+          <img
+            src="https://i.pravatar.cc/40"
+            class="w-9 h-9 rounded-full hover:cursor-pointer"
+          />
+        </div>
+      </div>
+    </header>
+
+    <div class="flex pt-16">
+      <!-- Sidebar -->
+      <aside
+        class="hidden lg:block w-64 bg-emerald-900 min-h-screen fixed text-white"
+      >
+        <nav class="px-4 py-6 space-y-2">
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img src="static/assets/img/icons/common/home 2.png" class="w-5" />
+            Dashboard
+          </a>
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/transfer 1.png"
+              class="w-5"
+            />
+            Employees
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/user 3 1.png"
+              class="w-5"
+            />
+            Attendance
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/economic-investment 1.png"
+              class="w-5"
+            />
+            Leave Management
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/credit-card 1.png"
+              class="w-5"
+            />
+            Payroll
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img src="static/assets/img/icons/common/loan 1.png" class="w-5" />
+            Performance
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/service 1.png"
+              class="w-5"
+            />
+            Assets
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/econometrics 1.png"
+              class="w-5"
+            />
+            Recruitment
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/settings solid 1.png"
+              class="w-5"
+            />
+            Settings
+          </a>
+        </nav>
+      </aside>
+
+      <main class="flex-1 lg:ml-64 bg-gray-50 min-h-screen p-6">
+        <!-- Breadcrumb -->
+        <p class="text-xs text-gray-500 mb-1">
+          Dashboard / Employee / Sara Khan
+        </p>
+
+        <!-- Name -->
+        <h1 class="text-xl font-semibold text-emerald-700 mb-6">Sara Khan</h1>
+
+        <!-- Profile Card -->
+        <div
+          class="bg-white rounded-xl border p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-6"
+        >
+          <div class="flex items-center gap-5">
+            <img
+              src="https://i.pravatar.cc/100"
+              class="w-24 h-24 rounded-full object-cover"
+            />
+
+            <div>
+              <h2 class="font-semibold text-lg">Sarah Khan</h2>
+              <p class="text-sm text-gray-500">
+                Senior Engineer &nbsp;•&nbsp; Engineering Dept
+              </p>
+
+              <div class="flex items-center gap-3 mt-2">
+                <span
+                  class="bg-emerald-100 text-emerald-700 text-xs px-3 py-1 rounded-md"
+                >
+                  Active
+                </span>
+                <span class="text-xs text-gray-500">EMP-01</span>
+              </div>
+            </div>
+          </div>
+          <button
+            class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-lg text-sm font-medium"
+          >
+            Edit Profile
+          </button>
+        </div>
+
+        <!-- Tabs -->
+        <div class="border-b mb-6">
+          <nav class="flex gap-6 text-sm font-medium">
+            <button class="pb-3 text-gray-500 hover:text-gray-700">
+              Overview
+            </button>
+            <button class="pb-3 text-gray-500 hover:text-gray-700">
+              Attendance
+            </button>
+            <button class="pb-3 text-gray-500 hover:text-gray-700">
+              Leaves
+            </button>
+            <button class="pb-3 text-gray-500 hover:text-gray-700">
+              Documents
+            </button>
+            <button class="pb-3 border-b-2 border-emerald-600 text-emerald-600">
+              Notes
+            </button>
+          </nav>
+        </div>
+
+        <!-- Notes Layout -->
+        <div
+          class="grid grid-cols-1 lg:grid-cols-[minmax(0,2fr)_minmax(0,1.3fr)] gap-6 items-start"
+        >
+          <!-- Notes History -->
+          <section class="space-y-4">
+            <div
+              class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"
+            >
+              <h2 class="text-base font-semibold text-gray-800">
+                Notes History
+              </h2>
+
+              <div class="relative w-full sm:w-64">
+                <span
+                  class="absolute inset-y-0 left-3 flex items-center text-gray-400"
+                >
+                  <!-- Search icon -->
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="w-4 h-4"
+                  >
+                    <circle cx="11" cy="11" r="7" />
+                    <line x1="16.5" y1="16.5" x2="21" y2="21" />
+                  </svg>
+                </span>
+                <input
+                  type="text"
+                  placeholder="Search notes..."
+                  class="w-full rounded-full border border-gray-200 bg-white pl-9 pr-3 py-2 text-xs outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                />
+              </div>
+            </div>
+
+            <div class="space-y-4">
+              <!-- Note Card 1 -->
+              <article
+                class="bg-white border rounded-xl shadow-sm hover:shadow-md transition-shadow"
+              >
+                <div class="p-4">
+                  <div
+                    class="flex flex-wrap items-start justify-between gap-3 mb-2"
+                  >
+                    <div>
+                      <h3 class="text-sm font-semibold text-gray-800">
+                        Probation Review
+                      </h3>
+                      <p class="text-xs text-gray-500 mt-1">
+                        Added by HR Admin Aug 12, 2025
+                      </p>
+                    </div>
+                    <span
+                      class="px-3 py-1 rounded-full bg-rose-50 text-rose-600 text-[11px] font-medium"
+                    >
+                      HR Only
+                    </span>
+                  </div>
+
+                  <p class="text-sm text-gray-600 leading-relaxed mt-5">
+                    Employee has shown good adaptability during the probation
+                    period. Communication with the team is consistent, and task
+                    ownership has improved over time. Recommended for probation
+                    confirmation.
+                  </p>
+                </div>
+
+                <hr class="border-gray-300 w-full mt-2" />
+
+                <div class="text-right p-4">
+                  <button
+                    type="button"
+                    class="text-xs font-medium text-emerald-700 hover:text-emerald-800"
+                  >
+                    Edit Note
+                  </button>
+                </div>
+              </article>
+
+              <!-- Note Card 2 -->
+              <article
+                class="bg-white border rounded-xl shadow-sm hover:shadow-md transition-shadow"
+              >
+                <div class="p-4">
+                  <div
+                    class="flex flex-wrap items-start justify-between gap-3 mb-2"
+                  >
+                    <div>
+                      <h3 class="text-sm font-semibold text-gray-800">
+                        Probation Review
+                      </h3>
+                      <p class="text-xs text-gray-500 mt-1">
+                        Added by HR Admin Aug 12, 2025
+                      </p>
+                    </div>
+                    <span
+                      class="px-3 py-1 rounded-full bg-rose-50 text-rose-600 text-[11px] font-medium"
+                    >
+                      HR Only
+                    </span>
+                  </div>
+
+                  <p class="text-sm text-gray-600 leading-relaxed mt-5">
+                    Employee has shown good adaptability during the probation
+                    period. Communication with the team is consistent, and task
+                    ownership has improved over time. Recommended for probation
+                    confirmation.
+                  </p>
+                </div>
+
+                <hr class="border-gray-300 w-full mt-2" />
+
+                <div class="text-right p-4">
+                  <button
+                    type="button"
+                    class="text-xs font-medium text-emerald-700 hover:text-emerald-800"
+                  >
+                    Edit Note
+                  </button>
+                </div>
+              </article>
+
+              <!-- Note Card 3 -->
+              <article
+                class="bg-white border rounded-xl shadow-sm hover:shadow-md transition-shadow"
+              >
+                <div class="p-4">
+                  <div
+                    class="flex flex-wrap items-start justify-between gap-3 mb-2"
+                  >
+                    <div>
+                      <h3 class="text-sm font-semibold text-gray-800">
+                        Probation Review
+                      </h3>
+                      <p class="text-xs text-gray-500 mt-1">
+                        Added by HR Admin Aug 12, 2025
+                      </p>
+                    </div>
+                    <span
+                      class="px-3 py-1 rounded-full bg-rose-50 text-rose-600 text-[11px] font-medium"
+                    >
+                      HR Only
+                    </span>
+                  </div>
+
+                  <p class="text-sm text-gray-600 leading-relaxed mt-5">
+                    Employee has shown good adaptability during the probation
+                    period. Communication with the team is consistent, and task
+                    ownership has improved over time. Recommended for probation
+                    confirmation.
+                  </p>
+                </div>
+
+                <hr class="border-gray-300 w-full mt-2" />
+
+                <div class="text-right p-4">
+                  <button
+                    type="button"
+                    class="text-xs font-medium text-emerald-700 hover:text-emerald-800"
+                  >
+                    Edit Note
+                  </button>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <!-- Add New Note -->
+          <aside class="space-y-4">
+            <section class="bg-white border rounded-xl p-5 shadow-sm">
+              <div class="flex items-center justify-between mb-4">
+                <h2 class="text-base font-semibold text-gray-800">
+                  Add New Note
+                </h2>
+                <span class="text-[11px] text-gray-400">
+                  All fields are required
+                </span>
+              </div>
+
+              <hr class="border-gray-300 w-full mb-2 mt-2" />
+
+              <form class="space-y-4">
+                <!-- Visibility Pills -->
+                <div>
+                  <label class="block text-xs font-medium text-gray-600 mb-2">
+                    Visibility
+                  </label>
+                  <div class="flex flex-wrap gap-2">
+                    <button
+                      type="button"
+                      class="px-3 py-1.5 rounded-full text-xs font-medium bg-emerald-600 text-white shadow-sm"
+                    >
+                      Manager
+                    </button>
+                    <button
+                      type="button"
+                      class="px-3 py-1.5 rounded-full text-xs font-medium border border-gray-200 text-gray-600 bg-gray-50 hover:bg-gray-100"
+                    >
+                      HR-Only
+                    </button>
+                    <button
+                      type="button"
+                      class="px-3 py-1.5 rounded-full text-xs font-medium border border-gray-200 text-gray-600 bg-gray-50 hover:bg-gray-100"
+                    >
+                      Public
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Category -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-medium text-gray-600 mb-1">
+                      Category
+                    </label>
+                    <select
+                      class="w-full text-xs rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    >
+                      <option>Performance</option>
+                      <option>Behavior</option>
+                      <option>Recognition</option>
+                      <option>Warning</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-medium text-gray-600 mb-1">
+                      Title
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Brief summary of the note..."
+                      class="w-full text-xs rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    />
+                  </div>
+                </div>
+
+                <!-- Content -->
+                <div>
+                  <label class="block text-xs font-medium text-gray-600 mb-1">
+                    Content
+                  </label>
+
+                  <div
+                    class="border border-gray-200 rounded-lg overflow-hidden"
+                  >
+                    <!-- Editor toolbar -->
+                    <div
+                      class="flex items-center gap-2 px-3 py-2 bg-gray-50 border-b"
+                    >
+                      <button
+                        type="button"
+                        class="w-6 h-6 flex items-center justify-center text-[11px] font-semibold text-gray-700 border border-gray-300 rounded hover:bg-white"
+                      >
+                        B
+                      </button>
+                      <button
+                        type="button"
+                        class="w-6 h-6 flex items-center justify-center text-[11px] font-semibold italic text-gray-700 border border-gray-300 rounded hover:bg-white"
+                      >
+                        I
+                      </button>
+                      <!-- <button
+                        type="button"
+                        class="w-6 h-6 flex items-center justify-center text-[11px] text-gray-700 border border-gray-300 rounded hover:bg-white"
+                      >
+                        sfsfsdsf
+                      </button> -->
+                    </div>
+
+                    <textarea
+                      rows="5"
+                      placeholder="Write your note here..."
+                      class="w-full text-xs px-3 py-2 resize-none outline-none border-0 focus:ring-0"
+                    ></textarea>
+                  </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center justify-end gap-3 pt-2">
+                  <button
+                    type="button"
+                    class="px-4 py-2 rounded-lg border border-gray-200 text-xs font-medium text-gray-600 bg-white hover:bg-gray-50"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    class="px-5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-xs font-medium text-white shadow-sm"
+                  >
+                    Save Note
+                  </button>
+                </div>
+              </form>
+            </section>
+
+            <!-- Note Guidelines -->
+            <section
+              class="bg-emerald-50 border border-emerald-100 rounded-xl p-4 text-xs text-emerald-900 space-y-2"
+            >
+              <h3 class="text-sm font-semibold text-emerald-900">
+                Note Guidelines
+              </h3>
+              <ul class="list-disc pl-4 space-y-1">
+                <li>
+                  Notes are part of permanent employee record. Ensure all
+                  content is factual, objective and professional.
+                </li>
+                <li>
+                  Avoid subjective or discriminatory language. Focus on behavior
+                  and outcomes.
+                </li>
+                <li>
+                  For sensitive information, adjust visibility accordingly and
+                  mark sensitive info as "HR-Only".
+                </li>
+              </ul>
+            </section>
+          </aside>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

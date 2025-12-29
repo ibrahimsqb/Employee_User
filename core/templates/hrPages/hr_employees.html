@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>HR Employees Info</title>
+  </head>
+
+  <body class="bg-gray-100">
+    <!-- Topbar -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white border-b">
+      <div class="flex items-center justify-between px-6 h-16">
+        <!-- Logo -->
+        <div class="flex items-center gap-3">
+          <img
+            src="static/assets/img/brand/OfficeFlowAi.png"
+            class="h-20 w-20"
+          />
+        </div>
+
+        <!-- Search + Settings -->
+        <div class="flex items-center gap-3">
+          <div
+            class="hidden md:flex items-center bg-gray-100 rounded-full gap-2 px-4 py-2 w-72"
+          >
+            <svg
+              class="w-4 h-4 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 21l-4.35-4.35M10 18a8 8 0 100-16 8 8 0 000 16z"
+              />
+            </svg>
+            <input
+              type="text"
+              placeholder="Search for something"
+              class="bg-transparent outline-none text-sm w-full"
+            />
+          </div>
+
+          <button
+            class="w-10 h-10 flex items-center justify-center border rounded-full"
+          >
+            <img
+              src="static/assets/img/icons/common/settings 1.png"
+              class="w-5"
+            />
+          </button>
+
+          <button
+            class="w-10 h-10 flex items-center justify-center border rounded-full"
+          >
+            <img
+              src="static/assets/img/icons/common/002-notification-1.png"
+              class="w-5"
+            />
+          </button>
+
+          <img
+            src="https://i.pravatar.cc/40"
+            class="w-9 h-9 rounded-full hover:cursor-pointer"
+          />
+        </div>
+      </div>
+    </header>
+
+    <div class="flex pt-16">
+      <!-- Sidebar -->
+      <aside
+        class="hidden lg:block w-64 bg-emerald-900 min-h-screen fixed text-white"
+      >
+        <nav class="px-4 py-6 space-y-2">
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img src="static/assets/img/icons/common/home 2.png" class="w-5" />
+            Dashboard
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/transfer 1.png"
+              class="w-5"
+            />
+            Employees
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/user 3 1.png"
+              class="w-5"
+            />
+            Attendance
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/economic-investment 1.png"
+              class="w-5"
+            />
+            Leave Management
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/credit-card 1.png"
+              class="w-5"
+            />
+            Payroll
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img src="static/assets/img/icons/common/loan 1.png" class="w-5" />
+            Performance
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/service 1.png"
+              class="w-5"
+            />
+            Assets
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/econometrics 1.png"
+              class="w-5"
+            />
+            Recruitment
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/settings solid 1.png"
+              class="w-5"
+            />
+            Settings
+          </a>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 lg:ml-64 bg-gray-50 min-h-screen p-6">
+        <!-- Breadcrumb -->
+        <p class="text-xs text-gray-500 mb-1">Dashboard / Employee</p>
+
+        <!-- Title -->
+        <h1 class="text-xl font-semibold text-gray-800 mb-6">Employee</h1>
+
+        <!-- Filters -->
+        <div class="bg-white rounded-xl border p-4 mb-6">
+          <div class="flex flex-col lg:flex-row lg:items-center gap-4">
+            <!-- Search -->
+            <div
+              class="flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-lg flex-1"
+            >
+              <svg
+                class="w-4 h-4 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 18a7.5 7.5 0 006.15-3.35z"
+                />
+              </svg>
+              <input
+                type="text"
+                placeholder="Search by name, email or ID"
+                class="bg-transparent outline-none text-sm w-full"
+              />
+            </div>
+
+            <!-- Dropdowns -->
+            <select class="border rounded-lg px-4 py-2 text-sm">
+              <option>Department</option>
+            </select>
+
+            <select class="border rounded-lg px-4 py-2 text-sm">
+              <option>Status</option>
+            </select>
+
+            <select class="border rounded-lg px-4 py-2 text-sm">
+              <option>Role</option>
+            </select>
+
+            <!-- Add Employee -->
+            <button
+              class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-medium"
+            >
+              + Add Employee
+            </button>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="bg-white rounded-xl border overflow-x-auto">
+          <table class="min-w-full text-sm">
+            <thead class="bg-gray-50 border-b">
+              <tr>
+                <th class="text-left px-6 py-4">Name</th>
+                <th>ID</th>
+                <th>Department</th>
+                <th>Role</th>
+                <th>Phone</th>
+                <th>Status</th>
+                <th>Joining Date</th>
+                <th class="text-right px-6">Action</th>
+              </tr>
+            </thead>
+
+            <tbody class="divide-y">
+              <!-- Row -->
+              <tr>
+                <td class="px-6 py-4 flex items-center gap-3">
+                  <img
+                    src="https://i.pravatar.cc/40"
+                    class="w-9 h-9 rounded-full"
+                  />
+                  <span class="font-medium">Sarah Khan</span>
+                </td>
+                <td>EMP-01</td>
+                <td>IT</td>
+                <td>Web Developer</td>
+                <td>0300-xxxxxx</td>
+                <td>
+                  <span
+                    class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-md text-xs"
+                  >
+                    Active
+                  </span>
+                </td>
+                <td>05 Jun 2025</td>
+                <td class="text-right px-6">
+                  <a href="#" class="text-blue-600 text-xs font-semibold"
+                    >View Profile</a
+                  >
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 flex items-center gap-3">
+                  <img
+                    src="https://i.pravatar.cc/40"
+                    class="w-9 h-9 rounded-full"
+                  />
+                  <span class="font-medium">Sarah Khan</span>
+                </td>
+                <td>EMP-01</td>
+                <td>IT</td>
+                <td>Web Developer</td>
+                <td>0300-xxxxxx</td>
+                <td>
+                  <span
+                    class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-md text-xs"
+                  >
+                    Onboarding
+                  </span>
+                </td>
+                <td>05 Jun 2025</td>
+                <td class="text-right px-6">
+                  <a href="#" class="text-blue-600 text-xs font-semibold"
+                    >View Profile</a
+                  >
+                </td>
+              </tr>
+
+              <tr>
+                <td class="px-6 py-4 flex items-center gap-3">
+                  <img
+                    src="https://i.pravatar.cc/40"
+                    class="w-9 h-9 rounded-full"
+                  />
+                  <span class="font-medium">Sarah Khan</span>
+                </td>
+                <td>EMP-01</td>
+                <td>IT</td>
+                <td>Web Developer</td>
+                <td>0300-xxxxxx</td>
+                <td>
+                  <span
+                    class="bg-red-100 text-red-600 px-3 py-1 rounded-md text-xs"
+                  >
+                    Inactive
+                  </span>
+                </td>
+                <td>05 Jun 2025</td>
+                <td class="text-right px-6">
+                  <a href="#" class="text-blue-600 text-xs font-semibold"
+                    >View Profile</a
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Pagination -->
+          <div class="flex items-center gap-2 px-6 py-4 text-sm">
+            <button class="px-2 py-1 border rounded">&lt;</button>
+            <button class="px-3 py-1 border rounded bg-gray-100">1</button>
+            <button class="px-3 py-1 border rounded">2</button>
+            <button class="px-3 py-1 border rounded">3</button>
+            <span class="px-2">...</span>
+            <button class="px-2 py-1 border rounded">&gt;</button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>HR Employees Info</title>
+  </head>
+
+  <body class="bg-gray-100">
+    <!-- Topbar -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white border-b">
+      <div class="flex items-center justify-between px-6 h-16">
+        <!-- Logo -->
+        <div class="flex items-center gap-3">
+          <img
+            src="static/assets/img/brand/OfficeFlowAi.png"
+            class="h-20 w-20"
+          />
+        </div>
+
+        <!-- Search + Settings -->
+        <div class="flex items-center gap-3">
+          <div
+            class="hidden md:flex items-center bg-gray-100 rounded-full px-4 py-2 w-72"
+          >
+            <input
+              type="text"
+              placeholder="Search for something"
+              class="bg-transparent outline-none text-sm w-full"
+            />
+          </div>
+
+          <button
+            class="w-10 h-10 flex items-center justify-center border rounded-full"
+          >
+            <img
+              src="static/assets/img/icons/common/settings 1.png"
+              class="w-5"
+            />
+          </button>
+
+          <button
+            class="w-10 h-10 flex items-center justify-center border rounded-full"
+          >
+            <img
+              src="static/assets/img/icons/common/002-notification-1.png"
+              class="w-5"
+            />
+          </button>
+
+          <img
+            src="https://i.pravatar.cc/40"
+            class="w-9 h-9 rounded-full hover:cursor-pointer"
+          />
+        </div>
+      </div>
+    </header>
+
+    <div class="flex pt-16">
+      <!-- Sidebar -->
+      <aside
+        class="hidden lg:block w-64 bg-emerald-900 min-h-screen fixed text-white"
+      >
+        <nav class="px-4 py-6 space-y-2">
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img src="static/assets/img/icons/common/home 2.png" class="w-5" />
+            Dashboard
+          </a>
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/transfer 1.png"
+              class="w-5"
+            />
+            Employees
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/user 3 1.png"
+              class="w-5"
+            />
+            Attendance
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/economic-investment 1.png"
+              class="w-5"
+            />
+            Leave Management
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/credit-card 1.png"
+              class="w-5"
+            />
+            Payroll
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img src="static/assets/img/icons/common/loan 1.png" class="w-5" />
+            Performance
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/service 1.png"
+              class="w-5"
+            />
+            Assets
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/econometrics 1.png"
+              class="w-5"
+            />
+            Recruitment
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/settings solid 1.png"
+              class="w-5"
+            />
+            Settings
+          </a>
+        </nav>
+      </aside>
+
+      <main class="flex-1 lg:ml-64 bg-gray-50 min-h-screen p-6">
+        <!-- Breadcrumb -->
+        <p class="text-xs text-gray-500 mb-1">
+          Dashboard / Employee / Sara Khan
+        </p>
+
+        <!-- Name -->
+        <h1 class="text-xl font-semibold text-emerald-700 mb-6">Sara Khan</h1>
+
+        <!-- Profile Card -->
+        <div
+          class="bg-white rounded-xl border p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-6"
+        >
+          <div class="flex items-center gap-5">
+            <img
+              src="https://i.pravatar.cc/100"
+              class="w-24 h-24 rounded-full object-cover"
+            />
+
+            <div>
+              <h2 class="font-semibold text-lg">Sarah Khan</h2>
+              <p class="text-sm text-gray-500">
+                Senior Engineer &nbsp;•&nbsp; Engineering Dept
+              </p>
+
+              <div class="flex items-center gap-3 mt-2">
+                <span
+                  class="bg-emerald-100 text-emerald-700 text-xs px-3 py-1 rounded-md"
+                >
+                  Active
+                </span>
+                <span class="text-xs text-gray-500">EMP-01</span>
+              </div>
+            </div>
+          </div>
+          <button
+            class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-lg text-sm font-medium"
+          >
+            Edit Profile
+          </button>
+        </div>
+
+        <!-- Tabs -->
+        <div class="border-b mb-6">
+          <nav class="flex gap-6 text-sm font-medium">
+            <button class="pb-3 text-gray-500 hover:text-gray-700">
+              Overview
+            </button>
+            <button class="pb-3 text-gray-500 hover:text-gray-700">
+              Attendance
+            </button>
+            <button class="pb-3 text-gray-500 hover:text-gray-700">
+              Leaves
+            </button>
+            <button class="pb-3 border-b-2 border-emerald-600 text-emerald-600">
+              Documents
+            </button>
+            <button class="pb-3 text-gray-500 hover:text-gray-700">
+              Notes
+            </button>
+          </nav>
+        </div>
+
+        <!-- Documents Layout -->
+        <div class="grid grid-cols-1 xl:grid-cols-4 gap-6">
+          <!-- Left Sidebar -->
+          <div class="space-y-6">
+            <!-- Categories -->
+            <div class="bg-white border rounded-xl p-4">
+              <h3 class="text-sm font-medium mb-3">Categories</h3>
+
+              <ul class="text-sm space-y-2">
+                <li
+                  class="flex items-center justify-between px-3 py-2 rounded-lg bg-emerald-50 text-emerald-700"
+                >
+                  <span>All Documents</span>
+                  <span
+                    class="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full"
+                    >12</span
+                  >
+                </li>
+
+                <li
+                  class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-50"
+                >
+                  <span>Identity</span>
+                  <span
+                    class="text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full"
+                    >4</span
+                  >
+                </li>
+
+                <li
+                  class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-50"
+                >
+                  <span>Employment</span>
+                  <span
+                    class="text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full"
+                    >3</span
+                  >
+                </li>
+
+                <li
+                  class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-50"
+                >
+                  <span>Contracts</span>
+                  <span
+                    class="text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full"
+                    >3</span
+                  >
+                </li>
+
+                <li
+                  class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-50"
+                >
+                  <span>Certifications</span>
+                  <span
+                    class="text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full"
+                    >2</span
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <!-- Required Checklist -->
+            <div class="bg-white border rounded-xl p-4">
+              <h3 class="text-sm font-medium mb-3">Required Checklist</h3>
+
+              <div class="space-y-3 text-sm">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                    Passport / ID
+                  </div>
+                  <span
+                    class="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded"
+                    >Uploaded</span
+                  >
+                </div>
+
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                    Signed Contract
+                  </div>
+                  <span
+                    class="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded"
+                    >Uploaded</span
+                  >
+                </div>
+
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-gray-300"></span>
+                    Tax Forms
+                  </div>
+                  <span
+                    class="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded"
+                    >Pending</span
+                  >
+                </div>
+
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-gray-300"></span>
+                    Medical Clearance
+                  </div>
+                  <span
+                    class="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded"
+                    >Missing</span
+                  >
+                </div>
+              </div>
+
+              <button
+                class="w-full mt-4 border border-indigo-600 text-indigo-600 text-xs py-2 rounded-lg hover:bg-indigo-50"
+              >
+                Send Reminder to Sarah
+              </button>
+            </div>
+          </div>
+
+          <!-- Documents Table -->
+          <div class="xl:col-span-3 bg-white border rounded-xl">
+            <!-- Table Header -->
+            <div
+              class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-5 border-b"
+            >
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex items-center gap-2 border rounded-lg px-3 py-2 text-sm w-64"
+                >
+                  <svg
+                    class="w-4 h-4 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M21 21l-4.35-4.35M10 18a8 8 0 100-16 8 8 0 000 16z"
+                    />
+                  </svg>
+                  <input
+                    type="text"
+                    placeholder="Search document..."
+                    class="outline-none text-sm w-full"
+                  />
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <button
+                  class="border px-4 py-2 rounded-lg text-sm hover:bg-gray-50"
+                >
+                  Request Document
+                </button>
+                <button
+                  class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm"
+                >
+                  Upload Document
+                </button>
+              </div>
+            </div>
+
+            <!-- Table -->
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead class="bg-gray-100 text-gray-600">
+                  <tr>
+                    <th class="text-left p-3">Document Name</th>
+                    <th class="text-left p-3">Category</th>
+                    <th class="text-left p-3">Upload Date</th>
+                    <th class="text-left p-3">Uploaded By</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr class="border-t">
+                    <td class="p-3 flex items-center gap-2">
+                      <span class="text-red-500">📄</span>
+                      Employment_Contract.pdf
+                    </td>
+                    <td class="p-3">
+                      <span
+                        class="bg-blue-100 text-blue-600 text-xs px-2 py-0.5 rounded"
+                        >Contract</span
+                      >
+                    </td>
+                    <td class="p-3">Dec 14, 2025</td>
+                    <td class="p-3">Admin</td>
+                  </tr>
+
+                  <tr class="border-t">
+                    <td class="p-3 flex items-center gap-2">
+                      <span class="text-blue-500">🖼</span>
+                      Id_Proof_front.jpg
+                    </td>
+                    <td class="p-3">
+                      <span
+                        class="bg-purple-100 text-purple-600 text-xs px-2 py-0.5 rounded"
+                        >Identity</span
+                      >
+                    </td>
+                    <td class="p-3">Oct 15, 2025</td>
+                    <td class="p-3">Sarah</td>
+                  </tr>
+
+                  <tr class="border-t">
+                    <td class="p-3 flex items-center gap-2">
+                      <span class="text-blue-500">🖼</span>
+                      Id_Proof_back.jpg
+                    </td>
+                    <td class="p-3">
+                      <span
+                        class="bg-purple-100 text-purple-600 text-xs px-2 py-0.5 rounded"
+                        >Identity</span
+                      >
+                    </td>
+                    <td class="p-3">Sep 03, 2025</td>
+                    <td class="p-3">Sarah</td>
+                  </tr>
+
+                  <tr class="border-t">
+                    <td class="p-3 flex items-center gap-2">
+                      <span class="text-red-500">📄</span>
+                      Tax_form.pdf
+                    </td>
+                    <td class="p-3">
+                      <span
+                        class="bg-yellow-100 text-yellow-700 text-xs px-2 py-0.5 rounded"
+                        >Employment</span
+                      >
+                    </td>
+                    <td class="p-3">Mar 23, 2025</td>
+                    <td class="p-3">Sarah</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

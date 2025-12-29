@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>HR Dashboard</title>
+  </head>
+
+  <body class="bg-gray-100">
+    <!-- Topbar -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white border-b">
+      <div class="flex items-center justify-between px-6 h-16">
+        <!-- Logo -->
+        <div class="flex items-center gap-3">
+          <img
+            src="static/assets/img/brand/OfficeFlowAi.png"
+            class="h-20 w-20"
+          />
+        </div>
+
+        <!-- Search + Settings -->
+        <div class="flex items-center gap-3">
+          <div
+            class="hidden md:flex items-center bg-gray-100 rounded-full gap-2 px-4 py-2 w-72"
+          >
+            <svg
+              class="w-4 h-4 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 21l-4.35-4.35M10 18a8 8 0 100-16 8 8 0 000 16z"
+              />
+            </svg>
+            <input
+              type="text"
+              placeholder="Search for something"
+              class="bg-transparent outline-none text-sm w-full"
+            />
+          </div>
+
+          <button
+            class="w-10 h-10 flex items-center justify-center border rounded-full"
+          >
+            <img
+              src="static/assets/img/icons/common/settings 1.png"
+              class="w-5"
+            />
+          </button>
+
+          <button
+            class="w-10 h-10 flex items-center justify-center border rounded-full"
+          >
+            <img
+              src="static/assets/img/icons/common/002-notification-1.png"
+              class="w-5"
+            />
+          </button>
+
+          <img
+            src="https://i.pravatar.cc/40"
+            class="w-9 h-9 rounded-full hover:cursor-pointer"
+          />
+        </div>
+      </div>
+    </header>
+
+    <div class="flex pt-16">
+      <!-- Sidebar -->
+      <aside
+        class="hidden lg:block w-64 bg-emerald-900 min-h-screen fixed text-white"
+      >
+        <nav class="px-4 py-6 space-y-2">
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg bg-emerald-800"
+          >
+            <img src="static/assets/img/icons/common/home 2.png" class="w-5" />
+            Dashboard
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/transfer 1.png"
+              class="w-5"
+            />
+            Employees
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/user 3 1.png"
+              class="w-5"
+            />
+            Attendance
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/economic-investment 1.png"
+              class="w-5"
+            />
+            Leave Management
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/credit-card 1.png"
+              class="w-5"
+            />
+            Payroll
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img src="static/assets/img/icons/common/loan 1.png" class="w-5" />
+            Performance
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/service 1.png"
+              class="w-5"
+            />
+            Assets
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/econometrics 1.png"
+              class="w-5"
+            />
+            Recruitment
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/settings solid 1.png"
+              class="w-5"
+            />
+            Settings
+          </a>
+        </nav>
+      </aside>
+
+      <!-- Main -->
+      <main class="flex-1 lg:ml-64 p-6">
+        <!-- Header -->
+        <div class="mb-6">
+          <h1 class="text-2xl font-bold text-emerald-800">Dashboard</h1>
+          <p class="text-sm text-gray-600">Welcome back, Sarah</p>
+          <p class="text-sm text-gray-500">Role: HR</p>
+        </div>
+
+        <hr class="border-gray-300 w-full mb-5 mt-5" />
+
+        <!-- KPI Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-6 gap-4 mb-6">
+          <div class="bg-white p-4 rounded-xl border">
+            <p class="text-xs text-gray-500">Total Employees</p>
+            <p class="text-2xl font-bold">248</p>
+            <p class="text-xs text-emerald-600 mt-1">Across departments</p>
+          </div>
+          <div class="bg-white p-4 rounded-xl border">
+            <p class="text-xs text-gray-500">New Hires</p>
+            <p class="text-2xl font-bold">12</p>
+            <p class="text-xs text-emerald-600 mt-1">Joined this month</p>
+          </div>
+          <div class="bg-white p-4 rounded-xl border">
+            <p class="text-xs text-gray-500">Attrition Rate</p>
+            <p class="text-2xl font-bold">3.2%</p>
+            <p class="text-xs text-yellow-600 mt-1">Last 30 days</p>
+          </div>
+          <div class="bg-white p-4 rounded-xl border">
+            <p class="text-xs text-gray-500">Leaves</p>
+            <p class="text-2xl font-bold">18</p>
+            <p class="text-xs text-red-600 mt-1">Awaiting approval</p>
+          </div>
+          <div class="bg-white p-4 rounded-xl border">
+            <p class="text-xs text-gray-500">Overtime</p>
+            <p class="text-2xl font-bold">9</p>
+            <p class="text-xs text-blue-600 mt-1">Awaiting approval</p>
+          </div>
+          <div class="bg-white p-4 rounded-xl border">
+            <p class="text-xs text-gray-500">Open Positions</p>
+            <p class="text-2xl font-bold">7</p>
+            <p class="text-xs text-emerald-600 mt-1">Currently hiring</p>
+          </div>
+        </div>
+
+        <!-- Middle Section -->
+        <!-- Employee Management + Notifications -->
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-6">
+          <!-- Employee Management -->
+          <div class="xl:col-span-2 bg-white rounded-xl border">
+            <div class="flex justify-between items-center px-5 py-4 border-b">
+              <h2 class="font-semibold text-sm">Employee Management</h2>
+              <button
+                class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm"
+              >
+                + Add Employee
+              </button>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th class="text-left px-5 py-3">Employee</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Department</th>
+                    <th class="text-right px-5">Action</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr class="border-t">
+                    <td class="px-5 py-4">
+                      <p class="font-semibold">Sarah Khan</p>
+                      <p class="text-xs text-gray-500">ID-001</p>
+                    </td>
+                    <td>Product Manager</td>
+                    <td>
+                      <span
+                        class="bg-green-100 text-green-700 px-3 py-1 rounded text-xs"
+                      >
+                        Active
+                      </span>
+                    </td>
+                    <td>Marketing</td>
+                    <td class="text-right px-5">
+                      <a href="#" class="text-blue-600 text-xs font-semibold">
+                        View Profile
+                      </a>
+                    </td>
+                  </tr>
+
+                  <tr class="border-t">
+                    <td class="px-5 py-4">
+                      <p class="font-semibold">Ali Ahmed</p>
+                      <p class="text-xs text-gray-500">ID-002</p>
+                    </td>
+                    <td>Product Manager</td>
+                    <td>
+                      <span
+                        class="bg-green-100 text-green-700 px-3 py-1 rounded text-xs"
+                      >
+                        Active
+                      </span>
+                    </td>
+                    <td>Sales</td>
+                    <td class="text-right px-5">
+                      <a href="#" class="text-blue-600 text-xs font-semibold">
+                        View Profile
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Notifications -->
+          <div class="bg-white rounded-xl border p-5">
+            <div class="flex justify-between items-center mb-4">
+              <h2 class="font-semibold text-sm">Notifications</h2>
+              <span class="bg-red-100 text-red-600 text-xs px-2 py-1 rounded">
+                3 New
+              </span>
+            </div>
+
+            <div class="space-y-4 text-sm">
+              <div class="border rounded-lg p-3">
+                <p class="font-semibold">Contract Expiring</p>
+                <p class="text-xs text-gray-500">
+                  Ali’s contract is expiring in 3 days.
+                </p>
+                <a href="#" class="text-emerald-600 text-xs font-semibold">
+                  Review Contract
+                </a>
+              </div>
+
+              <div class="border rounded-lg p-3">
+                <p class="font-semibold">New Leave Request</p>
+                <p class="text-xs text-gray-500">Alia requested 5 day leave.</p>
+                <a href="#" class="text-emerald-600 text-xs font-semibold">
+                  View Request
+                </a>
+              </div>
+
+              <div class="border rounded-lg p-3">
+                <p class="font-semibold">Contract Expiring</p>
+                <p class="text-xs text-gray-500">
+                  Ali’s contract is expiring in 3 days.
+                </p>
+                <a href="#" class="text-emerald-600 text-xs font-semibold">
+                  Review Contract
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Task Updates + Leave Summary -->
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+          <!-- Task Updates -->
+          <div class="xl:col-span-2 bg-white rounded-xl border p-5">
+            <div class="flex justify-between items-center mb-4">
+              <h2 class="font-semibold text-sm">Task Updates</h2>
+              <div class="flex gap-2">
+                <button class="px-3 py-1 text-xs border rounded bg-gray-100">
+                  All
+                </button>
+                <button class="px-3 py-1 text-xs border rounded">
+                  Due Today
+                </button>
+                <button class="px-3 py-1 text-xs border rounded">
+                  Overdue
+                </button>
+              </div>
+            </div>
+
+            <div class="space-y-3">
+              <div
+                class="flex justify-between items-center border rounded-lg p-3"
+              >
+                <div class="flex items-start gap-3">
+                  <input type="checkbox" class="mt-1" />
+                  <div>
+                    <p class="font-semibold">Employee Document Submission</p>
+                    <p class="text-xs text-gray-500">
+                      Reminder for pending CNIC & contract uploads.
+                    </p>
+                  </div>
+                </div>
+                <span
+                  class="bg-blue-100 text-blue-600 px-3 py-1 rounded text-xs"
+                >
+                  In progress
+                </span>
+              </div>
+
+              <div
+                class="flex justify-between items-center border rounded-lg p-3"
+              >
+                <div class="flex items-start gap-3">
+                  <input type="checkbox" class="mt-1" />
+                  <div>
+                    <p class="font-semibold">Leave Approval Request</p>
+                    <p class="text-xs text-gray-500">
+                      3 leave requests are awaiting review.
+                    </p>
+                  </div>
+                </div>
+                <span
+                  class="bg-blue-100 text-blue-600 px-3 py-1 rounded text-xs"
+                >
+                  In progress
+                </span>
+              </div>
+            </div>
+
+            <div class="text-center mt-4">
+              <a href="#" class="text-sm text-blue-600 font-semibold">
+                View All Tasks
+              </a>
+            </div>
+          </div>
+
+          <!-- Leave Summary -->
+          <div class="bg-white rounded-xl border p-5">
+            <h2 class="font-semibold text-sm mb-4">Leave Summary</h2>
+
+            <div class="space-y-3 text-sm">
+              <div class="flex justify-between">
+                <span class="text-emerald-700">Annual Leave</span>
+                <span>30%</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-orange-600">Sick Leave</span>
+                <span>15%</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-pink-600">Casual Leave</span>
+                <span>20%</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-teal-600">Others</span>
+                <span>35%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

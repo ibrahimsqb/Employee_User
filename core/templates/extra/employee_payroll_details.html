@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Employee Onboarding</title>
+  </head>
+
+  <body class="bg-gray-100 text-gray-800">
+    <!-- ================= TOPBAR (UNCHANGED) ================= -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white border-b">
+      <div class="flex items-center justify-between px-6 h-16">
+        <img src="static/assets/img/brand/OfficeFlowAi.png" class="h-20 w-20" />
+
+        <div class="flex items-center gap-3">
+          <div
+            class="hidden md:flex items-center bg-gray-100 rounded-full px-4 py-2 w-72"
+          >
+            <input
+              type="text"
+              placeholder="Search for something"
+              class="bg-transparent outline-none text-sm w-full"
+            />
+          </div>
+
+          <button
+            class="w-10 h-10 flex items-center justify-center border rounded-full"
+          >
+            <img
+              src="static/assets/img/icons/common/settings 1.png"
+              class="w-5"
+            />
+          </button>
+
+          <button
+            class="w-10 h-10 flex items-center justify-center border rounded-full"
+          >
+            <img
+              src="static/assets/img/icons/common/002-notification-1.png"
+              class="w-5"
+            />
+          </button>
+
+          <img src="https://i.pravatar.cc/40" class="w-9 h-9 rounded-full" />
+        </div>
+      </div>
+    </header>
+
+    <div class="flex pt-16">
+      <!-- ================= SIDEBAR (UNCHANGED) ================= -->
+      <aside
+        class="hidden lg:block w-64 bg-emerald-900 min-h-screen fixed text-white"
+      >
+        <nav class="px-4 py-6 space-y-2">
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img src="static/assets/img/icons/common/home 2.png" class="w-5" />
+            Dashboard
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg bg-emerald-800"
+          >
+            <img
+              src="static/assets/img/icons/common/transfer 1.png"
+              class="w-5"
+            />
+            Employees
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="static/assets/img/icons/common/user 3 1.png"
+              class="w-5"
+            />
+            Attendance
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="static/assets/img/icons/common/economic-investment 1.png"
+              class="w-5"
+            />
+            Leave Management
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="static/assets/img/icons/common/credit-card 1.png"
+              class="w-5"
+            />
+            Payroll
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img src="static/assets/img/icons/common/loan 1.png" class="w-5" />
+            Performance
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="static/assets/img/icons/common/service 1.png"
+              class="w-5"
+            />
+            Assets
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="static/assets/img/icons/common/econometrics 1.png"
+              class="w-5"
+            />
+            Recruitment
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="static/assets/img/icons/common/settings solid 1.png"
+              class="w-5"
+            />
+            Settings
+          </a>
+        </nav>
+      </aside>
+
+      <!-- ================= MAIN ================= -->
+      <main class="ml-[260px] pt-[74px] px-10 pb-10 bg-surface min-h-screen">
+        <!-- Back + Name -->
+        <div class="flex items-center gap-3 mb-6">
+          <button class="text-gray-400 hover:text-black text-xl">←</button>
+          <h1 class="text-xl font-semibold text-[#183231]">Sara Khan</h1>
+        </div>
+
+        <div class="grid grid-cols-[320px_1fr] gap-8">
+          <!-- ================= LEFT PROFILE CARD ================= -->
+          <div class="bg-white rounded-2xl border shadow-sm p-6 h-fit">
+            <div class="flex flex-col items-center text-center">
+              <img
+                src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=160&h=160&crop=faces"
+                class="w-28 h-28 rounded-full object-cover mb-4"
+              />
+              <h3 class="font-semibold text-lg">Sarah Khan</h3>
+              <p class="text-sm text-muted">Web Developer</p>
+
+              <span
+                class="mt-3 px-4 py-1 text-xs rounded-md bg-emerald-100 text-emerald-700 font-semibold"
+              >
+                Active
+              </span>
+            </div>
+
+            <hr class="my-6" />
+
+            <div class="space-y-3 text-sm text-[#344e4a]">
+              <div class="flex gap-2">📧 sarahkhan@gmail.com</div>
+              <div class="flex gap-2">📞 0300-xxxxxxx</div>
+              <div class="flex gap-2">🌍 UTC +5:00</div>
+            </div>
+
+            <hr class="my-6" />
+
+            <div class="space-y-4 text-sm">
+              <div class="flex justify-between items-center">
+                <div>
+                  <p class="text-xs text-muted">Department</p>
+                  <p class="font-medium">IT</p>
+                </div>
+                <span class="text-gray-400">›</span>
+              </div>
+
+              <div class="flex justify-between items-center">
+                <div>
+                  <p class="text-xs text-muted">Office</p>
+                  <p class="font-medium">NIC Islamabad</p>
+                </div>
+                <span class="text-gray-400">›</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= RIGHT PAYROLL CONTENT ================= -->
+          <div class="bg-white rounded-2xl border shadow-sm overflow-hidden">
+            <!-- Tabs -->
+            <div class="flex gap-8 px-8 border-b text-sm font-medium">
+              <button class="py-4 text-muted">General</button>
+              <button class="py-4 text-muted">Job</button>
+              <button class="py-4 border-b-2 border-primary text-primary">
+                Payroll
+              </button>
+              <button class="py-4 text-muted">Documents</button>
+              <button class="py-4 text-muted">Settings</button>
+            </div>
+
+            <div class="p-8 space-y-8">
+              <!-- Employment Summary -->
+              <div class="grid grid-cols-4 gap-4 text-sm border rounded-xl p-5">
+                <div>
+                  <p class="text-muted text-xs">Employee Status</p>
+                  <p class="font-semibold">Active</p>
+                </div>
+                <div>
+                  <p class="text-muted text-xs">Employment Type</p>
+                  <p class="font-semibold">Contractor</p>
+                </div>
+                <div>
+                  <p class="text-muted text-xs">Job Title</p>
+                  <p class="font-semibold">Junior Web Developer</p>
+                </div>
+                <div>
+                  <p class="text-muted text-xs">Job Date</p>
+                  <p class="font-semibold">05 Jun 2025</p>
+                </div>
+              </div>
+
+              <!-- ================= SALARY BREAKDOWN ================= -->
+              <div class="border rounded-xl overflow-hidden">
+                <div
+                  class="flex justify-between items-center px-5 py-4 bg-gray-50"
+                >
+                  <h3 class="font-semibold">Salary Breakdown</h3>
+                  <button
+                    class="px-4 py-2 bg-primary text-white rounded-md text-sm font-semibold"
+                  >
+                    Download Payslip
+                  </button>
+                </div>
+
+                <div class="divide-y text-sm">
+                  <div class="flex justify-between px-5 py-3 bg-gray-50">
+                    <span>Basic Salary</span><span>Rs. 50,000</span>
+                  </div>
+                  <div class="flex justify-between px-5 py-3">
+                    <span>House Allowance</span><span>Rs. 10,000</span>
+                  </div>
+                  <div class="flex justify-between px-5 py-3 bg-gray-50">
+                    <span>Medical Allowance</span><span>Rs. 3,000</span>
+                  </div>
+                  <div class="flex justify-between px-5 py-3">
+                    <span>Transport Allowance</span><span>Rs. 2,000</span>
+                  </div>
+                  <div class="flex justify-between px-5 py-3 bg-gray-50">
+                    <span>Bonuses</span><span>Rs. 5,000</span>
+                  </div>
+                  <div class="flex justify-between px-5 py-3">
+                    <span>Overtime Pay</span><span>Rs. 2,500</span>
+                  </div>
+                  <div
+                    class="flex justify-between px-5 py-3 font-semibold bg-gray-100"
+                  >
+                    <span>Total Earnings</span><span>Rs. 72,500</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ================= DEDUCTIONS ================= -->
+              <div class="border rounded-xl overflow-hidden">
+                <div class="px-5 py-4 bg-gray-50 font-semibold">Deductions</div>
+                <div class="divide-y text-sm">
+                  <div class="flex justify-between px-5 py-3">
+                    <span>Tax Deduction</span
+                    ><span class="text-danger">Rs. 5,000</span>
+                  </div>
+                  <div class="flex justify-between px-5 py-3 bg-gray-50">
+                    <span>Loan Deduction</span
+                    ><span class="text-danger">Rs. 5,000</span>
+                  </div>
+                  <div class="flex justify-between px-5 py-3">
+                    <span>Provident Fund</span
+                    ><span class="text-danger">Rs. 0</span>
+                  </div>
+                  <div
+                    class="flex justify-between px-5 py-3 font-semibold bg-gray-100"
+                  >
+                    <span>Total Deductions</span
+                    ><span class="text-danger">Rs. 7,000</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ================= NET SALARY ================= -->
+              <div class="border rounded-xl p-5 text-sm space-y-2">
+                <div class="flex justify-between font-semibold">
+                  <span>Net Salary (Payable)</span>
+                  <span>Rs. 65,000</span>
+                </div>
+                <div class="flex justify-between text-muted text-xs">
+                  <span>Pay Cycle</span><span>1 Jun – 30 Jun</span>
+                </div>
+                <div class="flex justify-between text-muted text-xs">
+                  <span>Payment Method</span><span>Bank Transfer</span>
+                </div>
+              </div>
+
+              <!-- ================= PAYMENT INFORMATION ================= -->
+              <div class="border rounded-xl p-5 text-sm space-y-2">
+                <h3 class="font-semibold mb-3">Payment Information</h3>
+                <div class="grid grid-cols-2 gap-y-2">
+                  <span class="text-muted">Bank Name</span
+                  ><span class="font-medium">HBL</span>
+                  <span class="text-muted">Account Title</span
+                  ><span class="font-medium">Sarah Khan</span>
+                  <span class="text-muted">Account Number</span
+                  ><span class="font-medium">****1234</span>
+                  <span class="text-muted">IBAN</span
+                  ><span class="font-medium">PK00HBL00001234</span>
+                  <span class="text-muted">Payment Frequency</span
+                  ><span class="font-medium">Monthly</span>
+                  <span class="text-muted">Next Pay Date</span
+                  ><span class="font-medium">01 July 2025</span>
+                </div>
+              </div>
+
+              <!-- ================= PAYMENT HISTORY ================= -->
+              <div class="border rounded-xl p-5">
+                <h3 class="font-semibold mb-3">Payment History</h3>
+                <div
+                  class="space-y-3 text-sm max-h-[160px] overflow-y-auto pr-2"
+                >
+                  <div class="flex justify-between">
+                    <span>June 2025</span><span>Rs. 65,000 ⬇</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>July 2025</span><span>Rs. 65,000 ⬇</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>August 2025</span><span>Rs. 65,000 ⬇</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>September 2025</span><span>Rs. 65,000 ⬇</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

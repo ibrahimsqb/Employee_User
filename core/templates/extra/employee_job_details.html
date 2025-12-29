@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Employee Profile</title>
+  </head>
+
+  <body class="bg-gray-100">
+    <!-- ================= TOPBAR ================= -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white border-b">
+      <div class="flex items-center justify-between px-6 h-16">
+        <img src="static/assets/img/brand/OfficeFlowAi.png" class="h-20 w-20" />
+
+        <div class="flex items-center gap-3">
+          <div
+            class="hidden md:flex items-center bg-gray-100 rounded-full px-4 py-2 w-72"
+          >
+            <input
+              type="text"
+              placeholder="Search for something"
+              class="bg-transparent outline-none text-sm w-full"
+            />
+          </div>
+
+          <button
+            class="w-10 h-10 flex items-center justify-center border rounded-full"
+          >
+            <img
+              src="static/assets/img/icons/common/settings 1.png"
+              class="w-5"
+            />
+          </button>
+
+          <button
+            class="w-10 h-10 flex items-center justify-center border rounded-full"
+          >
+            <img
+              src="static/assets/img/icons/common/002-notification-1.png"
+              class="w-5"
+            />
+          </button>
+
+          <img src="https://i.pravatar.cc/40" class="w-9 h-9 rounded-full" />
+        </div>
+      </div>
+    </header>
+
+    <div class="flex pt-16">
+      <!-- ================= SIDEBAR ================= -->
+      <aside
+        class="hidden lg:block w-64 bg-emerald-900 min-h-screen fixed text-white"
+      >
+        <nav class="px-4 py-6 space-y-2">
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img src="static/assets/img/icons/common/home 2.png" class="w-5" />
+            Dashboard
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg bg-emerald-800"
+          >
+            <img
+              src="static/assets/img/icons/common/transfer 1.png"
+              class="w-5"
+            />
+            Employees
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="static/assets/img/icons/common/user 3 1.png"
+              class="w-5"
+            />
+            Attendance
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="static/assets/img/icons/common/economic-investment 1.png"
+              class="w-5"
+            />
+            Leave Management
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="static/assets/img/icons/common/credit-card 1.png"
+              class="w-5"
+            />
+            Payroll
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img src="static/assets/img/icons/common/loan 1.png" class="w-5" />
+            Performance
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="static/assets/img/icons/common/service 1.png"
+              class="w-5"
+            />
+            Assets
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="static/assets/img/icons/common/econometrics 1.png"
+              class="w-5"
+            />
+            Recruitment
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="static/assets/img/icons/common/settings solid 1.png"
+              class="w-5"
+            />
+            Settings
+          </a>
+        </nav>
+      </aside>
+
+      <!-- ================= MAIN CONTENT ================= -->
+      <main class="mt-[74px] ml-[260px] min-h-screen bg-gray-100 pb-10">
+        <section class="px-10 py-7">
+          <!-- Back + Name -->
+          <div class="flex items-center gap-3 mb-6">
+            <a href="#" class="text-blue-600 font-semibold">←</a>
+            <h1 class="text-2xl font-semibold text-emerald-900">Sara Khan</h1>
+          </div>
+
+          <!-- Layout -->
+          <div class="grid grid-cols-1 xl:grid-cols-[300px_1fr] gap-8">
+            <!-- LEFT CARD -->
+            <div class="bg-white border border-gray-200 rounded-2xl px-6 py-8">
+              <div class="text-center">
+                <img
+                  src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=160&h=160&crop=faces"
+                  class="w-24 h-24 rounded-full mx-auto mb-3 object-cover"
+                />
+
+                <h3 class="font-semibold text-lg mt-2">Sarah Khan</h3>
+                <p class="text-sm text-gray-500 mt-1">Web Developer</p>
+
+                <span
+                  class="inline-block mt-3 px-4 py-1 rounded-lg text-sm font-semibold bg-emerald-100 text-emerald-700 border border-emerald-200"
+                >
+                  Active
+                </span>
+              </div>
+
+              <hr class="my-5" />
+
+              <div class="space-y-3 text-sm">
+                <div>📧 sarahkhan@email.com</div>
+                <div>📞 0300-xxxxxxx</div>
+                <div>🌐 UTC +5:00</div>
+              </div>
+
+              <hr class="my-5" />
+
+              <div class="space-y-4 text-sm">
+                <div class="flex justify-between items-center">
+                  <div>
+                    <p class="text-gray-500">Department</p>
+                    <p class="font-semibold">IT</p>
+                  </div>
+                  <span class="text-blue-600 font-semibold">›</span>
+                </div>
+
+                <div class="flex justify-between items-center">
+                  <div>
+                    <p class="text-gray-500">Office</p>
+                    <p class="font-semibold">NIC Islamabad</p>
+                  </div>
+                  <span class="text-blue-600 font-semibold">›</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT CARD -->
+            <div
+              class="bg-white border border-gray-200 rounded-2xl overflow-hidden"
+            >
+              <!-- Tabs -->
+              <div class="flex gap-8 px-8 border-b border-gray-200">
+                <button
+                  class="py-4 font-semibold text-emerald-700 border-b-2 border-emerald-500"
+                >
+                  General
+                </button>
+                <button class="py-4 text-gray-500">Job</button>
+                <button class="py-4 text-gray-500">Payroll</button>
+                <button class="py-4 text-gray-500">Documents</button>
+                <button class="py-4 text-gray-500">Settings</button>
+              </div>
+
+              <!-- Content -->
+              <div class="px-8 py-7 space-y-10">
+                <!-- Employment Info -->
+                <section>
+                  <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-semibold">Employment Information</h3>
+                    <button
+                      class="w-9 h-9 rounded-full border flex items-center justify-center"
+                    >
+                      ✎
+                    </button>
+                  </div>
+
+                  <div
+                    class="grid grid-cols-1 md:grid-cols-3 gap-6 border border-gray-200 rounded-xl px-6 py-5 text-sm"
+                  >
+                    <div>
+                      <p class="text-gray-500">Employee ID</p>
+                      <p class="font-semibold">EMP-001</p>
+                    </div>
+                    <div>
+                      <p class="text-gray-500">Service Year</p>
+                      <p class="font-semibold">01 Year</p>
+                    </div>
+                    <div>
+                      <p class="text-gray-500">Join Date</p>
+                      <p class="font-semibold">05 Jan 2025</p>
+                    </div>
+                  </div>
+                </section>
+
+                <!-- Job Timeline -->
+                <section>
+                  <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-semibold">Job Timeline</h3>
+                    <button
+                      class="w-9 h-9 rounded-full border flex items-center justify-center"
+                    >
+                      ＋
+                    </button>
+                  </div>
+
+                  <div class="border rounded-xl overflow-hidden text-sm">
+                    <div
+                      class="grid grid-cols-5 bg-gray-50 font-medium px-6 py-3 border-b text-gray-600"
+                    >
+                      <div>Effective Date</div>
+                      <div>Job Title</div>
+                      <div>Position Type</div>
+                      <div>Employment Type</div>
+                      <div>Line Manager</div>
+                    </div>
+
+                    <div class="grid grid-cols-5 px-6 py-4">
+                      <div>05 Jan 2025</div>
+                      <div>Web Developer</div>
+                      <div>Junior Developer</div>
+                      <div>Full Time</div>
+                      <div>Alina Nasir</div>
+                    </div>
+                  </div>
+                </section>
+
+                <!-- Contract Timeline -->
+                <section>
+                  <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-semibold">Contract Timeline</h3>
+                    <button
+                      class="w-9 h-9 rounded-full border flex items-center justify-center"
+                    >
+                      ＋
+                    </button>
+                  </div>
+
+                  <div class="border rounded-xl overflow-hidden text-sm">
+                    <div
+                      class="grid grid-cols-5 bg-gray-50 font-semibold px-5 py-3 border-b"
+                    >
+                      <div>Contract #</div>
+                      <div>Contract Name</div>
+                      <div>Contract Type</div>
+                      <div>Start Date</div>
+                      <div>End Date</div>
+                    </div>
+
+                    <div class="grid grid-cols-5 px-5 py-4">
+                      <div>#1234</div>
+                      <div>Full-time Remote</div>
+                      <div>Full-time Remote</div>
+                      <div>05 Jun 2025</div>
+                      <div>—</div>
+                    </div>
+                  </div>
+                </section>
+
+                <!-- Work Schedule -->
+                <section>
+                  <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-semibold">Work Schedule</h3>
+                    <button
+                      class="w-9 h-9 rounded-full border flex items-center justify-center"
+                    >
+                      ✎
+                    </button>
+                  </div>
+
+                  <div
+                    class="flex justify-between gap-6 border rounded-lg p-4 text-sm"
+                  >
+                    <div>
+                      <p class="text-gray-500">Working Hours</p>
+                      <p class="font-semibold">9:00 am – 5:00 pm</p>
+                    </div>
+                    <div>
+                      <p class="text-gray-500">Working Days</p>
+                      <p class="font-semibold">Monday – Friday</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

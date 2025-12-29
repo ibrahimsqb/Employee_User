@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>HR Employees Info</title>
+  </head>
+
+  <body class="bg-gray-100">
+    <!-- Topbar -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white border-b">
+      <div class="flex items-center justify-between px-6 h-16">
+        <!-- Logo -->
+        <div class="flex items-center gap-3">
+          <img
+            src="static/assets/img/brand/OfficeFlowAi.png"
+            class="h-20 w-20"
+          />
+        </div>
+
+        <!-- Search + Settings -->
+        <div class="flex items-center gap-3">
+          <div
+            class="hidden md:flex items-center bg-gray-100 rounded-full gap-2 px-4 py-2 w-72"
+          >
+            <svg
+              class="w-4 h-4 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 21l-4.35-4.35M10 18a8 8 0 100-16 8 8 0 000 16z"
+              />
+            </svg>
+            <input
+              type="text"
+              placeholder="Search for something"
+              class="bg-transparent outline-none text-sm w-full"
+            />
+          </div>
+
+          <button
+            class="w-10 h-10 flex items-center justify-center border rounded-full"
+          >
+            <img
+              src="static/assets/img/icons/common/settings 1.png"
+              class="w-5"
+            />
+          </button>
+
+          <button
+            class="w-10 h-10 flex items-center justify-center border rounded-full"
+          >
+            <img
+              src="static/assets/img/icons/common/002-notification-1.png"
+              class="w-5"
+            />
+          </button>
+
+          <img
+            src="https://i.pravatar.cc/40"
+            class="w-9 h-9 rounded-full hover:cursor-pointer"
+          />
+        </div>
+      </div>
+    </header>
+
+    <div class="flex pt-16">
+      <!-- Sidebar -->
+      <aside
+        class="hidden lg:block w-64 bg-emerald-900 min-h-screen fixed text-white"
+      >
+        <nav class="px-4 py-6 space-y-2">
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img src="static/assets/img/icons/common/home 2.png" class="w-5" />
+            Dashboard
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/transfer 1.png"
+              class="w-5"
+            />
+            Employees
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/user 3 1.png"
+              class="w-5"
+            />
+            Attendance
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/economic-investment 1.png"
+              class="w-5"
+            />
+            Leave Management
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/credit-card 1.png"
+              class="w-5"
+            />
+            Payroll
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img src="static/assets/img/icons/common/loan 1.png" class="w-5" />
+            Performance
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/service 1.png"
+              class="w-5"
+            />
+            Assets
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/econometrics 1.png"
+              class="w-5"
+            />
+            Recruitment
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800 cursor-pointer"
+          >
+            <img
+              src="static/assets/img/icons/common/settings solid 1.png"
+              class="w-5"
+            />
+            Settings
+          </a>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 lg:ml-64 bg-gray-50 min-h-screen p-6">
+        <!-- Breadcrumb -->
+        <p class="text-xs text-gray-500 mb-1">
+          Dashboard / Employee / Sara Khan
+        </p>
+
+        <!-- Name -->
+        <h1 class="text-xl font-semibold text-emerald-700 mb-6">Sara Khan</h1>
+
+        <!-- Profile Card -->
+        <div
+          class="bg-white rounded-xl border p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-6"
+        >
+          <div class="flex items-center gap-5">
+            <img
+              src="https://i.pravatar.cc/100"
+              class="w-24 h-24 rounded-full object-cover"
+            />
+
+            <div>
+              <h2 class="font-semibold text-lg">Sarah Khan</h2>
+              <p class="text-sm text-gray-500">
+                Senior Engineer &nbsp;•&nbsp; Engineering Dept
+              </p>
+
+              <div class="flex items-center gap-3 mt-2">
+                <span
+                  class="bg-emerald-100 text-emerald-700 text-xs px-3 py-1 rounded-md"
+                >
+                  Active
+                </span>
+                <span class="text-xs text-gray-500">EMP-01</span>
+              </div>
+            </div>
+          </div>
+
+          <button
+            class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-lg text-sm font-medium"
+          >
+            Edit Profile
+          </button>
+        </div>
+
+        <!-- Tabs -->
+        <div class="border-b mb-6">
+          <nav class="flex gap-6 text-sm font-medium">
+            <button class="pb-3 border-b-2 border-emerald-600 text-emerald-600">
+              Overview
+            </button>
+            <button class="pb-3 text-gray-500 hover:text-gray-700">
+              Attendance
+            </button>
+            <button class="pb-3 text-gray-500 hover:text-gray-700">
+              Leaves
+            </button>
+            <button class="pb-3 text-gray-500 hover:text-gray-700">
+              Documents
+            </button>
+            <button class="pb-3 text-gray-500 hover:text-gray-700">
+              Notes
+            </button>
+          </nav>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+          <!-- Left Column -->
+          <div class="xl:col-span-2 space-y-6">
+            <!-- Personal Information -->
+            <div class="bg-white rounded-xl border p-6">
+              <h3 class="font-semibold text-sm mb-4">Personal Information</h3>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <p class="text-blue-600 text-xs">Email Address</p>
+                  <p>sarahkhan@gmail.com</p>
+                </div>
+
+                <div>
+                  <p class="text-blue-600 text-xs">Phone Number</p>
+                  <p>+92 xxx xxxxxxx</p>
+                </div>
+
+                <div>
+                  <p class="text-blue-600 text-xs">Residential Address</p>
+                  <p>123 street, Tech park, Islamabad</p>
+                </div>
+
+                <div>
+                  <p class="text-blue-600 text-xs">Nationality</p>
+                  <p>Pakistani</p>
+                </div>
+
+                <div>
+                  <p class="text-blue-600 text-xs">Date Of Birth</p>
+                  <p>09-01-2001</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Job Details -->
+            <div class="bg-white rounded-xl border p-6">
+              <h3 class="font-semibold text-sm mb-4">Job Details</h3>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <p class="text-blue-600 text-xs">Reporting Manager</p>
+                  <p>Director of Engineering</p>
+                </div>
+
+                <div>
+                  <p class="text-blue-600 text-xs">Employment Type</p>
+                  <p>Full-Time Permanent</p>
+                </div>
+
+                <div>
+                  <p class="text-blue-600 text-xs">Date of Joining</p>
+                  <p>March 01-2021</p>
+                </div>
+
+                <div>
+                  <p class="text-blue-600 text-xs">Work Location</p>
+                  <p>On Site</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column -->
+          <div class="space-y-6">
+            <!-- Leave Balance -->
+            <div class="bg-white rounded-xl border p-6">
+              <h3 class="font-semibold text-sm mb-2">Leave Balance</h3>
+              <p class="text-2xl font-semibold">12</p>
+              <p class="text-xs text-gray-500 mb-3">Days Remaining</p>
+
+              <div class="w-full bg-gray-200 h-2 rounded">
+                <div class="bg-indigo-500 h-2 rounded w-1/2"></div>
+              </div>
+            </div>
+
+            <!-- On Time -->
+            <div class="bg-white rounded-xl border p-6">
+              <h3 class="font-semibold text-sm mb-2">On Time</h3>
+              <p class="text-2xl font-semibold">95%</p>
+              <p class="text-xs text-gray-500 mb-3">Attendance Score</p>
+
+              <div class="w-full bg-gray-200 h-2 rounded">
+                <div class="bg-emerald-500 h-2 rounded w-[95%]"></div>
+              </div>
+            </div>
+
+            <!-- Recent Documents -->
+            <div class="bg-white rounded-xl border p-6">
+              <div class="flex justify-between mb-4">
+                <h3 class="font-semibold text-sm">Recent Documents</h3>
+                <a href="#" class="text-blue-600 text-xs font-semibold"
+                  >View All</a
+                >
+              </div>
+
+              <div class="space-y-3 text-sm">
+                <div class="flex justify-between items-center">
+                  <div>
+                    <p class="font-medium">Employment_Contract.pdf</p>
+                    <p class="text-xs text-gray-500">
+                      Uploaded on March 01,2021
+                    </p>
+                  </div>
+                  <span>⬇</span>
+                </div>
+
+                <div class="flex justify-between items-center">
+                  <div>
+                    <p class="font-medium">ID_PROOF_Front.jpg</p>
+                    <p class="text-xs text-gray-500">
+                      Uploaded on March 01,2021
+                    </p>
+                  </div>
+                  <span>⬇</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Activity Log -->
+            <div class="bg-white rounded-xl border p-6">
+              <h3 class="font-semibold text-sm mb-4">Activity Log</h3>
+
+              <div class="space-y-3 text-sm">
+                <div>
+                  <p class="font-medium">Promotion to Senior Engineer</p>
+                  <p class="text-xs text-gray-500">Uploaded on March 01,2021</p>
+                </div>
+
+                <div>
+                  <p class="font-medium">Leave Request Approved</p>
+                  <p class="text-xs text-gray-500">Uploaded on March 01,2021</p>
+                </div>
+              </div>
+
+              <a
+                href="#"
+                class="text-blue-600 text-xs font-semibold block mt-4 text-right"
+              >
+                View Full History
+              </a>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

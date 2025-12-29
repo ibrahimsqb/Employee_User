@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Employee Onboarding</title>
+  </head>
+
+  <body class="bg-gray-100 text-gray-800">
+    <!-- ================= TOPBAR (UNCHANGED) ================= -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white border-b">
+      <div class="flex items-center justify-between px-6 h-16">
+        <img src="static/assets/img/brand/OfficeFlowAi.png" class="h-20 w-20" />
+
+        <div class="flex items-center gap-3">
+          <div
+            class="hidden md:flex items-center bg-gray-100 rounded-full px-4 py-2 w-72"
+          >
+            <input
+              type="text"
+              placeholder="Search for something"
+              class="bg-transparent outline-none text-sm w-full"
+            />
+          </div>
+
+          <button
+            class="w-10 h-10 flex items-center justify-center border rounded-full"
+          >
+            <img
+              src="static/assets/img/icons/common/settings 1.png"
+              class="w-5"
+            />
+          </button>
+
+          <button
+            class="w-10 h-10 flex items-center justify-center border rounded-full"
+          >
+            <img
+              src="static/assets/img/icons/common/002-notification-1.png"
+              class="w-5"
+            />
+          </button>
+
+          <img src="https://i.pravatar.cc/40" class="w-9 h-9 rounded-full" />
+        </div>
+      </div>
+    </header>
+
+    <div class="flex pt-16">
+      <!-- ================= SIDEBAR (UNCHANGED) ================= -->
+      <aside
+        class="hidden lg:block w-64 bg-emerald-900 min-h-screen fixed text-white"
+      >
+        <nav class="px-4 py-6 space-y-2">
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img src="static/assets/img/icons/common/home 2.png" class="w-5" />
+            Dashboard
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg bg-emerald-800"
+          >
+            <img
+              src="static/assets/img/icons/common/transfer 1.png"
+              class="w-5"
+            />
+            Employees
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="static/assets/img/icons/common/user 3 1.png"
+              class="w-5"
+            />
+            Attendance
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="static/assets/img/icons/common/economic-investment 1.png"
+              class="w-5"
+            />
+            Leave Management
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="static/assets/img/icons/common/credit-card 1.png"
+              class="w-5"
+            />
+            Payroll
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img src="static/assets/img/icons/common/loan 1.png" class="w-5" />
+            Performance
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="static/assets/img/icons/common/service 1.png"
+              class="w-5"
+            />
+            Assets
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="static/assets/img/icons/common/econometrics 1.png"
+              class="w-5"
+            />
+            Recruitment
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="static/assets/img/icons/common/settings solid 1.png"
+              class="w-5"
+            />
+            Settings
+          </a>
+        </nav>
+      </aside>
+
+      <!-- ================= MAIN CONTENT ================= -->
+      <main class="flex-1 lg:ml-64 p-6">
+        <!-- Header -->
+        <div
+          class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4"
+        >
+          <h1 class="text-2xl font-semibold text-emerald-700">
+            New Employee Onboarding
+          </h1>
+
+          <button
+            class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-lg font-medium"
+          >
+            + Add New Employee
+          </button>
+        </div>
+
+        <!-- Onboarding Card (captures all data shown on employee profile screens) -->
+        <form class="bg-white border rounded-xl p-6 space-y-10">
+          <!-- ================= GENERAL (matches "General" tab) ================= -->
+          <section>
+            <div class="flex justify-between items-center mb-4">
+              <h2 class="font-semibold text-gray-800">General Information</h2>
+              <span class="text-xs text-gray-500">Shown in General tab</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <label class="text-sm font-medium">
+                  Full Name <span class="text-red-500">*</span>
+                </label>
+                <input
+                  name="full_name"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                  placeholder="Sarah Khan"
+                />
+              </div>
+
+              <div>
+                <label class="text-sm font-medium">
+                  Gender <span class="text-red-500">*</span>
+                </label>
+                <select
+                  name="gender"
+                  class="mt-1 w-full rounded-lg border px-3 py-2 bg-white"
+                >
+                  <option value="">Select</option>
+                  <option>Female</option>
+                  <option>Male</option>
+                  <option>Other</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="text-sm font-medium">
+                  Date of Birth <span class="text-red-500">*</span>
+                </label>
+                <input
+                  type="date"
+                  name="date_of_birth"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                />
+              </div>
+
+              <div>
+                <label class="text-sm font-medium">
+                  Email <span class="text-red-500">*</span>
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                  placeholder="sarakhan@example.com"
+                />
+              </div>
+
+              <div>
+                <label class="text-sm font-medium">
+                  Phone Number <span class="text-red-500">*</span>
+                </label>
+                <input
+                  name="phone_number"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                  placeholder="0300-xxxxxxx"
+                />
+              </div>
+
+              <div>
+                <label class="text-sm font-medium">
+                  Marital Status <span class="text-red-500">*</span>
+                </label>
+                <input
+                  name="marital_status"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                  placeholder="Single / Married / Other"
+                />
+              </div>
+
+              <div>
+                <label class="text-sm font-medium">
+                  Personal ID / CNIC <span class="text-red-500">*</span>
+                </label>
+                <input
+                  name="personal_id"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                  placeholder="e.g. 3520-xxxxxxx-x"
+                />
+              </div>
+
+              <div>
+                <label class="text-sm font-medium">
+                  Emergency Contact <span class="text-red-500">*</span>
+                </label>
+                <input
+                  name="emergency_contact"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                  placeholder="Name & phone number"
+                />
+              </div>
+
+              <div>
+                <label class="text-sm font-medium"> Time Zone </label>
+                <input
+                  name="time_zone"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                  placeholder="UTC +5:00"
+                />
+              </div>
+            </div>
+          </section>
+
+          <!-- ================= JOB (matches "Job" tab) ================= -->
+          <section>
+            <div class="flex justify-between items-center mb-4">
+              <h2 class="font-semibold text-gray-800">Job & Employment</h2>
+              <span class="text-xs text-gray-500">Shown in Job tab</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+              <div>
+                <label class="text-sm font-medium">
+                  Employee ID <span class="text-red-500">*</span>
+                </label>
+                <input
+                  name="employee_id"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                  placeholder="EMP-01"
+                />
+              </div>
+
+              <div>
+                <label class="text-sm font-medium">
+                  Job Title <span class="text-red-500">*</span>
+                </label>
+                <input
+                  name="job_title"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                  placeholder="Web Developer"
+                />
+              </div>
+
+              <div>
+                <label class="text-sm font-medium">
+                  Position Type <span class="text-red-500">*</span>
+                </label>
+                <input
+                  name="position_type"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                  placeholder="Junior / Senior / Intern"
+                />
+              </div>
+
+              <div>
+                <label class="text-sm font-medium">
+                  Employment Type <span class="text-red-500">*</span>
+                </label>
+                <select
+                  name="employment_type"
+                  class="mt-1 w-full rounded-lg border px-3 py-2 bg-white"
+                >
+                  <option value="">Select</option>
+                  <option>Full Time</option>
+                  <option>Part Time</option>
+                  <option>Contract</option>
+                  <option>Intern</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="text-sm font-medium">
+                  Department <span class="text-red-500">*</span>
+                </label>
+                <input
+                  name="department"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                  placeholder="IT"
+                />
+              </div>
+
+              <div>
+                <label class="text-sm font-medium"> Office / Location </label>
+                <input
+                  name="office"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                  placeholder="NIC Islamabad"
+                />
+              </div>
+
+              <div>
+                <label class="text-sm font-medium">
+                  Line Manager <span class="text-red-500">*</span>
+                </label>
+                <input
+                  name="line_manager"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                  placeholder="Manager name"
+                />
+              </div>
+
+              <div>
+                <label class="text-sm font-medium">
+                  Join Date <span class="text-red-500">*</span>
+                </label>
+                <input
+                  type="date"
+                  name="join_date"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                />
+              </div>
+
+              <div>
+                <label class="text-sm font-medium">Working Hours</label>
+                <input
+                  name="working_hours"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                  placeholder="9:00am - 5:00pm"
+                />
+              </div>
+
+              <div>
+                <label class="text-sm font-medium">Working Days</label>
+                <input
+                  name="working_days"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                  placeholder="Monday - Friday"
+                />
+              </div>
+
+              <div>
+                <label class="text-sm font-medium">Employment Status</label>
+                <select
+                  name="employment_status"
+                  class="mt-1 w-full rounded-lg border px-3 py-2 bg-white"
+                >
+                  <option>Active</option>
+                  <option>Probation</option>
+                  <option>Inactive</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Contract details (used in Contract Timeline) -->
+            <div class="mt-6 grid grid-cols-1 md:grid-cols-4 gap-5">
+              <div>
+                <label class="text-sm font-medium">Contract #</label>
+                <input
+                  name="contract_number"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                  placeholder="#1234"
+                />
+              </div>
+              <div>
+                <label class="text-sm font-medium">Contract Name</label>
+                <input
+                  name="contract_name"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                  placeholder="Full-time Remote"
+                />
+              </div>
+              <div>
+                <label class="text-sm font-medium">Contract Type</label>
+                <input
+                  name="contract_type"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                  placeholder="Permanent / Contract / Internship"
+                />
+              </div>
+              <div>
+                <label class="text-sm font-medium">Contract Start Date</label>
+                <input
+                  type="date"
+                  name="contract_start"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                />
+              </div>
+              <div>
+                <label class="text-sm font-medium">Contract End Date</label>
+                <input
+                  type="date"
+                  name="contract_end"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                />
+              </div>
+            </div>
+          </section>
+
+          <!-- ================= PAYROLL (matches "Payroll" tab) ================= -->
+          <section>
+            <div class="flex justify-between items-center mb-4">
+              <h2 class="font-semibold text-gray-800">
+                Payroll & Compensation
+              </h2>
+              <span class="text-xs text-gray-500">Shown in Payroll tab</span>
+            </div>
+
+            <!-- Salary breakdown -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+              <div>
+                <label class="text-sm font-medium">
+                  Basic Salary (Monthly) <span class="text-red-500">*</span>
+                </label>
+                <input
+                  name="basic_salary"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                  placeholder="Rs. 50,000"
+                />
+              </div>
+              <div>
+                <label class="text-sm font-medium">House Allowance</label>
+                <input
+                  name="house_allowance"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                  placeholder="Rs. 10,000"
+                />
+              </div>
+              <div>
+                <label class="text-sm font-medium">Medical Allowance</label>
+                <input
+                  name="medical_allowance"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                  placeholder="Rs. 3,000"
+                />
+              </div>
+              <div>
+                <label class="text-sm font-medium">Transport Allowance</label>
+                <input
+                  name="transport_allowance"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                  placeholder="Rs. 2,000"
+                />
+              </div>
+              <div>
+                <label class="text-sm font-medium">Fixed Monthly Bonus</label>
+                <input
+                  name="bonus"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                  placeholder="Rs. 5,000 (optional)"
+                />
+              </div>
+              <div>
+                <label class="text-sm font-medium">Overtime Policy</label>
+                <input
+                  name="overtime_policy"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                  placeholder="e.g. hourly rate or none"
+                />
+              </div>
+            </div>
+
+            <!-- Deductions -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+              <div>
+                <label class="text-sm font-medium">Tax Deduction Rule</label>
+                <input
+                  name="tax_deduction"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                  placeholder="e.g. fixed amount or %"
+                />
+              </div>
+              <div>
+                <label class="text-sm font-medium"
+                  >Loan Deduction (if any)</label
+                >
+                <input
+                  name="loan_deduction"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                  placeholder="e.g. Rs. 2,000 / month"
+                />
+              </div>
+            </div>
+
+            <!-- Payment information (matches Payment Information & Payment History base) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <label class="text-sm font-medium">Bank Name</label>
+                <input
+                  name="bank_name"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                  placeholder="HBL"
+                />
+              </div>
+              <div>
+                <label class="text-sm font-medium">Account Title</label>
+                <input
+                  name="account_title"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                  placeholder="Sarah Khan"
+                />
+              </div>
+              <div>
+                <label class="text-sm font-medium">Account Number</label>
+                <input
+                  name="account_number"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                  placeholder="e.g. 1234-xxxx-xxxx"
+                />
+              </div>
+              <div>
+                <label class="text-sm font-medium">Payment Method</label>
+                <select
+                  name="payment_method"
+                  class="mt-1 w-full rounded-lg border px-3 py-2 bg-white"
+                >
+                  <option>Bank Transfer</option>
+                  <option>Cheque</option>
+                  <option>Cash</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-sm font-medium">Payment Frequency</label>
+                <select
+                  name="payment_frequency"
+                  class="mt-1 w-full rounded-lg border px-3 py-2 bg-white"
+                >
+                  <option>Monthly</option>
+                  <option>Bi-weekly</option>
+                  <option>Weekly</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-sm font-medium">Next Pay Date</label>
+                <input
+                  type="date"
+                  name="next_pay_date"
+                  class="mt-1 w-full rounded-lg border px-3 py-2"
+                />
+              </div>
+            </div>
+          </section>
+
+          <!-- ================= DOCUMENTS (matches "Documents" tab) ================= -->
+          <section>
+            <div class="flex justify-between items-center mb-4">
+              <h2 class="font-semibold text-gray-800">Documents</h2>
+              <span class="text-xs text-gray-500">Shown in Documents tab</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+              <div>
+                <label class="text-sm font-medium">
+                  CNIC / ID Copy <span class="text-red-500">*</span>
+                </label>
+                <input
+                  type="file"
+                  name="cnic_file"
+                  class="mt-2 block w-full text-sm"
+                />
+              </div>
+
+              <div>
+                <label class="text-sm font-medium">
+                  Employment Contract <span class="text-red-500">*</span>
+                </label>
+                <input
+                  type="file"
+                  name="contract_file"
+                  class="mt-2 block w-full text-sm"
+                />
+              </div>
+
+              <div>
+                <label class="text-sm font-medium">Offer Letter</label>
+                <input
+                  type="file"
+                  name="offer_letter_file"
+                  class="mt-2 block w-full text-sm"
+                />
+              </div>
+
+              <div>
+                <label class="text-sm font-medium">Other Supporting Docs</label>
+                <input
+                  type="file"
+                  name="other_docs"
+                  multiple
+                  class="mt-2 block w-full text-sm"
+                />
+              </div>
+            </div>
+
+            <!-- Generic dropzone matching employee4 documents UX -->
+            <div class="border-2 border-dashed rounded-lg p-6 text-center mb-4">
+              <p class="text-gray-700 text-sm font-semibold mb-1">
+                Drag & drop payslips or other files here
+              </p>
+              <p class="text-gray-500 text-xs mb-3">
+                These will appear under the employee's Documents tab
+              </p>
+              <button
+                type="button"
+                class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-md text-sm"
+              >
+                Select Files
+              </button>
+            </div>
+          </section>
+
+          <!-- ================= ORIENTATION (extra, not shown on profile) ================= -->
+          <section>
+            <div class="flex justify-between items-center mb-4">
+              <h2 class="font-semibold">Orientation & Training</h2>
+              <button
+                type="button"
+                class="bg-emerald-600 text-white text-sm px-4 py-2 rounded-lg"
+              >
+                + Add Event
+              </button>
+            </div>
+
+            <div class="space-y-3">
+              <label class="flex items-center gap-3 text-sm">
+                <input type="checkbox" name="orientation_welcome" />
+                Welcome session / company overview
+              </label>
+
+              <label class="flex items-center gap-3 text-sm">
+                <input type="checkbox" name="orientation_safety" />
+                Workplace safety & emergency procedures
+              </label>
+
+              <label class="flex items-center gap-3 text-sm">
+                <input type="checkbox" name="orientation_culture" />
+                Company culture and values session
+              </label>
+            </div>
+          </section>
+
+          <!-- Actions -->
+          <div class="flex justify-end gap-3 pt-4 border-t">
+            <button
+              type="button"
+              class="px-4 py-2 rounded-lg border text-gray-700 bg-gray-50 hover:bg-gray-100 text-sm"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="px-5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm"
+            >
+              Save & Create Employee
+            </button>
+          </div>
+        </form>
+      </main>
+    </div>
+  </body>
+</html>
