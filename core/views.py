@@ -21,6 +21,28 @@ def index(request):
     return render(request, "core/index.html")
 
 
+def _generate_next_employee_id() -> str:
+    """Generate the next employee ID like EMP-001, EMP-002, ..."""
+
+    last_profile = (
+        EmployeeProfile.objects.filter(employee_id__startswith="EMP-")
+        .order_by("-id")
+        .first()
+    )
+
+    if not last_profile:
+        return "EMP-001"
+
+    last_id = last_profile.employee_id or ""
+    try:
+        number_part = int(last_id.split("-")[-1])
+    except (ValueError, TypeError):
+        # Fallback if existing IDs don't match the pattern cleanly
+        return "EMP-001"
+
+    return f"EMP-{number_part + 1:03d}"
+
+
 @transaction.atomic
 def employee_onboarding_view(request):
     """Create a new employee and all related records from the onboarding form."""
@@ -30,7 +52,8 @@ def employee_onboarding_view(request):
 
         full_name = (data.get("full_name") or "").strip() or "New Employee"
         email = data.get("email") or ""
-        username = data.get("employee_id") or email or full_name.replace(" ", "_")
+        employee_id = data.get("employee_id") or _generate_next_employee_id()
+        username = employee_id or email or full_name.replace(" ", "_")
 
         user = User.objects.create(username=username)
         if email:
@@ -69,8 +92,8 @@ def employee_onboarding_view(request):
 
         profile = EmployeeProfile.objects.create(
             user=user,
-            employee_id=data.get("employee_id") or username,
-            department=data.get("department") or "ENGINEERING",
+            employee_id=employee_id,
+            department=data.get("department") or "",
             job_title=data.get("job_title") or "",
             office=data.get("office") or "",
             employment_type=employment_type,
@@ -117,7 +140,7 @@ def employee_onboarding_view(request):
             job_title=data.get("job_title") or "",
             position_type=data.get("position_type") or "",
             employment_type=employment_type,
-            line_manager=None,
+            line_manager=data.get("line_manager") or "",
         )
 
         # Employment contract
@@ -161,7 +184,7 @@ def employee_onboarding_view(request):
             payment_frequency=data.get("payment_frequency") or "MONTHLY",
         )
 
-        # Salary components: map from onboarding fields if provided
+        # Salary components: map from onboarding fields
         def create_component(field_name: str, label: str, component_type: str):
             raw = data.get(field_name)
             if raw:
@@ -186,6 +209,45 @@ def employee_onboarding_view(request):
         create_component("tax_deduction", "Tax Deduction", "DEDUCTION")
         create_component("loan_deduction", "Loan Deduction", "DEDUCTION")
 
+        # Creating an initial payroll record so the Payroll tab has data
+        next_pay_date_str = data.get("next_pay_date") or None
+        payment_method = data.get("payment_method") or "Bank Transfer"
+
+        if next_pay_date_str:
+            try:
+                next_pay_date = date.fromisoformat(next_pay_date_str)
+            except ValueError:
+                next_pay_date = None
+
+            if next_pay_date:
+                from django.db.models import Sum
+
+                earnings_total = (
+                    SalaryComponent.objects.filter(
+                        employee=profile, component_type="EARNING"
+                    ).aggregate(total=Sum("amount"))["total"]
+                    or 0
+                )
+                deductions_total = (
+                    SalaryComponent.objects.filter(
+                        employee=profile, component_type="DEDUCTION"
+                    ).aggregate(total=Sum("amount"))["total"]
+                    or 0
+                )
+
+                net_salary = earnings_total - deductions_total
+
+                Payroll.objects.create(
+                    employee=profile,
+                    period_start=join_date or date.today(),
+                    period_end=next_pay_date,
+                    total_earnings=earnings_total,
+                    total_deductions=deductions_total,
+                    net_salary=net_salary,
+                    payment_method=payment_method,
+                    payment_date=next_pay_date,
+                )
+
         # Documents uploaded at onboarding time
         cnic_file = request.FILES.get("cnic_file")
         if cnic_file:
@@ -201,7 +263,7 @@ def employee_onboarding_view(request):
         if contract_file:
             EmployeeDocument.objects.create(
                 employee=profile,
-                name="Employment Contract",
+                name="Employment Contract / Offer Letter",
                 category="CONTRACT",
                 file=contract_file,
                 uploaded_by=request.user if request.user.is_authenticated else None,
@@ -211,7 +273,12 @@ def employee_onboarding_view(request):
         return redirect("employee_general", employee_id=profile.employee_id)
 
     # GET: just render the static onboarding form
-    return render(request, "employeePages/employee_onboarding.html")
+    default_employee_id = _generate_next_employee_id()
+    return render(
+        request,
+        "employeePages/employee_onboarding.html",
+        {"default_employee_id": default_employee_id},
+    )
 
 
 def _get_employee_or_404(employee_id: str) -> EmployeeProfile:

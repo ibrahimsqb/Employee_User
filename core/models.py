@@ -113,9 +113,10 @@ class JobHistory(models.Model):
     job_title = models.CharField(max_length=100)
     position_type = models.CharField(max_length=50)
     employment_type = models.CharField(max_length=20)
-    line_manager = models.ForeignKey(
-        User, on_delete=models.SET_NULL, null=True, related_name='managed_employees'
-    )
+    line_manager = models.CharField(max_length=50, default="Not Assigned")
+    # line_manager = models.ForeignKey(
+    #     User, on_delete=models.SET_NULL, null=True, related_name='managed_employees'
+    # )
 
     created_at = models.DateTimeField(auto_now_add=True)
 

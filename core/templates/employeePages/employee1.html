@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -11,129 +12,76 @@
     <!-- ================= TOPBAR ================= -->
     <header class="fixed top-0 left-0 right-0 z-50 bg-white border-b">
       <div class="flex items-center justify-between px-6 h-16">
-        <img src="static/assets/img/brand/OfficeFlowAi.png" class="h-20 w-20" />
+        <!-- Logo -->
+        <img src="{% static 'assets/img/brand/OfficeFlowAi.png' %}" class="h-20 w-20" alt="OfficeFlowAi Logo" />
 
         <div class="flex items-center gap-3">
-          <div
-            class="hidden md:flex items-center bg-gray-100 rounded-full px-4 py-2 w-72"
-          >
-            <input
-              type="text"
-              placeholder="Search for something"
-              class="bg-transparent outline-none text-sm w-full"
-            />
+          <div class="hidden md:flex items-center bg-gray-100 rounded-full px-4 py-2 w-72">
+            <input type="text" placeholder="Search for something" class="bg-transparent outline-none text-sm w-full" />
           </div>
 
-          <button
-            class="w-10 h-10 flex items-center justify-center border rounded-full"
-          >
-            <img
-              src="static/assets/img/icons/common/settings 1.png"
-              class="w-5"
-            />
+          <!-- Settings -->
+          <button class="w-10 h-10 flex items-center justify-center border rounded-full">
+            <img src="{% static 'assets/img/icons/common/settings 1.png' %}" class="w-5" alt="Settings" />
           </button>
 
-          <button
-            class="w-10 h-10 flex items-center justify-center border rounded-full"
-          >
-            <img
-              src="static/assets/img/icons/common/002-notification-1.png"
-              class="w-5"
-            />
+          <!-- Notifications -->
+          <button class="w-10 h-10 flex items-center justify-center border rounded-full">
+            <img src="{% static 'assets/img/icons/common/002-notification-1.png' %}" class="w-5" alt="Notifications" />
           </button>
 
-          <img src="https://i.pravatar.cc/40" class="w-9 h-9 rounded-full" />
+          <!-- Avatar -->
+          <img src="https://i.pravatar.cc/40" class="w-9 h-9 rounded-full" alt="User Avatar" />
         </div>
       </div>
     </header>
 
     <div class="flex pt-16">
       <!-- ================= SIDEBAR ================= -->
-      <aside
-        class="hidden lg:block w-64 bg-emerald-900 min-h-screen fixed text-white"
-      >
+      <aside class="hidden lg:block w-64 bg-emerald-900 min-h-screen fixed text-white">
         <nav class="px-4 py-6 space-y-2">
-          <a
-            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
-          >
-            <img src="static/assets/img/icons/common/home 2.png" class="w-5" />
+          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/home 2.png' %}" class="w-5" alt="Dashboard" />
             Dashboard
           </a>
 
-          <a
-            class="flex items-center gap-3 px-4 py-2 rounded-lg bg-emerald-800"
-          >
-            <img
-              src="static/assets/img/icons/common/transfer 1.png"
-              class="w-5"
-            />
+          <a class="flex items-center gap-3 px-4 py-2 rounded-lg bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/transfer 1.png' %}" class="w-5" alt="Employees" />
             Employees
           </a>
 
-          <a
-            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
-          >
-            <img
-              src="static/assets/img/icons/common/user 3 1.png"
-              class="w-5"
-            />
+          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/user 3 1.png' %}" class="w-5" alt="Attendance" />
             Attendance
           </a>
 
-          <a
-            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
-          >
-            <img
-              src="static/assets/img/icons/common/economic-investment 1.png"
-              class="w-5"
-            />
+          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/economic-investment 1.png' %}" class="w-5" alt="Leave Management" />
             Leave Management
           </a>
 
-          <a
-            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
-          >
-            <img
-              src="static/assets/img/icons/common/credit-card 1.png"
-              class="w-5"
-            />
+          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/credit-card 1.png' %}" class="w-5" alt="Payroll" />
             Payroll
           </a>
 
-          <a
-            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
-          >
-            <img src="static/assets/img/icons/common/loan 1.png" class="w-5" />
+          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/loan 1.png' %}" class="w-5" alt="Performance" />
             Performance
           </a>
 
-          <a
-            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
-          >
-            <img
-              src="static/assets/img/icons/common/service 1.png"
-              class="w-5"
-            />
+          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/service 1.png' %}" class="w-5" alt="Assets" />
             Assets
           </a>
 
-          <a
-            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
-          >
-            <img
-              src="static/assets/img/icons/common/econometrics 1.png"
-              class="w-5"
-            />
+          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/econometrics 1.png' %}" class="w-5" alt="Recruitment" />
             Recruitment
           </a>
 
-          <a
-            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
-          >
-            <img
-              src="static/assets/img/icons/common/settings solid 1.png"
-              class="w-5"
-            />
+          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/settings solid 1.png' %}" class="w-5" alt="Settings" />
             Settings
           </a>
         </nav>
@@ -142,9 +90,7 @@
       <main class="flex-1 lg:ml-64 p-6">
         <!-- Back + Title -->
         <div class="flex items-center gap-3 mb-6">
-          <button class="text-gray-500 text-xl" onclick="history.back()">
-            &#8592;
-          </button>
+          <button class="text-gray-500 text-xl" onclick="history.back()">&#8592;</button>
           <h1 class="text-xl font-semibold">{{ personal.full_name }}</h1>
         </div>
 
@@ -152,36 +98,23 @@
           <!-- ================= PROFILE CARD ================= -->
           <div class="bg-white rounded-xl shadow p-6 self-start">
             <div class="flex flex-col items-center text-center">
-              <img
-                src="https://i.pravatar.cc/120?img=47"
-                class="w-24 h-24 rounded-full mb-3"
-              />
+              <img src="https://i.pravatar.cc/120?img=47" class="w-24 h-24 rounded-full mb-3" />
               <h2 class="font-semibold text-lg">{{ personal.full_name }}</h2>
               <p class="text-sm text-gray-500">{{ employee.job_title }}</p>
 
-              <span
-                class="mt-2 px-4 py-1 text-sm bg-emerald-100 text-emerald-700 rounded-full"
-              >
-                {{ employee.get_status_display }}
-              </span>
+              <span class="mt-2 px-4 py-1 text-sm bg-emerald-100 text-emerald-700 rounded-full"> {{ employee.get_status_display }} </span>
             </div>
 
             <div class="mt-6 space-y-3 text-sm text-gray-600">
               <div class="flex items-center gap-2">📧 {{ personal.email }}</div>
-              <div class="flex items-center gap-2">
-                📞 {{ personal.phone_number }}
-              </div>
-              <div class="flex items-center gap-2">
-                🌐 {{ personal.timezone }}
-              </div>
+              <div class="flex items-center gap-2">📞 {{ personal.phone_number }}</div>
+              <div class="flex items-center gap-2">🌐 {{ personal.timezone }}</div>
             </div>
 
             <div class="border-t mt-6 pt-4 space-y-3">
               <div class="flex justify-between text-sm">
                 <span class="text-gray-500">Department</span>
-                <span class="font-medium">
-                  {{employee.get_department_display}}
-                </span>
+                <span class="font-medium"> {{employee.get_department_display}} </span>
               </div>
               <div class="flex justify-between text-sm">
                 <span class="text-gray-500">Office</span>
@@ -195,24 +128,10 @@
             <!-- Tabs -->
             <div class="border-b mb-6">
               <nav class="flex gap-6 text-sm font-medium">
-                <a class="pb-3 border-b-2 border-emerald-600 text-emerald-600">
-                  General
-                </a>
-                <a
-                  href="{% url 'employee_job' employee.employee_id %}"
-                  class="pb-3 text-gray-500 hover:text-gray-700"
-                  >Job</a
-                >
-                <a
-                  href="{% url 'employee_payroll' employee.employee_id %}"
-                  class="pb-3 text-gray-500 hover:text-gray-700"
-                  >Payroll</a
-                >
-                <a
-                  href="{% url 'employee_documents' employee.employee_id %}"
-                  class="pb-3 text-gray-500 hover:text-gray-700"
-                  >Documents</a
-                >
+                <a class="pb-3 border-b-2 border-emerald-600 text-emerald-600"> General </a>
+                <a href="{% url 'employee_job' employee.employee_id %}" class="pb-3 text-gray-500 hover:text-gray-700">Job</a>
+                <a href="{% url 'employee_payroll' employee.employee_id %}" class="pb-3 text-gray-500 hover:text-gray-700">Payroll</a>
+                <a href="{% url 'employee_documents' employee.employee_id %}" class="pb-3 text-gray-500 hover:text-gray-700">Documents</a>
                 <a class="pb-3 text-gray-500 hover:text-gray-700">Settings</a>
               </nav>
             </div>
@@ -227,77 +146,42 @@
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label class="text-sm text-gray-500">Full Name *</label>
-                  <input
-                    class="w-full mt-1 border rounded-lg px-3 py-2"
-                    value="{{ personal.full_name }}"
-                    readonly
-                  />
+                  <input class="w-full mt-1 border rounded-lg px-3 py-2" value="{{ personal.full_name }}" readonly />
                 </div>
 
                 <div>
                   <label class="text-sm text-gray-500">Gender *</label>
-                  <input
-                    class="w-full mt-1 border rounded-lg px-3 py-2"
-                    value="{{ personal.get_gender_display }}"
-                    readonly
-                  />
+                  <input class="w-full mt-1 border rounded-lg px-3 py-2" value="{{ personal.get_gender_display }}" readonly />
                 </div>
 
                 <div>
                   <label class="text-sm text-gray-500">Date of Birth *</label>
-                  <input
-                    type="date"
-                    class="w-full mt-1 border rounded-lg px-3 py-2"
-                    value="{{ personal.date_of_birth|date:'Y-m-d' }}"
-                    readonly
-                  />
+                  <input type="date" class="w-full mt-1 border rounded-lg px-3 py-2" value="{{ personal.date_of_birth|date:'Y-m-d' }}" readonly />
                 </div>
 
                 <div>
                   <label class="text-sm text-gray-500">Email *</label>
-                  <input
-                    class="w-full mt-1 border rounded-lg px-3 py-2"
-                    value="{{ personal.email }}"
-                    readonly
-                  />
+                  <input class="w-full mt-1 border rounded-lg px-3 py-2" value="{{ personal.email }}" readonly />
                 </div>
 
                 <div>
                   <label class="text-sm text-gray-500">Phone Number *</label>
-                  <input
-                    class="w-full mt-1 border rounded-lg px-3 py-2"
-                    value="{{ personal.phone_number }}"
-                    readonly
-                  />
+                  <input class="w-full mt-1 border rounded-lg px-3 py-2" value="{{ personal.phone_number }}" readonly />
                 </div>
 
                 <div>
                   <label class="text-sm text-gray-500">Marital Status *</label>
-                  <input
-                    class="w-full mt-1 border rounded-lg px-3 py-2"
-                    value="{{ personal.marital_status }}"
-                    readonly
-                  />
+                  <input class="w-full mt-1 border rounded-lg px-3 py-2" value="{{ personal.marital_status }}" readonly />
                 </div>
 
                 <div>
                   <label class="text-sm text-gray-500">Personal ID *</label>
-                  <input
-                    class="w-full mt-1 border rounded-lg px-3 py-2"
-                    value="{{ personal.personal_id }}"
-                    readonly
-                  />
+                  <input class="w-full mt-1 border rounded-lg px-3 py-2" value="{{ personal.personal_id }}" readonly />
                 </div>
 
                 <div>
-                  <label class="text-sm text-gray-500"
-                    >Emergency Contact *</label
-                  >
-                  <input
-                    class="w-full mt-1 border rounded-lg px-3 py-2"
-                    value="{{ personal.emergency_contact }}"
-                    readonly
-                  />
+                  <label class="text-sm text-gray-500">Emergency Contact *</label>
+                  <input class="w-full mt-1 border rounded-lg px-3 py-2" value="{{ personal.emergency_contact }}" readonly />
                 </div>
               </div>
             </div>
