@@ -13,75 +13,157 @@
     <header class="fixed top-0 left-0 right-0 z-50 bg-white border-b">
       <div class="flex items-center justify-between px-6 h-16">
         <!-- Logo -->
-        <img src="{% static 'assets/img/brand/OfficeFlowAi.png' %}" class="h-20 w-20" alt="OfficeFlowAi Logo" />
+        <img
+          src="{% static 'assets/img/brand/OfficeFlowAi.png' %}"
+          class="h-20 w-20"
+          alt="OfficeFlowAi Logo"
+        />
 
         <div class="flex items-center gap-3">
-          <div class="hidden md:flex items-center bg-gray-100 rounded-full px-4 py-2 w-72">
-            <input type="text" placeholder="Search for something" class="bg-transparent outline-none text-sm w-full" />
+          <div
+            class="hidden md:flex items-center bg-gray-100 rounded-full px-4 py-2 w-72"
+          >
+            <input
+              type="text"
+              placeholder="Search for something"
+              class="bg-transparent outline-none text-sm w-full"
+            />
           </div>
 
           <!-- Settings -->
-          <button class="w-10 h-10 flex items-center justify-center border rounded-full">
-            <img src="{% static 'assets/img/icons/common/settings 1.png' %}" class="w-5" alt="Settings" />
+          <button
+            class="w-10 h-10 flex items-center justify-center border rounded-full"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/settings 1.png' %}"
+              class="w-5"
+              alt="Settings"
+            />
           </button>
 
           <!-- Notifications -->
-          <button class="w-10 h-10 flex items-center justify-center border rounded-full">
-            <img src="{% static 'assets/img/icons/common/002-notification-1.png' %}" class="w-5" alt="Notifications" />
+          <button
+            class="w-10 h-10 flex items-center justify-center border rounded-full"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/002-notification-1.png' %}"
+              class="w-5"
+              alt="Notifications"
+            />
           </button>
 
           <!-- Avatar -->
-          <img src="https://i.pravatar.cc/40" class="w-9 h-9 rounded-full" alt="User Avatar" />
+          <img
+            src="https://i.pravatar.cc/40"
+            class="w-9 h-9 rounded-full"
+            alt="User Avatar"
+          />
         </div>
       </div>
     </header>
 
     <div class="flex pt-16">
       <!-- ================= SIDEBAR ================= -->
-      <aside class="hidden lg:block w-64 bg-emerald-900 min-h-screen fixed text-white">
+      <aside
+        class="hidden lg:block w-64 bg-emerald-900 min-h-screen fixed text-white"
+      >
         <nav class="px-4 py-6 space-y-2">
-          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
-            <img src="{% static 'assets/img/icons/common/home 2.png' %}" class="w-5" alt="Dashboard" />
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/home 2.png' %}"
+              class="w-5"
+              alt="Dashboard"
+            />
             Dashboard
           </a>
 
-          <a class="flex items-center gap-3 px-4 py-2 rounded-lg bg-emerald-800">
-            <img src="{% static 'assets/img/icons/common/transfer 1.png' %}" class="w-5" alt="Employees" />
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/transfer 1.png' %}"
+              class="w-5"
+              alt="Employees"
+            />
             Employees
           </a>
 
-          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
-            <img src="{% static 'assets/img/icons/common/user 3 1.png' %}" class="w-5" alt="Attendance" />
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/user 3 1.png' %}"
+              class="w-5"
+              alt="Attendance"
+            />
             Attendance
           </a>
 
-          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
-            <img src="{% static 'assets/img/icons/common/economic-investment 1.png' %}" class="w-5" alt="Leave Management" />
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/economic-investment 1.png' %}"
+              class="w-5"
+              alt="Leave Management"
+            />
             Leave Management
           </a>
 
-          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
-            <img src="{% static 'assets/img/icons/common/credit-card 1.png' %}" class="w-5" alt="Payroll" />
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/credit-card 1.png' %}"
+              class="w-5"
+              alt="Payroll"
+            />
             Payroll
           </a>
 
-          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
-            <img src="{% static 'assets/img/icons/common/loan 1.png' %}" class="w-5" alt="Performance" />
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/loan 1.png' %}"
+              class="w-5"
+              alt="Performance"
+            />
             Performance
           </a>
 
-          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
-            <img src="{% static 'assets/img/icons/common/service 1.png' %}" class="w-5" alt="Assets" />
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/service 1.png' %}"
+              class="w-5"
+              alt="Assets"
+            />
             Assets
           </a>
 
-          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
-            <img src="{% static 'assets/img/icons/common/econometrics 1.png' %}" class="w-5" alt="Recruitment" />
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/econometrics 1.png' %}"
+              class="w-5"
+              alt="Recruitment"
+            />
             Recruitment
           </a>
 
-          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
-            <img src="{% static 'assets/img/icons/common/settings solid 1.png' %}" class="w-5" alt="Settings" />
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/settings solid 1.png' %}"
+              class="w-5"
+              alt="Settings"
+            />
             Settings
           </a>
         </nav>
@@ -90,18 +172,30 @@
       <main class="flex-1 lg:ml-64 p-6">
         <!-- Back + Title -->
         <div class="flex items-center gap-3 mb-6">
-          <button class="text-gray-500 text-xl" onclick="history.back()">&#8592;</button>
-          <h1 class="text-xl font-semibold">{{ employee.employeepersonalinfo.full_name }}</h1>
+          <button class="text-gray-500 text-xl" onclick="history.back()">
+            &#8592;
+          </button>
+          <h1 class="text-xl font-semibold">
+            {{ employee.employeepersonalinfo.full_name }}
+          </h1>
         </div>
 
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
           <!-- ================= PROFILE CARD ================= -->
           <div class="bg-white rounded-xl shadow p-6 self-start">
             <div class="flex flex-col items-center text-center">
-              <img src="https://i.pravatar.cc/120?img=47" class="w-24 h-24 rounded-full mb-3" />
-              <h2 class="font-semibold text-lg">{{ employee.employeepersonalinfo.full_name }}</h2>
+              <img
+                src="https://i.pravatar.cc/120?img=47"
+                class="w-24 h-24 rounded-full mb-3"
+              />
+              <h2 class="font-semibold text-lg">
+                {{ employee.employeepersonalinfo.full_name }}
+              </h2>
               <p class="text-sm text-gray-500">{{ employee.job_title }}</p>
-              <span class="mt-2 px-4 py-1 text-sm bg-emerald-100 text-emerald-700 rounded-full">{{ employee.get_status_display }}</span>
+              <span
+                class="mt-2 px-4 py-1 text-sm bg-emerald-100 text-emerald-700 rounded-full"
+                >{{ employee.get_status_display }}</span
+              >
             </div>
 
             <div class="mt-6 space-y-3 text-sm text-gray-600">
@@ -113,7 +207,9 @@
             <div class="border-t mt-6 pt-4 space-y-3 text-sm">
               <div class="flex justify-between">
                 <span class="text-gray-500">Department</span>
-                <span class="font-medium">{{employee.get_department_display|default:employee.department}}</span>
+                <span class="font-medium"
+                  >{{employee.get_department_display|default:employee.department}}</span
+                >
               </div>
               <div class="flex justify-between">
                 <span class="text-gray-500">Office</span>
@@ -126,15 +222,31 @@
           <div class="xl:col-span-2 bg-white rounded-xl shadow p-6 space-y-6">
             <!-- Tabs -->
             <div class="border-b pb-3 flex gap-6 text-sm font-medium">
-              <a href="{% url 'employee_general' employee.employee_id %}" class="text-gray-500">General</a>
-              <a href="{% url 'employee_job' employee.employee_id %}" class="text-gray-500">Job</a>
-              <span class="text-emerald-600 border-b-2 border-emerald-600 pb-2">Payroll</span>
-              <a href="{% url 'employee_documents' employee.employee_id %}" class="text-gray-500">Documents</a>
+              <a
+                href="{% url 'employee_general' employee.employee_id %}"
+                class="text-gray-500"
+                >General</a
+              >
+              <a
+                href="{% url 'employee_job' employee.employee_id %}"
+                class="text-gray-500"
+                >Job</a
+              >
+              <span class="text-emerald-600 border-b-2 border-emerald-600 pb-2"
+                >Payroll</span
+              >
+              <a
+                href="{% url 'employee_documents' employee.employee_id %}"
+                class="text-gray-500"
+                >Documents</a
+              >
               <span class="text-gray-500">Settings</span>
             </div>
 
             <!-- ================= PAYROLL SUMMARY ================= -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm bg-gray-50 p-4 rounded-lg">
+            <div
+              class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm bg-gray-50 p-4 rounded-lg"
+            >
               <div>
                 <p class="text-gray-500">Employee Status</p>
                 <p class="font-medium">{{ employee.get_status_display }}</p>
@@ -145,7 +257,9 @@
               </div>
               <div>
                 <p class="text-gray-500">Employment Type</p>
-                <p class="font-medium">{{ employee.get_employment_type_display }}</p>
+                <p class="font-medium">
+                  {{ employee.get_employment_type_display }}
+                </p>
               </div>
               <div>
                 <p class="text-gray-500">Joining Date</p>
@@ -153,28 +267,47 @@
               </div>
               <div>
                 <p class="text-gray-500">Last Working Day</p>
-                <p class="font-medium">{{ employee.exit_date|date:'d M Y'|default:'—' }}</p>
+                <p class="font-medium">
+                  {{ employee.exit_date|date:'d M Y'|default:'—' }}
+                </p>
               </div>
-              <div>
+              <!-- <div>
                 <p class="text-gray-500">Last Paid On</p>
-                <p class="font-medium">{{ last_pay.payment_date|date:'d M Y'|default:'—' }}</p>
-              </div>
+                <p class="font-medium">
+                  {{ last_pay.payment_date|date:'d M Y'|default:'—' }}
+                </p>
+              </div> -->
             </div>
 
             <!-- ================= SALARY BREAKDOWN ================= -->
             <div>
               <div class="flex justify-between mb-3">
                 <h3 class="font-semibold">Salary Breakdown</h3>
-                <button class="bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm">Download Payslip</button>
+                <div class="flex gap-4 items-center">
+                  <button class="text-emerald-600">✏️Edit</button>
+                  <a
+                    href="{% url 'employee_payslip_list' employee.employee_id %}"
+                    class="bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm inline-flex items-center"
+                  >
+                    View Payslips
+                  </a>
+                </div>
               </div>
 
               <div class="space-y-2 text-sm">
                 {% for e in earnings %}
-                <div class="flex justify-between bg-gray-50 p-3 rounded"><span>{{ e.name }}</span><span>Rs. {{ e.amount }}</span></div>
+                <div class="flex justify-between bg-gray-50 p-3 rounded">
+                  <span>{{ e.name }}</span><span>Rs. {{ e.amount }}</span>
+                </div>
                 {% empty %}
-                <div class="flex justify-between bg-gray-50 p-3 rounded"><span>No earnings defined</span><span>-</span></div>
+                <div class="flex justify-between bg-gray-50 p-3 rounded">
+                  <span>No earnings defined</span><span>-</span>
+                </div>
                 {% endfor %}
-                <div class="flex justify-between font-semibold border-t pt-3"><span>Total Earnings</span><span>Rs. {{ earnings_total }}</span></div>
+                <div class="flex justify-between font-semibold border-t pt-3">
+                  <span>Total Earnings</span
+                  ><span>Rs. {{ earnings_total }}</span>
+                </div>
               </div>
             </div>
 
@@ -183,11 +316,24 @@
               <h3 class="font-semibold mb-3">Deductions</h3>
               <div class="space-y-2 text-sm">
                 {% for d in deductions %}
-                <div class="flex justify-between bg-gray-50 p-3 rounded text-red-600"><span>{{ d.name }}</span><span>Rs. {{ d.amount }}</span></div>
+                <div
+                  class="flex justify-between bg-gray-50 p-3 rounded text-red-600"
+                >
+                  <span>{{ d.name }}</span><span>Rs. {{ d.amount }}</span>
+                </div>
                 {% empty %}
-                <div class="flex justify-between bg-gray-50 p-3 rounded text-red-600"><span>No deductions defined</span><span>-</span></div>
+                <div
+                  class="flex justify-between bg-gray-50 p-3 rounded text-red-600"
+                >
+                  <span>No deductions defined</span><span>-</span>
+                </div>
                 {% endfor %}
-                <div class="flex justify-between font-semibold border-t pt-3 text-red-600"><span>Total Deductions</span><span>Rs. {{ deductions_total }}</span></div>
+                <div
+                  class="flex justify-between font-semibold border-t pt-3 text-red-600"
+                >
+                  <span>Total Deductions</span
+                  ><span>Rs. {{ deductions_total }}</span>
+                </div>
               </div>
             </div>
 
@@ -195,16 +341,28 @@
             <div class="bg-emerald-50 p-4 rounded-lg text-sm">
               <div class="flex justify-between font-semibold">
                 <span>Net Salary (Payable)</span>
-                <span> {% if last_pay %} Rs. {{ last_pay.net_salary }} {% else %} Rs. 0 {% endif %} </span>
+                <span>
+                  {% if last_pay %} Rs. {{ last_pay.net_salary }} {% else %} Rs.
+                  0 {% endif %}
+                </span>
               </div>
-              <p class="text-gray-600 mt-2">Pay Cycle: {% if last_pay %} {{ last_pay.period_end|date:'M Y' }} {% else %} - {% endif %}</p>
-              <p class="text-gray-600">Payment Method: {% if last_pay %} {{ last_pay.payment_method }} {% else %} - {% endif %}</p>
+              <!-- <p class="text-gray-600 mt-2">
+                Pay Cycle: {% if last_pay %} {{ last_pay.period_end|date:'M Y'}}
+                {% else %} - {% endif %}
+              </p> -->
+              <p class="text-gray-600 mt-2">Pay Cycle: {% now "M Y" %}</p>
+              <p class="text-gray-600">
+                Payment Method: {% if last_pay %} {{ last_pay.payment_method }}
+                {% else %} - {% endif %}
+              </p>
             </div>
 
             <!-- ================= PAYMENT INFORMATION ================= -->
             <div>
               <h3 class="font-semibold mb-3">Payment Information</h3>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm bg-gray-50 p-4 rounded-lg">
+              <div
+                class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm bg-gray-50 p-4 rounded-lg"
+              >
                 <div>
                   <p class="text-gray-500">Bank Name</p>
                   <p class="font-medium">{{ bank.bank_name }}</p>
@@ -219,30 +377,43 @@
                 </div>
                 <div>
                   <p class="text-gray-500">Payment Method</p>
-                  <p class="font-medium">{% if last_pay %} {{ last_pay.payment_method }} {% else %} - {% endif %}</p>
+                  <p class="font-medium">
+                    {% if last_pay %} {{ last_pay.payment_method }} {% else %} -
+                    {% endif %}
+                  </p>
                 </div>
                 <div>
                   <p class="text-gray-500">Payment Frequency</p>
-                  <p class="font-medium">{{ bank.get_payment_frequency_display }}</p>
+                  <p class="font-medium">
+                    {{ bank.get_payment_frequency_display }}
+                  </p>
                 </div>
-                <div>
+                <!-- <div>
                   <p class="text-gray-500">Next Pay Date</p>
-                  <p class="font-medium">{% if last_pay %} {{ last_pay.payment_date|date:'d M Y' }} {% else %} - {% endif %}</p>
-                </div>
+                  <p class="font-medium">
+                    {% if last_pay %} {{ last_pay.payment_date|date:'d M Y' }}
+                    {% else %} - {% endif %}
+                  </p>
+                </div> -->
               </div>
             </div>
 
             <!-- ================= PAYMENT HISTORY ================= -->
-            <div>
+            <!-- <div>
               <h3 class="font-semibold mb-3">Payment History</h3>
               <div class="space-y-2 text-sm">
                 {% for p in payroll_history %}
-                <div class="flex justify-between bg-gray-50 p-3 rounded"><span>{{ p.period_end|date:'F Y' }}</span><span>Rs. {{ p.net_salary }}</span></div>
+                <div class="flex justify-between bg-gray-50 p-3 rounded">
+                  <span>{{ p.period_end|date:'F Y' }}</span
+                  ><span>Rs. {{ p.net_salary }}</span>
+                </div>
                 {% empty %}
-                <div class="flex justify-between bg-gray-50 p-3 rounded"><span>No payments yet</span><span>-</span></div>
+                <div class="flex justify-between bg-gray-50 p-3 rounded">
+                  <span>No payments yet</span><span>-</span>
+                </div>
                 {% endfor %}
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </main>

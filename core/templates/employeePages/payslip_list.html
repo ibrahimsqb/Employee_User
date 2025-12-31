@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Employee Profile</title>
+    <title>Employee Salary</title>
   </head>
 
   <body class="bg-gray-100">
@@ -168,145 +168,101 @@
           </a>
         </nav>
       </aside>
+
       <!-- ================= MAIN CONTENT ================= -->
       <main class="flex-1 lg:ml-64 p-6">
-        <!-- Back + Title -->
         <div class="flex items-center gap-3 mb-6">
-          <button class="text-gray-500 text-xl" onclick="history.back()">
+          <a
+            href="{% url 'employee_payroll' employee.employee_id %}"
+            class="text-gray-500 text-xl"
+          >
             &#8592;
-          </button>
-          <h1 class="text-xl font-semibold">
-            {{ employee.employeepersonalinfo.full_name }}
-          </h1>
+          </a>
+          <h1 class="text-xl font-semibold">Employee Salary</h1>
         </div>
 
-        <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
-          <!-- ================= PROFILE CARD ================= -->
-          <div class="bg-white rounded-xl shadow p-6 self-start">
-            <div class="flex flex-col items-center text-center">
-              <img
-                src="https://i.pravatar.cc/120?img=47"
-                class="w-24 h-24 rounded-full mb-3"
-              />
-              <h2 class="font-semibold text-lg">
-                {{ employee.employeepersonalinfo.full_name }}
-              </h2>
-              <p class="text-sm text-gray-500">{{ employee.job_title }}</p>
+        <div class="bg-white rounded-xl shadow p-6">
+          <h2 class="font-semibold mb-4">Salary List</h2>
 
-              <span
-                class="mt-2 px-4 py-1 text-sm bg-emerald-100 text-emerald-700 rounded-full"
-              >
-                {{ employee.get_status_display }}
-              </span>
-            </div>
-
-            <div class="mt-6 space-y-3 text-sm text-gray-600">
-              <div class="flex items-center gap-2">
-                📧 {{ employee.employeepersonalinfo.email }}
-              </div>
-              <div class="flex items-center gap-2">
-                📞 {{ employee.employeepersonalinfo.phone_number }}
-              </div>
-              <div class="flex items-center gap-2">
-                🌐 {{ employee.employeepersonalinfo.timezone }}
-              </div>
-            </div>
-
-            <div class="border-t mt-6 pt-4 space-y-3">
-              <div class="flex justify-between text-sm">
-                <span class="text-gray-500">Department</span>
-                <span class="font-medium"
-                  >{{employee.get_department_display|default:employee.department}}</span
-                >
-              </div>
-              <div class="flex justify-between text-sm">
-                <span class="text-gray-500">Office</span>
-                <span class="font-medium">{{ employee.office }}</span>
-              </div>
-            </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead class="bg-gray-50 border-b">
+                <tr>
+                  <th class="px-4 py-3 text-left font-medium text-gray-700">
+                    Employee ID
+                  </th>
+                  <th class="px-4 py-3 text-left font-medium text-gray-700">
+                    Employee
+                  </th>
+                  <th class="px-4 py-3 text-left font-medium text-gray-700">
+                    Email
+                  </th>
+                  <th class="px-4 py-3 text-left font-medium text-gray-700">
+                    Phone
+                  </th>
+                  <th class="px-4 py-3 text-left font-medium text-gray-700">
+                    Designation
+                  </th>
+                  <th class="px-4 py-3 text-left font-medium text-gray-700">
+                    Joining Date
+                  </th>
+                  <th class="px-4 py-3 text-left font-medium text-gray-700">
+                    Salary
+                  </th>
+                  <th class="px-4 py-3 text-left font-medium text-gray-700">
+                    Payslip
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="divide-y">
+                {% for payroll in payroll_records %}
+                <tr class="hover:bg-gray-50">
+                  <td class="px-4 py-3">{{ employee.employee_id }}</td>
+                  <td class="px-4 py-3">
+                    <div class="flex items-center gap-2">
+                      <img
+                        src="https://i.pravatar.cc/40?img=47"
+                        class="w-8 h-8 rounded-full"
+                        alt="Avatar"
+                      />
+                      <div>
+                        <p class="font-medium">{{ personal.full_name }}</p>
+                        <p class="text-xs text-gray-500">
+                          {{ employee.job_title }}
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-4 py-3">{{ personal.email }}</td>
+                  <td class="px-4 py-3">{{ personal.phone_number }}</td>
+                  <td class="px-4 py-3">{{ employee.job_title }}</td>
+                  <td class="px-4 py-3">
+                    {{ employee.join_date|date:'d/m/Y' }}
+                  </td>
+                  <td class="px-4 py-3">{{ payroll.net_salary }}</td>
+                  <td class="px-4 py-3">
+                    <a
+                      href="{% url 'employee_payslip_detail' employee.employee_id payroll.id %}"
+                      class="bg-emerald-600 text-white px-3 py-1 rounded text-xs"
+                    >
+                      View Payslip
+                    </a>
+                  </td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="8" class="px-4 py-8 text-center text-gray-500">
+                    No payroll records found.
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
           </div>
 
-          <!-- ================= DETAILS SECTION ================= -->
-          <div class="xl:col-span-2 bg-white rounded-xl shadow p-6">
-            <!-- Tabs -->
-            <div class="border-b mb-6">
-              <nav class="flex gap-6 text-sm font-medium">
-                <a
-                  href="{% url 'employee_general' employee.employee_id %}"
-                  class="pb-3 text-gray-500 hover:text-gray-700"
-                >
-                  General
-                </a>
-                <a
-                  href="{% url 'employee_job' employee.employee_id %}"
-                  class="pb-3 text-gray-500 hover:text-gray-700"
-                  >Job</a
-                >
-                <a
-                  href="{% url 'employee_payroll' employee.employee_id %}"
-                  class="pb-3 text-gray-500 hover:text-gray-700"
-                  >Payroll</a
-                >
-                <a class="pb-3 border-b-2 border-emerald-600 text-emerald-600"
-                  >Documents</a
-                >
-                <a class="pb-3 text-gray-500 hover:text-gray-700">Settings</a>
-              </nav>
-            </div>
-
-            <!-- Form -->
-            <div>
-              <div class="flex justify-between items-center mb-4">
-                <h3 class="font-semibold">Personal Documents</h3>
-              </div>
-
-              <form
-                method="post"
-                enctype="multipart/form-data"
-                class="border-2 border-dashed rounded-lg p-6 text-center mb-4"
-              >
-                {% csrf_token %}
-                <p class="text-black-500 text-lg">Drag & Drop here to upload</p>
-                <p class="text-black-500 text-sm font-semibold mb-2">
-                  or select file from your computer
-                </p>
-                <input
-                  type="file"
-                  name="file"
-                  class="hidden"
-                  id="doc-file-input"
-                  onchange="this.form.submit()"
-                />
-                <button
-                  type="button"
-                  class="bg-green-600 text-white px-6 py-2 rounded-md"
-                  onclick="document.getElementById('doc-file-input').click()"
-                >
-                  Upload File
-                </button>
-              </form>
-
-              <!-- Documents list -->
-              <div class="bg-white rounded-xl p-6 shadow-sm">
-                <h3 class="font-semibold mb-4">Documents</h3>
-
-                {% for doc in documents %}
-                <div
-                  class="flex justify-between items-center py-2 border-b last:border-b-0"
-                >
-                  <span>{{ doc.name }}</span>
-                  <a
-                    href="{{ doc.file.url }}"
-                    class="text-sm text-emerald-600"
-                    target="_blank"
-                    >View</a
-                  >
-                </div>
-                {% empty %}
-                <p class="text-sm text-gray-500">No documents uploaded yet.</p>
-                {% endfor %}
-              </div>
-            </div>
+          <div class="mt-4 text-sm text-gray-600">
+            Showing {{ payroll_records|length }} of {{ payroll_records|length }}
+            entries
           </div>
         </div>
       </main>

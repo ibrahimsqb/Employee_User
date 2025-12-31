@@ -209,45 +209,6 @@ def employee_onboarding_view(request):
         create_component("tax_deduction", "Tax Deduction", "DEDUCTION")
         create_component("loan_deduction", "Loan Deduction", "DEDUCTION")
 
-        # Creating an initial payroll record so the Payroll tab has data
-        next_pay_date_str = data.get("next_pay_date") or None
-        payment_method = data.get("payment_method") or "Bank Transfer"
-
-        if next_pay_date_str:
-            try:
-                next_pay_date = date.fromisoformat(next_pay_date_str)
-            except ValueError:
-                next_pay_date = None
-
-            if next_pay_date:
-                from django.db.models import Sum
-
-                earnings_total = (
-                    SalaryComponent.objects.filter(
-                        employee=profile, component_type="EARNING"
-                    ).aggregate(total=Sum("amount"))["total"]
-                    or 0
-                )
-                deductions_total = (
-                    SalaryComponent.objects.filter(
-                        employee=profile, component_type="DEDUCTION"
-                    ).aggregate(total=Sum("amount"))["total"]
-                    or 0
-                )
-
-                net_salary = earnings_total - deductions_total
-
-                Payroll.objects.create(
-                    employee=profile,
-                    period_start=join_date or date.today(),
-                    period_end=next_pay_date,
-                    total_earnings=earnings_total,
-                    total_deductions=deductions_total,
-                    net_salary=net_salary,
-                    payment_method=payment_method,
-                    payment_date=next_pay_date,
-                )
-
         # Documents uploaded at onboarding time
         cnic_file = request.FILES.get("cnic_file")
         if cnic_file:
@@ -283,6 +244,61 @@ def employee_onboarding_view(request):
 
 def _get_employee_or_404(employee_id: str) -> EmployeeProfile:
     return get_object_or_404(EmployeeProfile, employee_id=employee_id)
+
+
+def _mask_account(number: str) -> str:
+    if not number:
+        return ""
+    num = str(number)
+    if len(num) <= 2:
+        return num
+    return num[:2] + "*" * (len(num) - 2)
+
+
+def _ensure_current_month_payroll(employee: EmployeeProfile) -> Payroll | None:
+    """Guarantee a payroll exists for the current month; create it if missing."""
+    from datetime import date
+    from calendar import monthrange
+    from django.db.models import Sum
+
+    today = date.today()
+    existing = Payroll.objects.filter(
+        employee=employee, period_end__year=today.year, period_end__month=today.month
+    ).first()
+    if existing:
+        return existing
+
+    earnings_total = (
+        SalaryComponent.objects.filter(employee=employee, component_type="EARNING")
+        .aggregate(total=Sum("amount"))
+        .get("total")
+        or 0
+    )
+    deductions_total = (
+        SalaryComponent.objects.filter(employee=employee, component_type="DEDUCTION")
+        .aggregate(total=Sum("amount"))
+        .get("total")
+        or 0
+    )
+
+    period_start = date(today.year, today.month, 1)
+    period_end = date(today.year, today.month, monthrange(today.year, today.month)[1])
+    payment_method = "Bank Transfer"
+
+    bank = getattr(employee, "bankdetail", None)
+    if bank and getattr(bank, "payment_frequency", None):
+        payment_method = f"Bank Transfer ({bank.payment_frequency.title()})"
+
+    return Payroll.objects.create(
+        employee=employee,
+        period_start=period_start,
+        period_end=period_end,
+        total_earnings=earnings_total,
+        total_deductions=deductions_total,
+        net_salary=earnings_total - deductions_total,
+        payment_method=payment_method,
+        payment_date=today,
+    )
 
 
 def employee_general_view(request, employee_id):
@@ -321,6 +337,7 @@ def employee_payroll_view(request, employee_id):
     earnings = SalaryComponent.objects.filter(employee=employee, component_type="EARNING")
     deductions = SalaryComponent.objects.filter(employee=employee, component_type="DEDUCTION")
     bank = getattr(employee, "bankdetail", None)
+    _ensure_current_month_payroll(employee)
     payroll_history = Payroll.objects.filter(employee=employee).order_by("-payment_date")
 
     last_pay = payroll_history.first()
@@ -341,6 +358,45 @@ def employee_payroll_view(request, employee_id):
         "deductions_total": deductions_total,
     }
     return render(request, "employeePages/employee3.html", context)
+
+
+def employee_payslip_list_view(request, employee_id):
+    """Display a list of all payslips for an employee."""
+    employee = _get_employee_or_404(employee_id)
+    personal = getattr(employee, "employeepersonalinfo", None)
+    _ensure_current_month_payroll(employee)
+    payroll_records = Payroll.objects.filter(employee=employee).order_by("-payment_date")
+
+    context = {
+        "employee": employee,
+        "personal": personal,
+        "payroll_records": payroll_records,
+    }
+    return render(request, "employeePages/payslip_list.html", context)
+
+
+def employee_payslip_detail_view(request, employee_id, payroll_id):
+    """Display a single payslip detail."""
+    employee = _get_employee_or_404(employee_id)
+    personal = getattr(employee, "employeepersonalinfo", None)
+    bank = getattr(employee, "bankdetail", None)
+
+    payroll = get_object_or_404(Payroll, employee=employee, id=payroll_id)
+
+    earnings = SalaryComponent.objects.filter(employee=employee, component_type="EARNING")
+    deductions = SalaryComponent.objects.filter(employee=employee, component_type="DEDUCTION")
+
+    context = {
+        "employee": employee,
+        "personal": personal,
+        "payroll": payroll,
+        "earnings": earnings,
+        "deductions": deductions,
+        "bank": bank,
+        "masked_account": _mask_account(bank.account_number) if bank else "",
+        "masked_iban": _mask_account(bank.iban) if bank else "",
+    }
+    return render(request, "employeePages/payslip.html", context)
 
 
 def employee_documents_view(request, employee_id):

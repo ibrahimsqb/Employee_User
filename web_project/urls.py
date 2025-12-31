@@ -49,6 +49,16 @@ urlpatterns = [
         name="employee_payroll",
     ),
     path(
+        "employees/<str:employee_id>/payslips/",
+        core_views.employee_payslip_list_view,
+        name="employee_payslip_list",
+    ),
+    path(
+        "employees/<str:employee_id>/payslips/<int:payroll_id>/",
+        core_views.employee_payslip_detail_view,
+        name="employee_payslip_detail",
+    ),
+    path(
         "employees/<str:employee_id>/documents/",
         core_views.employee_documents_view,
         name="employee_documents",
