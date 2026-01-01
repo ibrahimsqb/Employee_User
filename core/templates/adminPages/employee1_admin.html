@@ -175,9 +175,7 @@
           <button class="text-gray-500 text-xl" onclick="history.back()">
             &#8592;
           </button>
-          <h1 class="text-xl font-semibold">
-            {{ employee.employeepersonalinfo.full_name }}
-          </h1>
+          <h1 class="text-xl font-semibold">{{ personal.full_name }}</h1>
         </div>
 
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
@@ -188,10 +186,9 @@
                 src="https://i.pravatar.cc/120?img=47"
                 class="w-24 h-24 rounded-full mb-3"
               />
-              <h2 class="font-semibold text-lg">
-                {{ employee.employeepersonalinfo.full_name }}
-              </h2>
+              <h2 class="font-semibold text-lg">{{ personal.full_name }}</h2>
               <p class="text-sm text-gray-500">{{ employee.job_title }}</p>
+
               <span
                 class="mt-2 px-4 py-1 text-sm bg-emerald-100 text-emerald-700 rounded-full"
               >
@@ -200,173 +197,155 @@
             </div>
 
             <div class="mt-6 space-y-3 text-sm text-gray-600">
-              <div>📧 {{ employee.employeepersonalinfo.email }}</div>
-              <div>📞 {{ employee.employeepersonalinfo.phone_number }}</div>
-              <div>🌐 {{ employee.employeepersonalinfo.timezone }}</div>
+              <div class="flex items-center gap-2">📧 {{ personal.email }}</div>
+              <div class="flex items-center gap-2">
+                📞 {{ personal.phone_number }}
+              </div>
+              <div class="flex items-center gap-2">
+                🌐 {{ personal.timezone }}
+              </div>
             </div>
 
-            <div class="border-t mt-6 pt-4 space-y-3 text-sm">
-              <div class="flex justify-between">
+            <div class="border-t mt-6 pt-4 space-y-3">
+              <div class="flex justify-between text-sm">
                 <span class="text-gray-500">Department</span>
-                <span class="font-medium"
-                  >{{employee.get_department_display|default:employee.department}}
+                <span class="font-medium">
+                  {{employee.get_department_display}}
                 </span>
               </div>
-              <div class="flex justify-between">
+              <div class="flex justify-between text-sm">
                 <span class="text-gray-500">Office</span>
                 <span class="font-medium">{{ employee.office }}</span>
               </div>
             </div>
           </div>
 
-          <!-- ================= JOB DETAILS ================= -->
-          <div class="xl:col-span-2 bg-white rounded-xl shadow p-6 space-y-6">
+          <!-- ================= DETAILS SECTION ================= -->
+          <div class="xl:col-span-2 bg-white rounded-xl shadow p-6">
             <!-- Tabs -->
-            <div class="border-b pb-3 flex gap-6 text-sm font-medium">
-              <a
-                href="{% url 'employee_general' employee.employee_id %}"
-                class="text-gray-500"
-                >General</a
-              >
-              <span class="text-emerald-600 border-b-2 border-emerald-600 pb-2"
-                >Job</span
-              >
-              <a
-                href="{% url 'employee_payroll' employee.employee_id %}"
-                class="text-gray-500"
-                >Payroll</a
-              >
-              <a
-                href="{% url 'employee_documents' employee.employee_id %}"
-                class="text-gray-500"
-                >Documents</a
-              >
-              <span class="text-gray-500">Settings</span>
+            <div class="border-b mb-6">
+              <nav class="flex gap-6 text-sm font-medium">
+                <a class="pb-3 border-b-2 border-emerald-600 text-emerald-600">
+                  General
+                </a>
+                <a
+                  href="{% url 'employee_job_admin' employee.employee_id %}"
+                  class="pb-3 text-gray-500 hover:text-gray-700"
+                  >Job</a
+                >
+                <a
+                  href="{% url 'employee_payroll_admin' employee.employee_id %}"
+                  class="pb-3 text-gray-500 hover:text-gray-700"
+                  >Payroll</a
+                >
+                <a
+                  href="{% url 'employee_documents_admin' employee.employee_id %}"
+                  class="pb-3 text-gray-500 hover:text-gray-700"
+                  >Documents</a
+                >
+                <a class="pb-3 text-gray-500 hover:text-gray-700">Settings</a>
+              </nav>
             </div>
 
-            <!-- ================= Employment Info ================= -->
-            <div>
-              <div class="flex justify-between mb-3">
-                <h3 class="font-semibold">Employment Information</h3>
-                <!-- <button class="text-emerald-600">✏️Edit</button> -->
+            <!-- Form -->
+            <form method="post" action="">
+              {% csrf_token %}
+              <div class="flex justify-between items-center mb-4">
+                <h3 class="font-semibold">Personal Info</h3>
+                <button type="submit" class="bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-emerald-700">
+                  💾 Save Changes
+                </button>
               </div>
 
-              <div
-                class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-gray-50 p-4 rounded-lg text-sm"
-              >
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <p class="text-gray-500">Employee ID</p>
-                  <p class="font-medium">{{ employee.employee_id }}</p>
+                  <label class="text-sm text-gray-500">Full Name *</label>
+                  <input
+                    name="full_name"
+                    class="w-full mt-1 border rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-500 outline-none"
+                    value="{{ personal.full_name }}"
+                    required
+                  />
                 </div>
+
                 <div>
-                  <p class="text-gray-500">Service Year</p>
-                  <p class="font-medium">
-                    {% if service_years %} {{ service_years }} Year{{
-                    service_years|pluralize }} {% else %} - {% endif %}
-                  </p>
+                  <label class="text-sm text-gray-500">Gender *</label>
+                  <select
+                    name="gender"
+                    class="w-full mt-1 border rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-500 outline-none"
+                    required
+                  >
+                    <option value="MALE" {% if personal.gender == 'MALE' %}selected{% endif %}>Male</option>
+                    <option value="FEMALE" {% if personal.gender == 'FEMALE' %}selected{% endif %}>Female</option>
+                    <option value="OTHER" {% if personal.gender == 'OTHER' %}selected{% endif %}>Other</option>
+                  </select>
                 </div>
+
                 <div>
-                  <p class="text-gray-500">Join Date</p>
-                  <p class="font-medium">
-                    {{ employee.join_date|date:'d M Y' }}
-                  </p>
+                  <label class="text-sm text-gray-500">Date of Birth *</label>
+                  <input
+                    type="date"
+                    name="date_of_birth"
+                    class="w-full mt-1 border rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-500 outline-none"
+                    value="{{ personal.date_of_birth|date:'Y-m-d' }}"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label class="text-sm text-gray-500">Email *</label>
+                  <input
+                    type="email"
+                    name="email"
+                    class="w-full mt-1 border rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-500 outline-none"
+                    value="{{ personal.email }}"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label class="text-sm text-gray-500">Phone Number *</label>
+                  <input
+                    name="phone_number"
+                    class="w-full mt-1 border rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-500 outline-none"
+                    value="{{ personal.phone_number }}"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label class="text-sm text-gray-500">Marital Status *</label>
+                  <input
+                    name="marital_status"
+                    class="w-full mt-1 border rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-500 outline-none"
+                    value="{{ personal.marital_status }}"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label class="text-sm text-gray-500">Personal ID *</label>
+                  <input
+                    name="personal_id"
+                    class="w-full mt-1 border rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-500 outline-none"
+                    value="{{ personal.personal_id }}"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label class="text-sm text-gray-500"
+                    >Emergency Contact *</label
+                  >
+                  <input
+                    name="emergency_contact"
+                    class="w-full mt-1 border rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-500 outline-none"
+                    value="{{ personal.emergency_contact }}"
+                    required
+                  />
                 </div>
               </div>
-            </div>
-
-            <!-- ================= Job Timeline ================= -->
-            <div>
-              <div class="flex justify-between mb-3">
-                <h3 class="font-semibold">Job Timeline</h3>
-              </div>
-
-              <div class="overflow-x-auto">
-                <table class="w-full text-sm border rounded-lg">
-                  <thead class="bg-gray-50 text-gray-500">
-                    <tr>
-                      <th class="p-3 text-left">Effective Date</th>
-                      <th class="p-3 text-left">Job Title</th>
-                      <th class="p-3 text-left">Position Type</th>
-                      <th class="p-3 text-left">Employment Type</th>
-                      <th class="p-3 text-left">Line Manager</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for j in job_history %}
-                    <tr class="border-t">
-                      <td class="p-3">{{ j.effective_date|date:'d M Y' }}</td>
-                      <td class="p-3">{{ j.job_title }}</td>
-                      <td class="p-3">{{ j.position_type }}</td>
-                      <td class="p-3">{{ j.employment_type }}</td>
-                      <td class="p-3">{{j.line_manager}}</td>
-                    </tr>
-                    {% empty %}
-                    <tr class="border-t">
-                      <td class="p-3" colspan="5">No job history yet.</td>
-                    </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <!-- ================= Contract Timeline ================= -->
-            <div>
-              <div class="flex justify-between mb-3">
-                <h3 class="font-semibold">Contract Timeline</h3>
-              </div>
-
-              <div class="overflow-x-auto">
-                <table class="w-full text-sm border rounded-lg">
-                  <thead class="bg-gray-50 text-gray-500">
-                    <tr>
-                      <th class="p-3 text-left">Contract #</th>
-                      <th class="p-3 text-left">Contract Name</th>
-                      <th class="p-3 text-left">Contract Type</th>
-                      <th class="p-3 text-left">Start Date</th>
-                      <th class="p-3 text-left">End Date</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for c in contracts %}
-                    <tr class="border-t">
-                      <td class="p-3">{{ c.contract_number }}</td>
-                      <td class="p-3">{{ c.contract_name }}</td>
-                      <td class="p-3">{{ c.contract_type }}</td>
-                      <td class="p-3">{{ c.start_date|date:'d M Y' }}</td>
-                      <td class="p-3">
-                        {{ c.end_date|date:'d M Y'|default:'-' }}
-                      </td>
-                    </tr>
-                    {% empty %}
-                    <tr class="border-t">
-                      <td class="p-3" colspan="5">No contracts yet.</td>
-                    </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <!-- ================= Work Schedule ================= -->
-            <div>
-              <div class="flex justify-between mb-3">
-                <h3 class="font-semibold">Work Schedule</h3>
-              </div>
-
-              <div
-                class="bg-gray-50 p-4 rounded-lg text-sm flex flex-col md:flex-row md:justify-between"
-              >
-                <p>
-                  <span class="text-gray-500">Working Hours:</span>
-                  {{schedule.working_hours }}
-                </p>
-                <p>
-                  <span class="text-gray-500">Working Days:</span>
-                  {{schedule.working_days }}
-                </p>
-              </div>
-            </div>
+            </form>
           </div>
         </div>
       </main>

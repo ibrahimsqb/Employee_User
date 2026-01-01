@@ -21,6 +21,15 @@ def index(request):
     return render(request, "core/index.html")
 
 
+def employee_directory_view(request):
+    """Display all employees in a directory/grid view."""
+    employees = EmployeeProfile.objects.select_related('employeepersonalinfo').all()
+    context = {
+        'employees': employees,
+    }
+    return render(request, "adminPages/employee_directory.html", context)
+
+
 def _generate_next_employee_id() -> str:
     """Generate the next employee ID like EMP-001, EMP-002, ..."""
 
@@ -237,7 +246,7 @@ def employee_onboarding_view(request):
     default_employee_id = _generate_next_employee_id()
     return render(
         request,
-        "employeePages/employee_onboarding.html",
+        "adminPages/employee_onboarding.html",
         {"default_employee_id": default_employee_id},
     )
 
@@ -346,6 +355,9 @@ def employee_payroll_view(request, employee_id):
 
     earnings_total = earnings.aggregate(total=Sum("amount"))["total"] or 0
     deductions_total = deductions.aggregate(total=Sum("amount"))["total"] or 0
+    
+    # Calculate what the net salary will be for future payslips
+    calculated_net_salary = earnings_total - deductions_total
 
     context = {
         "employee": employee,
@@ -356,6 +368,7 @@ def employee_payroll_view(request, employee_id):
         "last_pay": last_pay,
         "earnings_total": earnings_total,
         "deductions_total": deductions_total,
+        "calculated_net_salary": calculated_net_salary,
     }
     return render(request, "employeePages/employee3.html", context)
 
@@ -383,8 +396,18 @@ def employee_payslip_detail_view(request, employee_id, payroll_id):
 
     payroll = get_object_or_404(Payroll, employee=employee, id=payroll_id)
 
-    earnings = SalaryComponent.objects.filter(employee=employee, component_type="EARNING")
-    deductions = SalaryComponent.objects.filter(employee=employee, component_type="DEDUCTION")
+    # Only show component breakdown for current month's payslip
+    # Past payslips will only show totals to prevent showing updated values
+    from datetime import date
+    today = date.today()
+    is_current_month = (payroll.period_end.year == today.year and 
+                        payroll.period_end.month == today.month)
+    
+    earnings = None
+    deductions = None
+    if is_current_month:
+        earnings = SalaryComponent.objects.filter(employee=employee, component_type="EARNING")
+        deductions = SalaryComponent.objects.filter(employee=employee, component_type="DEDUCTION")
 
     context = {
         "employee": employee,
@@ -395,6 +418,7 @@ def employee_payslip_detail_view(request, employee_id, payroll_id):
         "bank": bank,
         "masked_account": _mask_account(bank.account_number) if bank else "",
         "masked_iban": _mask_account(bank.iban) if bank else "",
+        "is_current_month": is_current_month,
     }
     return render(request, "employeePages/payslip.html", context)
 
@@ -420,3 +444,169 @@ def employee_documents_view(request, employee_id):
         "form": form,
     }
     return render(request, "employeePages/employee4.html", context)
+
+
+# ================= ADMIN VIEWS (Editable) =================
+
+def employee_general_admin_view(request, employee_id):
+    """Admin view for editing employee general/personal information."""
+    employee = _get_employee_or_404(employee_id)
+    personal = getattr(employee, "employeepersonalinfo", None)
+    
+    if request.method == "POST":
+        # Update personal info
+        if personal:
+            personal.full_name = request.POST.get("full_name", personal.full_name)
+            personal.gender = request.POST.get("gender", personal.gender)
+            personal.date_of_birth = request.POST.get("date_of_birth", personal.date_of_birth)
+            personal.email = request.POST.get("email", personal.email)
+            personal.phone_number = request.POST.get("phone_number", personal.phone_number)
+            personal.marital_status = request.POST.get("marital_status", personal.marital_status)
+            personal.personal_id = request.POST.get("personal_id", personal.personal_id)
+            personal.emergency_contact = request.POST.get("emergency_contact", personal.emergency_contact)
+            personal.save()
+        
+        return redirect("employee_general_admin", employee_id=employee.employee_id)
+    
+    context = {
+        "employee": employee,
+        "personal": personal,
+    }
+    return render(request, "adminPages/employee1_admin.html", context)
+
+
+def employee_job_admin_view(request, employee_id):
+    """Admin view for editing employee job information."""
+    employee = _get_employee_or_404(employee_id)
+    job_history = JobHistory.objects.filter(employee=employee).order_by("-effective_date")
+    contracts = EmploymentContract.objects.filter(employee=employee).order_by("-start_date")
+    schedule = getattr(employee, "workschedule", None)
+    
+    from datetime import date
+    today = date.today()
+    service_years = None
+    if employee.join_date:
+        service_years = (today - employee.join_date).days // 365
+    
+    if request.method == "POST":
+        # Update employee profile
+        employee.job_title = request.POST.get("job_title", employee.job_title)
+        employee.department = request.POST.get("department", employee.department)
+        employee.office = request.POST.get("office", employee.office)
+        employee.employment_type = request.POST.get("employment_type", employee.employment_type)
+        employee.status = request.POST.get("status", employee.status)
+        
+        join_date_str = request.POST.get("join_date")
+        if join_date_str:
+            try:
+                employee.join_date = date.fromisoformat(join_date_str)
+            except ValueError:
+                pass
+        
+        employee.save()
+        
+        # Update work schedule
+        if schedule:
+            schedule.working_hours = request.POST.get("working_hours", schedule.working_hours)
+            schedule.working_days = request.POST.get("working_days", schedule.working_days)
+            schedule.save()
+        
+        return redirect("employee_job_admin", employee_id=employee.employee_id)
+    
+    context = {
+        "employee": employee,
+        "job_history": job_history,
+        "contracts": contracts,
+        "schedule": schedule,
+        "service_years": service_years,
+    }
+    return render(request, "adminPages/employee2_admin.html", context)
+
+
+def employee_payroll_admin_view(request, employee_id):
+    """Admin view for editing employee payroll information."""
+    employee = _get_employee_or_404(employee_id)
+    earnings = SalaryComponent.objects.filter(employee=employee, component_type="EARNING")
+    deductions = SalaryComponent.objects.filter(employee=employee, component_type="DEDUCTION")
+    bank = getattr(employee, "bankdetail", None)
+    _ensure_current_month_payroll(employee)
+    payroll_history = Payroll.objects.filter(employee=employee).order_by("-payment_date")
+    last_pay = payroll_history.first()
+    
+    from django.db.models import Sum
+    earnings_total = earnings.aggregate(total=Sum("amount"))["total"] or 0
+    deductions_total = deductions.aggregate(total=Sum("amount"))["total"] or 0
+    
+    if request.method == "POST":
+        # Update bank details
+        if bank:
+            bank.bank_name = request.POST.get("bank_name", bank.bank_name)
+            bank.account_title = request.POST.get("account_title", bank.account_title)
+            bank.account_number = request.POST.get("account_number", bank.account_number)
+            bank.iban = request.POST.get("iban", bank.iban)
+            bank.payment_frequency = request.POST.get("payment_frequency", bank.payment_frequency)
+            bank.save()
+        
+        # Update salary components (simplified - just update existing ones)
+        for earning in earnings:
+            amount_key = f"earning_{earning.id}"
+            if amount_key in request.POST:
+                try:
+                    earning.amount = float(request.POST[amount_key])
+                    earning.save()
+                except ValueError:
+                    pass
+        
+        for deduction in deductions:
+            amount_key = f"deduction_{deduction.id}"
+            if amount_key in request.POST:
+                try:
+                    deduction.amount = float(request.POST[amount_key])
+                    deduction.save()
+                except ValueError:
+                    pass
+        
+        # Do NOT update existing payroll records
+        # Only future months will have updated values when new payslips are generated
+        # This preserves historical accuracy of already-generated payslips
+        
+        return redirect("employee_payroll_admin", employee_id=employee.employee_id)
+    
+    # Calculate what the net salary will be for future payslips
+    calculated_net_salary = earnings_total - deductions_total
+    
+    context = {
+        "employee": employee,
+        "earnings": earnings,
+        "deductions": deductions,
+        "bank": bank,
+        "payroll_history": payroll_history,
+        "last_pay": last_pay,
+        "earnings_total": earnings_total,
+        "deductions_total": deductions_total,
+        "calculated_net_salary": calculated_net_salary,
+    }
+    return render(request, "adminPages/employee3_admin.html", context)
+
+
+def employee_documents_admin_view(request, employee_id):
+    """Admin view for managing employee documents."""
+    employee = _get_employee_or_404(employee_id)
+    documents = EmployeeDocument.objects.filter(employee=employee).order_by("-uploaded_at")
+
+    if request.method == "POST" and request.FILES.get("file"):
+        file = request.FILES["file"]
+        EmployeeDocument.objects.create(
+            employee=employee,
+            name=file.name,
+            category="IDENTITY",  # Default category
+            file=file,
+            uploaded_by=request.user if request.user.is_authenticated else None,
+        )
+        return redirect("employee_documents_admin", employee_id=employee.employee_id)
+
+    context = {
+        "employee": employee,
+        "documents": documents,
+    }
+    return render(request, "adminPages/employee4_admin.html", context)

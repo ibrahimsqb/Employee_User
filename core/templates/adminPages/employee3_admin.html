@@ -223,12 +223,12 @@
             <!-- Tabs -->
             <div class="border-b pb-3 flex gap-6 text-sm font-medium">
               <a
-                href="{% url 'employee_general' employee.employee_id %}"
+                href="{% url 'employee_general_admin' employee.employee_id %}"
                 class="text-gray-500"
                 >General</a
               >
               <a
-                href="{% url 'employee_job' employee.employee_id %}"
+                href="{% url 'employee_job_admin' employee.employee_id %}"
                 class="text-gray-500"
                 >Job</a
               >
@@ -236,7 +236,7 @@
                 >Payroll</span
               >
               <a
-                href="{% url 'employee_documents' employee.employee_id %}"
+                href="{% url 'employee_documents_admin' employee.employee_id %}"
                 class="text-gray-500"
                 >Documents</a
               >
@@ -280,24 +280,37 @@
             </div>
 
             <!-- ================= SALARY BREAKDOWN ================= -->
-            <div>
+            <form method="post" action="">
+              {% csrf_token %}
               <div class="flex justify-between mb-3">
                 <h3 class="font-semibold">Salary Breakdown</h3>
                 <div class="flex gap-4 items-center">
-                  <!-- <button class="text-emerald-600">✏️Edit</button> -->
+                  <button type="submit" class="bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-emerald-700">
+                    💾 Save Changes
+                  </button>
                   <a
                     href="{% url 'employee_payslip_list' employee.employee_id %}"
-                    class="bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm inline-flex items-center"
+                    class="bg-gray-600 text-white px-4 py-2 rounded-lg text-sm inline-flex items-center hover:bg-gray-700"
                   >
                     View Payslips
                   </a>
                 </div>
               </div>
 
-              <div class="space-y-2 text-sm">
+              <div class="space-y-2 text-sm mb-4">
                 {% for e in earnings %}
-                <div class="flex justify-between bg-gray-50 p-3 rounded">
-                  <span>{{ e.name }}</span><span>Rs. {{ e.amount }}</span>
+                <div class="flex justify-between bg-gray-50 p-3 rounded items-center">
+                  <span>{{ e.name }}</span>
+                  <div class="flex items-center gap-2">
+                    <span>Rs.</span>
+                    <input
+                      type="number"
+                      name="earning_{{ e.id }}"
+                      value="{{ e.amount }}"
+                      step="0.01"
+                      class="border rounded px-2 py-1 w-32 focus:ring-2 focus:ring-emerald-500 outline-none"
+                    />
+                  </div>
                 </div>
                 {% empty %}
                 <div class="flex justify-between bg-gray-50 p-3 rounded">
@@ -309,17 +322,33 @@
                   ><span>Rs. {{ earnings_total }}</span>
                 </div>
               </div>
-            </div>
+            </form>
 
             <!-- ================= DEDUCTIONS ================= -->
-            <div>
-              <h3 class="font-semibold mb-3">Deductions</h3>
+            <form method="post" action="">
+              {% csrf_token %}
+              <div class="flex justify-between mb-3">
+                <h3 class="font-semibold">Deductions</h3>
+                <button type="submit" class="bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-emerald-700">
+                  💾 Save Changes
+                </button>
+              </div>
               <div class="space-y-2 text-sm">
                 {% for d in deductions %}
                 <div
-                  class="flex justify-between bg-gray-50 p-3 rounded text-red-600"
+                  class="flex justify-between bg-gray-50 p-3 rounded text-red-600 items-center"
                 >
-                  <span>{{ d.name }}</span><span>Rs. {{ d.amount }}</span>
+                  <span>{{ d.name }}</span>
+                  <div class="flex items-center gap-2">
+                    <span>Rs.</span>
+                    <input
+                      type="number"
+                      name="deduction_{{ d.id }}"
+                      value="{{ d.amount }}"
+                      step="0.01"
+                      class="border rounded px-2 py-1 w-32 focus:ring-2 focus:ring-emerald-500 outline-none"
+                    />
+                  </div>
                 </div>
                 {% empty %}
                 <div
@@ -335,7 +364,7 @@
                   ><span>Rs. {{ deductions_total }}</span>
                 </div>
               </div>
-            </div>
+            </form>
 
             <!-- ================= NET SALARY ================= -->
             <div class="bg-emerald-50 p-4 rounded-lg text-sm space-y-3">
@@ -365,45 +394,59 @@
             </div>
 
             <!-- ================= PAYMENT INFORMATION ================= -->
-            <div>
-              <h3 class="font-semibold mb-3">Payment Information</h3>
-              <div
-                class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm bg-gray-50 p-4 rounded-lg"
-              >
-                <div>
-                  <p class="text-gray-500">Bank Name</p>
-                  <p class="font-medium">{{ bank.bank_name }}</p>
-                </div>
-                <div>
-                  <p class="text-gray-500">Account Title</p>
-                  <p class="font-medium">{{ bank.account_title }}</p>
-                </div>
-                <div>
-                  <p class="text-gray-500">Account Number</p>
-                  <p class="font-medium">{{ bank.account_number }}</p>
-                </div>
-                <div>
-                  <p class="text-gray-500">Payment Method</p>
-                  <p class="font-medium">
-                    {% if last_pay %} {{ last_pay.payment_method }} {% else %} -
-                    {% endif %}
-                  </p>
-                </div>
-                <div>
-                  <p class="text-gray-500">Payment Frequency</p>
-                  <p class="font-medium">
-                    {{ bank.get_payment_frequency_display }}
-                  </p>
-                </div>
-                <!-- <div>
-                  <p class="text-gray-500">Next Pay Date</p>
-                  <p class="font-medium">
-                    {% if last_pay %} {{ last_pay.payment_date|date:'d M Y' }}
-                    {% else %} - {% endif %}
-                  </p>
-                </div> -->
+            <form method="post" action="">
+              {% csrf_token %}
+              <div class="flex justify-between mb-3">
+                <h3 class="font-semibold">Payment Information</h3>
+                <button type="submit" class="bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-emerald-700">
+                  💾 Save Changes
+                </button>
               </div>
-            </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <label class="text-gray-500 block mb-1">Bank Name</label>
+                  <input
+                    name="bank_name"
+                    class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-500 outline-none"
+                    value="{{ bank.bank_name }}"
+                  />
+                </div>
+                <div>
+                  <label class="text-gray-500 block mb-1">Account Title</label>
+                  <input
+                    name="account_title"
+                    class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-500 outline-none"
+                    value="{{ bank.account_title }}"
+                  />
+                </div>
+                <div>
+                  <label class="text-gray-500 block mb-1">Account Number</label>
+                  <input
+                    name="account_number"
+                    class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-500 outline-none"
+                    value="{{ bank.account_number }}"
+                  />
+                </div>
+                <div>
+                  <label class="text-gray-500 block mb-1">IBAN</label>
+                  <input
+                    name="iban"
+                    class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-500 outline-none"
+                    value="{{ bank.iban }}"
+                  />
+                </div>
+                <div>
+                  <label class="text-gray-500 block mb-1">Payment Frequency</label>
+                  <select
+                    name="payment_frequency"
+                    class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-500 outline-none"
+                  >
+                    <option value="MONTHLY" {% if bank.payment_frequency == 'MONTHLY' %}selected{% endif %}>Monthly</option>
+                    <option value="WEEKLY" {% if bank.payment_frequency == 'WEEKLY' %}selected{% endif %}>Weekly</option>
+                  </select>
+                </div>
+              </div>
+            </form>
 
             <!-- ================= PAYMENT HISTORY ================= -->
             <!-- <div>

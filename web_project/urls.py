@@ -25,6 +25,13 @@ urlpatterns = [
     path("", core_views.index, name="index"),
     path("admin/", admin.site.urls),
 
+    # Employee Directory
+    path(
+        "employees/directory/",
+        core_views.employee_directory_view,
+        name="employee_directory",
+    ),
+
     # Onboarding
     path(
         "employees/onboarding/",
@@ -62,6 +69,28 @@ urlpatterns = [
         "employees/<str:employee_id>/documents/",
         core_views.employee_documents_view,
         name="employee_documents",
+    ),
+    
+    # Admin views for editing (using /manage/ prefix to avoid conflict with Django admin)
+    path(
+        "manage/employees/<str:employee_id>/general/",
+        core_views.employee_general_admin_view,
+        name="employee_general_admin",
+    ),
+    path(
+        "manage/employees/<str:employee_id>/job/",
+        core_views.employee_job_admin_view,
+        name="employee_job_admin",
+    ),
+    path(
+        "manage/employees/<str:employee_id>/payroll/",
+        core_views.employee_payroll_admin_view,
+        name="employee_payroll_admin",
+    ),
+    path(
+        "manage/employees/<str:employee_id>/documents/",
+        core_views.employee_documents_admin_view,
+        name="employee_documents_admin",
     ),
 ]
 

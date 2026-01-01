@@ -224,7 +224,7 @@
             <!-- Tabs -->
             <div class="border-b pb-3 flex gap-6 text-sm font-medium">
               <a
-                href="{% url 'employee_general' employee.employee_id %}"
+                href="{% url 'employee_general_admin' employee.employee_id %}"
                 class="text-gray-500"
                 >General</a
               >
@@ -232,12 +232,12 @@
                 >Job</span
               >
               <a
-                href="{% url 'employee_payroll' employee.employee_id %}"
+                href="{% url 'employee_payroll_admin' employee.employee_id %}"
                 class="text-gray-500"
                 >Payroll</a
               >
               <a
-                href="{% url 'employee_documents' employee.employee_id %}"
+                href="{% url 'employee_documents_admin' employee.employee_id %}"
                 class="text-gray-500"
                 >Documents</a
               >
@@ -245,14 +245,17 @@
             </div>
 
             <!-- ================= Employment Info ================= -->
-            <div>
+            <form method="post" action="">
+              {% csrf_token %}
               <div class="flex justify-between mb-3">
                 <h3 class="font-semibold">Employment Information</h3>
-                <!-- <button class="text-emerald-600">✏️Edit</button> -->
+                <button type="submit" class="bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-emerald-700">
+                  💾 Save Changes
+                </button>
               </div>
 
               <div
-                class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-gray-50 p-4 rounded-lg text-sm"
+                class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-gray-50 p-4 rounded-lg text-sm mb-4"
               >
                 <div>
                   <p class="text-gray-500">Employee ID</p>
@@ -266,13 +269,70 @@
                   </p>
                 </div>
                 <div>
-                  <p class="text-gray-500">Join Date</p>
-                  <p class="font-medium">
-                    {{ employee.join_date|date:'d M Y' }}
-                  </p>
+                  <label class="text-gray-500 block mb-1">Join Date</label>
+                  <input
+                    type="date"
+                    name="join_date"
+                    class="w-full border rounded px-3 py-1 focus:ring-2 focus:ring-emerald-500 outline-none"
+                    value="{{ employee.join_date|date:'Y-m-d' }}"
+                  />
                 </div>
               </div>
-            </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label class="text-sm text-gray-500 block mb-1">Job Title</label>
+                  <input
+                    name="job_title"
+                    class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-500 outline-none"
+                    value="{{ employee.job_title }}"
+                  />
+                </div>
+                <div>
+                  <label class="text-sm text-gray-500 block mb-1">Department</label>
+                  <select
+                    name="department"
+                    class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-500 outline-none"
+                  >
+                    <option value="ENGINEERING" {% if employee.department == 'ENGINEERING' %}selected{% endif %}>Engineering</option>
+                    <option value="PROCUREMENT" {% if employee.department == 'PROCUREMENT' %}selected{% endif %}>Procurement</option>
+                    <option value="FINANCE" {% if employee.department == 'FINANCE' %}selected{% endif %}>Finance</option>
+                    <option value="CONSTRUCTION" {% if employee.department == 'CONSTRUCTION' %}selected{% endif %}>Construction</option>
+                    <option value="HSE" {% if employee.department == 'HSE' %}selected{% endif %}>HSE</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="text-sm text-gray-500 block mb-1">Office</label>
+                  <input
+                    name="office"
+                    class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-500 outline-none"
+                    value="{{ employee.office }}"
+                  />
+                </div>
+                <div>
+                  <label class="text-sm text-gray-500 block mb-1">Employment Type</label>
+                  <select
+                    name="employment_type"
+                    class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-500 outline-none"
+                  >
+                    <option value="FULL_TIME" {% if employee.employment_type == 'FULL_TIME' %}selected{% endif %}>Full Time</option>
+                    <option value="PART_TIME" {% if employee.employment_type == 'PART_TIME' %}selected{% endif %}>Part Time</option>
+                    <option value="CONTRACT" {% if employee.employment_type == 'CONTRACT' %}selected{% endif %}>Contract</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="text-sm text-gray-500 block mb-1">Status</label>
+                  <select
+                    name="status"
+                    class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-500 outline-none"
+                  >
+                    <option value="ACTIVE" {% if employee.status == 'ACTIVE' %}selected{% endif %}>Active</option>
+                    <option value="INACTIVE" {% if employee.status == 'INACTIVE' %}selected{% endif %}>Inactive</option>
+                    <option value="TERMINATED" {% if employee.status == 'TERMINATED' %}selected{% endif %}>Terminated</option>
+                  </select>
+                </div>
+              </div>
+            </form>
 
             <!-- ================= Job Timeline ================= -->
             <div>
@@ -349,24 +409,36 @@
             </div>
 
             <!-- ================= Work Schedule ================= -->
-            <div>
+            <form method="post" action="">
+              {% csrf_token %}
               <div class="flex justify-between mb-3">
                 <h3 class="font-semibold">Work Schedule</h3>
+                <button type="submit" class="bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-emerald-700">
+                  💾 Save Changes
+                </button>
               </div>
 
-              <div
-                class="bg-gray-50 p-4 rounded-lg text-sm flex flex-col md:flex-row md:justify-between"
-              >
-                <p>
-                  <span class="text-gray-500">Working Hours:</span>
-                  {{schedule.working_hours }}
-                </p>
-                <p>
-                  <span class="text-gray-500">Working Days:</span>
-                  {{schedule.working_days }}
-                </p>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="text-sm text-gray-500 block mb-1">Working Hours</label>
+                  <input
+                    name="working_hours"
+                    class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-500 outline-none"
+                    value="{{schedule.working_hours }}"
+                    placeholder="e.g. 9:00am - 5:00pm"
+                  />
+                </div>
+                <div>
+                  <label class="text-sm text-gray-500 block mb-1">Working Days</label>
+                  <input
+                    name="working_days"
+                    class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-500 outline-none"
+                    value="{{schedule.working_days }}"
+                    placeholder="e.g. Monday - Friday"
+                  />
+                </div>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </main>

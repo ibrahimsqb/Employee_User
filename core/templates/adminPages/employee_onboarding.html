@@ -428,11 +428,20 @@
                 <label class="text-sm font-medium">
                   Department <span class="text-red-500">*</span>
                 </label>
-                <input
+                <select
                   name="department"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                  placeholder="IT"
-                />
+                  required
+                  class="mt-1 w-full rounded-lg border px-3 py-2 bg-white outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="" disabled selected>
+                    Select a department
+                  </option>
+                  <option value="Engineering">Engineering</option>
+                  <option value="Procurement">Procurement</option>
+                  <option value="Finance">Finance</option>
+                  <option value="Construction">Construction</option>
+                  <option value="HSE">HSE</option>
+                </select>
               </div>
 
               <div>
