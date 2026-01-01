@@ -41,6 +41,11 @@ urlpatterns = [
 
     # Employee detail tabs
     path(
+        "employees/<str:employee_id>/dashboard/",
+        core_views.employee_dashboard_view,
+        name="employee_dashboard",
+    ),
+    path(
         "employees/<str:employee_id>/general/",
         core_views.employee_general_view,
         name="employee_general",

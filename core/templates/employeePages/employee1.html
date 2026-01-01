@@ -69,6 +69,7 @@
       >
         <nav class="px-4 py-6 space-y-2">
           <a
+            href="{% url 'employee_dashboard' employee.employee_id %}"
             class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
           >
             <img
@@ -80,22 +81,23 @@
           </a>
 
           <a
+            href="{% url 'employee_general' employee.employee_id %}"
             class="flex items-center gap-3 px-4 py-2 rounded-lg bg-emerald-800"
           >
             <img
-              src="{% static 'assets/img/icons/common/transfer 1.png' %}"
+              src="{% static 'assets/img/icons/common/user 3 1.png' %}"
               class="w-5"
               alt="Employees"
             />
-            Employees
+            Profile
           </a>
 
           <a
             class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
           >
             <img
-              src="{% static 'assets/img/icons/common/user 3 1.png' %}"
-              class="w-5"
+              src="{% static 'assets/img/icons/common/clock.png' %}"
+              class="w-5 filter invert"
               alt="Attendance"
             />
             Attendance
@@ -105,66 +107,11 @@
             class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
           >
             <img
-              src="{% static 'assets/img/icons/common/economic-investment 1.png' %}"
+              src="{% static 'assets/img/icons/common/calendar.png' %}"
               class="w-5"
               alt="Leave Management"
             />
             Leave Management
-          </a>
-
-          <a
-            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
-          >
-            <img
-              src="{% static 'assets/img/icons/common/credit-card 1.png' %}"
-              class="w-5"
-              alt="Payroll"
-            />
-            Payroll
-          </a>
-
-          <a
-            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
-          >
-            <img
-              src="{% static 'assets/img/icons/common/loan 1.png' %}"
-              class="w-5"
-              alt="Performance"
-            />
-            Performance
-          </a>
-
-          <a
-            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
-          >
-            <img
-              src="{% static 'assets/img/icons/common/service 1.png' %}"
-              class="w-5"
-              alt="Assets"
-            />
-            Assets
-          </a>
-
-          <a
-            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
-          >
-            <img
-              src="{% static 'assets/img/icons/common/econometrics 1.png' %}"
-              class="w-5"
-              alt="Recruitment"
-            />
-            Recruitment
-          </a>
-
-          <a
-            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
-          >
-            <img
-              src="{% static 'assets/img/icons/common/settings solid 1.png' %}"
-              class="w-5"
-              alt="Settings"
-            />
-            Settings
           </a>
         </nav>
       </aside>
@@ -182,10 +129,13 @@
           <!-- ================= PROFILE CARD ================= -->
           <div class="bg-white rounded-xl shadow p-6 self-start">
             <div class="flex flex-col items-center text-center">
-              <img
-                src="https://i.pravatar.cc/120?img=47"
-                class="w-24 h-24 rounded-full mb-3"
-              />
+              <div
+                class="w-20 h-20 rounded-full flex items-center justify-center text-xl font-semibold text-white mb-4"
+                style="background-color: #064e3b"
+              >
+                {{ employee.employeepersonalinfo.full_name|slice:":1" }}
+                {{employee.employeepersonalinfo.full_name|slice:"1:2" }}
+              </div>
               <h2 class="font-semibold text-lg">{{ personal.full_name }}</h2>
               <p class="text-sm text-gray-500">{{ employee.job_title }}</p>
 
@@ -243,7 +193,6 @@
                   class="pb-3 text-gray-500 hover:text-gray-700"
                   >Documents</a
                 >
-                <a class="pb-3 text-gray-500 hover:text-gray-700">Settings</a>
               </nav>
             </div>
 

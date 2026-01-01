@@ -310,7 +310,20 @@ def _ensure_current_month_payroll(employee: EmployeeProfile) -> Payroll | None:
     )
 
 
+def employee_dashboard_view(request, employee_id):
+    """Display employee dashboard."""
+    employee = _get_employee_or_404(employee_id)
+    personal = getattr(employee, "employeepersonalinfo", None)
+
+    context = {
+        "employee": employee,
+        "personal": personal,
+    }
+    return render(request, "employeePages/employee_dashboard.html", context)
+
+
 def employee_general_view(request, employee_id):
+    """Display employee general/personal information."""
     employee = _get_employee_or_404(employee_id)
     personal = getattr(employee, "employeepersonalinfo", None)
     context = {
