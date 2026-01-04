@@ -209,6 +209,33 @@ class RequiredDocument(models.Model):
     )
 
 
+class EmployeeAttendance(models.Model):
+    employee = models.ForeignKey(
+        EmployeeProfile,
+        on_delete=models.CASCADE,
+        related_name="attendances",
+    )
+    date = models.DateField()
+    check_in = models.DateTimeField(null=True, blank=True)
+    check_out = models.DateTimeField(null=True, blank=True)
+    total_duration = models.DurationField(null=True, blank=True)
+
+    class Meta:
+        unique_together = ("employee", "date")
+        ordering = ["-date", "-check_in"]
+
+    def __str__(self) -> str:
+        return f"{self.employee.employee_id} - {self.date}"
+
+    @property
+    def status(self) -> str:
+        if self.check_in and self.check_out:
+            return "COMPLETED"
+        if self.check_in:
+            return "IN_PROGRESS"
+        return "NOT_STARTED"
+
+
 
 
 

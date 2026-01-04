@@ -1,10 +1,12 @@
 from django.contrib.auth.models import User
 from django.db import transaction
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils import timezone
 
 from .forms import BankDetailForm, EmployeeDocumentForm
 from .models import (
     BankDetail,
+    EmployeeAttendance,
     EmployeeDocument,
     EmployeeOnboarding,
     EmployeePersonalInfo,
@@ -459,6 +461,120 @@ def employee_documents_view(request, employee_id):
     return render(request, "employeePages/employee4.html", context)
 
 
+def employee_attendance_view(request, employee_id):
+    """Track daily attendance for an employee (check-in / check-out)."""
+
+    employee = _get_employee_or_404(employee_id)
+    personal = getattr(employee, "employeepersonalinfo", None)
+
+    today = timezone.localdate()
+    now = timezone.localtime()
+
+    attendance, _ = EmployeeAttendance.objects.get_or_create(
+        employee=employee,
+        date=today,
+    )
+
+    if request.method == "POST":
+        action = request.POST.get("action")
+
+        # Record check-in if not already set
+        if action == "check_in" and attendance.check_in is None:
+            attendance.check_in = now
+            attendance.save()
+
+        # Record/update check-out and compute total duration
+        # Allow multiple clock-outs as a failsafe (user can update if they made a mistake)
+        elif action == "check_out" and attendance.check_in is not None:
+            attendance.check_out = now
+            attendance.total_duration = attendance.check_out - attendance.check_in
+            attendance.save()
+
+    # Prepare display values
+    def _format_time(dt):
+        if not dt:
+            return "--:--"
+        local_dt = timezone.localtime(dt)
+        return local_dt.strftime("%I:%M %p").lstrip("0")
+
+    check_in_display = _format_time(attendance.check_in)
+    check_out_display = _format_time(attendance.check_out)
+
+    total_hours_display = "0h 00m"
+    if attendance.total_duration:
+        total_seconds = int(attendance.total_duration.total_seconds())
+        hours = total_seconds // 3600
+        minutes = (total_seconds % 3600) // 60
+        total_hours_display = f"{hours}h {minutes:02d}m"
+
+    status_label = "Not Started"
+    if attendance.check_in and not attendance.check_out:
+        status_label = "In Progress"
+    elif attendance.check_in and attendance.check_out:
+        status_label = "Completed"
+
+    primary_action = None
+    primary_label = None
+    if attendance.check_in is None:
+        primary_action = "check_in"
+        primary_label = "Check In"
+    else:
+        # Allow clock-out and re-clock-out (failsafe for mistakes)
+        primary_action = "check_out"
+        if attendance.check_out is None:
+            primary_label = "Clock Out"
+        else:
+            primary_label = "Update Clock Out"
+
+    # Simple log message for today's activity
+    log_message = "No activity recorded for today yet."
+    log_time_display = "--:--"
+    log_status = "Idle"
+    log_status_color = "text-gray-500"
+
+    if attendance.check_out:
+        log_message = "Checked out successfully."
+        log_time_display = _format_time(attendance.check_out)
+        log_status = "Completed"
+        log_status_color = "text-emerald-600"
+    elif attendance.check_in:
+        log_message = "Checked in and shift in progress."
+        log_time_display = _format_time(attendance.check_in)
+        log_status = "In Progress"
+        log_status_color = "text-orange-500"
+
+    current_time = now.strftime("%I:%M %p").lstrip("0")
+    current_date = now.strftime("%A, %b %d, %Y")
+
+    first_name = None
+    if personal and personal.full_name:
+        first_name = personal.full_name.split(" ")[0]
+    elif employee.user and employee.user.first_name:
+        first_name = employee.user.first_name
+    else:
+        first_name = employee.employee_id
+
+    context = {
+        "employee": employee,
+        "personal": personal,
+        "attendance": attendance,
+        "check_in_display": check_in_display,
+        "check_out_display": check_out_display,
+        "total_hours_display": total_hours_display,
+        "status_label": status_label,
+        "primary_action": primary_action,
+        "primary_label": primary_label,
+        "log_message": log_message,
+        "log_time_display": log_time_display,
+        "log_status": log_status,
+        "log_status_color": log_status_color,
+        "current_time": current_time,
+        "current_date": current_date,
+        "first_name": first_name,
+    }
+    return render(request, "employeePages/employee_attendance.html", context)
+
+
 # ================= ADMIN VIEWS (Editable) =================
 
 def employee_general_admin_view(request, employee_id):
@@ -623,3 +739,79 @@ def employee_documents_admin_view(request, employee_id):
         "documents": documents,
     }
     return render(request, "adminPages/employee4_admin.html", context)
+
+
+def employee_schedule_view(request, employee_id):
+    """Employee schedule page with real current dates for the week."""
+
+    from datetime import timedelta
+
+    employee = _get_employee_or_404(employee_id)
+    personal = getattr(employee, "employeepersonalinfo", None)
+    schedule = getattr(employee, "workschedule", None)
+
+    today = timezone.localdate()
+    now = timezone.localtime()
+
+    # Determine current week (Monday to Sunday)
+    start_of_week = today - timedelta(days=today.weekday())
+    end_of_week = start_of_week + timedelta(days=6)
+
+    week_range_label = f"{start_of_week.strftime('%b %d')} - {end_of_week.strftime('%b %d')}"
+
+    default_shift_hours = "9:00 AM - 5:00 PM"
+    shift_hours = schedule.working_hours if schedule and schedule.working_hours else default_shift_hours
+
+    week_days = []
+    for i in range(7):
+        day_date = start_of_week + timedelta(days=i)
+        is_today = day_date == today
+        weekday_short = day_date.strftime("%a").upper()
+        date_label = day_date.strftime("%b %d")
+
+        # Very simple working day detection based on schedule working_days text or Mon-Fri default
+        is_working = False
+        if schedule and schedule.working_days:
+            weekday_full = day_date.strftime("%A")
+            if weekday_full.lower() in schedule.working_days.lower():
+                is_working = True
+        else:
+            is_working = day_date.weekday() < 5
+
+        week_days.append(
+            {
+                "weekday_short": weekday_short,
+                "date_label": date_label,
+                "is_today": is_today,
+                "is_working": is_working,
+                "shift_hours": shift_hours if is_working else None,
+            }
+        )
+
+    # Split shift hours for today's shift details if possible
+    today_start = None
+    today_end = None
+    if "-" in shift_hours:
+        parts = shift_hours.split("-", 1)
+        today_start = parts[0].strip()
+        today_end = parts[1].strip()
+
+    today_weekday = today.strftime("%A")
+    today_full_date = today.strftime("%b %d, %Y")
+
+    context = {
+        "employee": employee,
+        "personal": personal,
+        "schedule": schedule,
+        "week_days": week_days,
+        "week_range_label": week_range_label,
+        "shift_hours": shift_hours,
+        "today_start": today_start or "9:00 AM",
+        "today_end": today_end or "5:00 PM",
+        "today_total_hours": "8h 00m",
+        "late_threshold": "9:15 AM",
+        "today_weekday": today_weekday,
+        "today_full_date": today_full_date,
+        "current_date": now.strftime("%b %d, %Y"),
+    }
+    return render(request, "employeePages/employee_schedule.html", context)

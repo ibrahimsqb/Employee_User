@@ -14,39 +14,20 @@
     <header class="fixed top-0 left-0 right-0 z-50 bg-white border-b">
       <div class="flex items-center justify-between px-6 h-16">
         <div class="flex items-center gap-3">
-          <img
-            src="{% static 'assets/img/brand/OfficeFlowAi.png' %}"
-            class="h-20 w-20"
-          />
+          <img src="{% static 'assets/img/brand/OfficeFlowAi.png' %}" class="h-20 w-20" />
         </div>
 
         <div class="flex items-center gap-3">
-          <div
-            class="hidden md:flex items-center bg-gray-100 rounded-full px-4 py-2 w-72"
-          >
-            <input
-              type="text"
-              placeholder="Search for something"
-              class="bg-transparent outline-none text-sm w-full"
-            />
+          <div class="hidden md:flex items-center bg-gray-100 rounded-full px-4 py-2 w-72">
+            <input type="text" placeholder="Search for something" class="bg-transparent outline-none text-sm w-full" />
           </div>
 
-          <button
-            class="w-10 h-10 border rounded-full flex items-center justify-center"
-          >
-            <img
-              src="{% static 'assets/img/icons/common/settings 1.png' %}"
-              class="w-5"
-            />
+          <button class="w-10 h-10 border rounded-full flex items-center justify-center">
+            <img src="{% static 'assets/img/icons/common/settings 1.png' %}" class="w-5" />
           </button>
 
-          <button
-            class="w-10 h-10 border rounded-full flex items-center justify-center"
-          >
-            <img
-              src="{% static 'assets/img/icons/common/002-notification-1.png' %}"
-              class="w-5"
-            />
+          <button class="w-10 h-10 border rounded-full flex items-center justify-center">
+            <img src="{% static 'assets/img/icons/common/002-notification-1.png' %}" class="w-5" />
           </button>
 
           <img src="https://i.pravatar.cc/40" class="w-9 h-9 rounded-full" />
@@ -56,53 +37,25 @@
 
     <div class="flex pt-16">
       <!-- ================= SIDEBAR ================= -->
-      <aside
-        class="hidden lg:block w-64 bg-emerald-900 min-h-screen fixed text-white"
-      >
+      <aside class="hidden lg:block w-64 bg-emerald-900 min-h-screen fixed text-white">
         <nav class="px-4 py-6 space-y-2">
-          <a
-            href="{% url 'employee_dashboard' employee.employee_id %}"
-            class="flex items-center gap-3 px-4 py-2 rounded-lg bg-emerald-800"
-          >
-            <img
-              src="{% static 'assets/img/icons/common/home 2.png' %}"
-              class="w-5"
-              alt="Dashboard"
-            />
+          <a href="{% url 'employee_dashboard' employee.employee_id %}" class="flex items-center gap-3 px-4 py-2 rounded-lg bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/home 2.png' %}" class="w-5" alt="Dashboard" />
             Dashboard
           </a>
 
-          <a
-            href="{% url 'employee_general' employee.employee_id %}"
-            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
-          >
-            <img
-              src="{% static 'assets/img/icons/common/user 3 1.png' %}"
-              class="w-5"
-              alt="Employees"
-            />
+          <a href="{% url 'employee_general' employee.employee_id %}" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/user 3 1.png' %}" class="w-5" alt="Employees" />
             Profile
           </a>
 
-          <a
-            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
-          >
-            <img
-              src="{% static 'assets/img/icons/common/clock.png' %}"
-              class="w-5 filter invert"
-              alt="Attendance"
-            />
+          <a href="{% url 'employee_attendance' employee.employee_id %}" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/clock.png' %}" class="w-5 filter invert" alt="Attendance" />
             Attendance
           </a>
 
-          <a
-            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
-          >
-            <img
-              src="{% static 'assets/img/icons/common/calendar.png' %}"
-              class="w-5"
-              alt="Leave Management"
-            />
+          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/calendar.png' %}" class="w-5" alt="Leave Management" />
             Leave Management
           </a>
         </nav>
@@ -113,16 +66,11 @@
         <!-- Header -->
         <div class="mb-6">
           <h1 class="text-xl font-semibold">Good Morning</h1>
-          <p class="text-sm text-gray-500">
-            Welcome back, {{ personal.full_name|default:"User" }}. Here's your
-            overview.
-          </p>
+          <p class="text-sm text-gray-500">Welcome back, {{ personal.full_name|default:"User" }}. Here's your overview.</p>
         </div>
 
         <!-- Shift Info -->
-        <div
-          class="bg-white p-4 rounded-lg border flex flex-col md:flex-row justify-between gap-4 mb-6"
-        >
+        <div class="bg-white p-4 rounded-lg border flex flex-col md:flex-row justify-between gap-4 mb-6">
           <div>
             <p class="text-sm text-gray-500">Today's Shift</p>
             <p class="font-semibold text-lg">9:00 AM - 5:00 PM</p>
@@ -130,12 +78,8 @@
           </div>
 
           <div class="flex items-center gap-4">
-            <span class="flex items-center gap-2 text-green-600 text-sm">
-              ✔ Checked in at 8:55 AM
-            </span>
-            <button class="bg-emerald-600 text-white px-4 py-2 rounded-md">
-              Go to Attendance
-            </button>
+            <span class="flex items-center gap-2 text-green-600 text-sm"> ✔ Checked in at 8:55 AM </span>
+            <a href="{% url 'employee_attendance' employee.employee_id %}" class="bg-emerald-600 text-white px-4 py-2 rounded-md inline-flex items-center justify-center text-sm"> Go to Attendance </a>
           </div>
         </div>
 
@@ -182,11 +126,7 @@
                   <p class="font-medium">Downtown Office Tower</p>
                   <p class="text-sm text-gray-500">Electrical Installation</p>
                 </div>
-                <span
-                  class="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded"
-                >
-                  In progress
-                </span>
+                <span class="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded"> In progress </span>
               </div>
 
               <div class="flex justify-between items-center border p-3 rounded">
@@ -194,9 +134,7 @@
                   <p class="font-medium">Downtown Office Tower</p>
                   <p class="text-sm text-gray-500">Electrical Installation</p>
                 </div>
-                <span class="text-sm bg-gray-200 px-3 py-1 rounded">
-                  To do
-                </span>
+                <span class="text-sm bg-gray-200 px-3 py-1 rounded"> To do </span>
               </div>
             </div>
           </div>

@@ -75,6 +75,16 @@ urlpatterns = [
         core_views.employee_documents_view,
         name="employee_documents",
     ),
+    path(
+        "employees/<str:employee_id>/attendance/",
+        core_views.employee_attendance_view,
+        name="employee_attendance",
+    ),
+    path(
+        "employees/<str:employee_id>/schedule/",
+        core_views.employee_schedule_view,
+        name="employee_schedule",
+    ),
     
     # Admin views for editing (using /manage/ prefix to avoid conflict with Django admin)
     path(
