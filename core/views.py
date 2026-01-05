@@ -762,6 +762,64 @@ def employee_schedule_view(request, employee_id):
     default_shift_hours = "9:00 AM - 5:00 PM"
     shift_hours = schedule.working_hours if schedule and schedule.working_hours else default_shift_hours
 
+    # Parse shift hours for today's scheduled times
+    today_start = "9:00 AM"
+    today_end = "5:00 PM"
+    today_total_hours = "8h 00m"
+    late_threshold_time = "9:15 AM"
+    
+    if "-" in shift_hours:
+        parts = shift_hours.split("-", 1)
+        today_start = parts[0].strip()
+        today_end = parts[1].strip()
+        
+        # Calculate scheduled total hours
+        try:
+            from datetime import datetime
+            import re
+            
+            # Normalize: ensure there's a space before AM/PM
+            start_str = today_start.upper()
+            end_str = today_end.upper()
+            
+            # Add space before AM/PM if missing (e.g., "10:00AM" -> "10:00 AM")
+            start_str = re.sub(r'(\d)(AM|PM)', r'\1 \2', start_str)
+            end_str = re.sub(r'(\d)(AM|PM)', r'\1 \2', end_str)
+            
+            start_time = None
+            end_time = None
+            
+            # Try parsing with minutes first, then without
+            for fmt in ["%I:%M %p", "%I %p"]:
+                if start_time is None:
+                    try:
+                        start_time = datetime.strptime(start_str, fmt)
+                    except ValueError:
+                        pass
+                if end_time is None:
+                    try:
+                        end_time = datetime.strptime(end_str, fmt)
+                    except ValueError:
+                        pass
+            
+            if start_time and end_time:
+                # Handle case where end time is next day (e.g., 11 PM - 6 AM)
+                if end_time < start_time:
+                    end_time = end_time.replace(day=end_time.day + 1)
+                
+                duration = end_time - start_time
+                total_seconds = duration.total_seconds()
+                hours = int(total_seconds // 3600)
+                minutes = int((total_seconds % 3600) // 60)
+                today_total_hours = f"{hours}h {minutes:02d}m"
+                
+                # Calculate late threshold as start time + 15 minutes
+                late_threshold_dt = start_time + timedelta(minutes=15)
+                late_threshold_time = late_threshold_dt.strftime("%I:%M %p").lstrip("0")
+        except Exception as e:
+            today_total_hours = "8h 00m"
+            late_threshold_time = "9:15 AM"
+
     week_days = []
     for i in range(7):
         day_date = start_of_week + timedelta(days=i)
@@ -769,13 +827,21 @@ def employee_schedule_view(request, employee_id):
         weekday_short = day_date.strftime("%a").upper()
         date_label = day_date.strftime("%b %d")
 
-        # Very simple working day detection based on schedule working_days text or Mon-Fri default
+        # Working day detection based on schedule working_days text or Mon-Fri default
         is_working = False
         if schedule and schedule.working_days:
-            weekday_full = day_date.strftime("%A")
-            if weekday_full.lower() in schedule.working_days.lower():
+            working_days_lower = schedule.working_days.lower()
+            weekday_full = day_date.strftime("%A").lower()
+            
+            # Check for common patterns like "Monday - Friday" or individual day names
+            if "monday" in working_days_lower and "friday" in working_days_lower:
+                # Pattern like "Monday - Friday" means all weekdays
+                is_working = day_date.weekday() < 5
+            elif weekday_full in working_days_lower:
+                # Individual day name found
                 is_working = True
         else:
+            # Default: Monday through Friday
             is_working = day_date.weekday() < 5
 
         week_days.append(
@@ -788,13 +854,61 @@ def employee_schedule_view(request, employee_id):
             }
         )
 
-    # Split shift hours for today's shift details if possible
-    today_start = None
-    today_end = None
-    if "-" in shift_hours:
-        parts = shift_hours.split("-", 1)
-        today_start = parts[0].strip()
-        today_end = parts[1].strip()
+    # Fetch today's attendance record
+    attendance = EmployeeAttendance.objects.filter(
+        employee=employee,
+        date=today,
+    ).first()
+
+    # Format attendance times
+    def _format_time(dt):
+        if not dt:
+            return "--:--"
+        local_dt = timezone.localtime(dt)
+        return local_dt.strftime("%I:%M %p").lstrip("0")
+
+    check_in_display = _format_time(attendance.check_in) if attendance else "--:--"
+    check_out_display = _format_time(attendance.check_out) if attendance else "--:--"
+
+    # Calculate total hours worked
+    total_hours_display = "0h 00m"
+    if attendance and attendance.total_duration:
+        total_seconds = int(attendance.total_duration.total_seconds())
+        hours = total_seconds // 3600
+        minutes = (total_seconds % 3600) // 60
+        total_hours_display = f"{hours}h {minutes:02d}m"
+
+    # Calculate time late
+    from datetime import datetime
+    time_late_display = "--"
+    time_late_color = "text-gray-500"
+    
+    if attendance and attendance.check_in:
+        try:
+            # Parse the late threshold time
+            threshold_time_obj = datetime.strptime(late_threshold_time, "%I:%M %p")
+            
+            # Create threshold datetime for today
+            threshold_dt = timezone.make_aware(
+                datetime.combine(today, threshold_time_obj.time())
+            )
+            
+            # Calculate difference
+            if attendance.check_in > threshold_dt:
+                late_seconds = int((attendance.check_in - threshold_dt).total_seconds())
+                late_minutes = late_seconds // 60
+                if late_minutes > 0:
+                    time_late_display = f"+{late_minutes} min"
+                    time_late_color = "text-red-600"
+                else:
+                    time_late_display = "On Time"
+                    time_late_color = "text-emerald-600"
+            else:
+                time_late_display = "On Time"
+                time_late_color = "text-emerald-600"
+        except:
+            time_late_display = "--"
+            time_late_color = "text-gray-500"
 
     today_weekday = today.strftime("%A")
     today_full_date = today.strftime("%b %d, %Y")
@@ -806,10 +920,15 @@ def employee_schedule_view(request, employee_id):
         "week_days": week_days,
         "week_range_label": week_range_label,
         "shift_hours": shift_hours,
-        "today_start": today_start or "9:00 AM",
-        "today_end": today_end or "5:00 PM",
-        "today_total_hours": "8h 00m",
-        "late_threshold": "9:15 AM",
+        "today_start": today_start,
+        "today_end": today_end,
+        "today_total_hours": today_total_hours,
+        "check_in_display": check_in_display,
+        "check_out_display": check_out_display,
+        "total_hours_display": total_hours_display,
+        "time_late_display": time_late_display,
+        "time_late_color": time_late_color,
+        "late_threshold": late_threshold_time,
         "today_weekday": today_weekday,
         "today_full_date": today_full_date,
         "current_date": now.strftime("%b %d, %Y"),
