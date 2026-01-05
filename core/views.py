@@ -1,7 +1,11 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib import messages
 from django.db import transaction
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
+import secrets
 
 from .forms import BankDetailForm, EmployeeDocumentForm
 from .models import (
@@ -19,10 +23,160 @@ from .models import (
 )
 
 
+# ================= PERMISSION HELPERS =================
+
+def is_hr_or_superuser(user):
+    """Check if user is HR staff or superuser."""
+    return user.is_authenticated and (user.is_superuser or user.groups.filter(name='HR').exists())
+
+def is_superuser(user):
+    """Check if user is superuser."""
+    return user.is_authenticated and user.is_superuser
+
+def can_access_employee(user, employee_id):
+    """Check if user can access this employee's data."""
+    if not user.is_authenticated:
+        return False
+    
+    if user.is_superuser or user.groups.filter(name='HR').exists():
+        return True
+    
+    # Regular employees can only access their own data
+    try:
+        profile = EmployeeProfile.objects.get(user=user)
+        return profile.employee_id == employee_id
+    except EmployeeProfile.DoesNotExist:
+        return False
+
+
+# ================= AUTHENTICATION VIEWS =================
+
+def login_view(request):
+    """Custom login view."""
+    if request.user.is_authenticated:
+        # Redirect based on user type
+        if request.user.is_superuser:
+            return redirect("admin:index")
+        elif request.user.groups.filter(name='HR').exists():
+            return redirect("employee_directory")
+        else:
+            try:
+                profile = EmployeeProfile.objects.get(user=request.user)
+                return redirect("employee_dashboard", employee_id=profile.employee_id)
+            except EmployeeProfile.DoesNotExist:
+                pass
+    
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
+            
+            # Redirect based on user type
+            if user.is_superuser:
+                return redirect("admin:index")
+            elif user.groups.filter(name='HR').exists():
+                return redirect("employee_directory")
+            else:
+                # Regular employee - redirect to their dashboard
+                try:
+                    profile = EmployeeProfile.objects.get(user=user)
+                    return redirect("employee_dashboard", employee_id=profile.employee_id)
+                except EmployeeProfile.DoesNotExist:
+                    messages.error(request, "Employee profile not found.")
+                    logout(request)
+                    return redirect("login")
+        else:
+            messages.error(request, "Invalid username or password.")
+    
+    return render(request, "core/login.html")
+
+def logout_view(request):
+    """Custom logout view."""
+    logout(request)
+    return redirect("login")
+
+@login_required
+def change_password_view(request):
+    """Allow users to change their password."""
+    if request.method == "POST":
+        old_password = request.POST.get("old_password")
+        new_password = request.POST.get("new_password")
+        confirm_password = request.POST.get("confirm_password")
+        
+        if new_password != confirm_password:
+            messages.error(request, "New passwords don't match.")
+        elif request.user.check_password(old_password):
+            request.user.set_password(new_password)
+            request.user.save()
+            messages.success(request, "Password changed successfully. Please login again.")
+            return redirect("login")
+        else:
+            messages.error(request, "Incorrect old password.")
+    
+    return render(request, "core/change_password.html")
+
+@login_required
+@user_passes_test(is_superuser)
+def create_hr_user_view(request):
+    """Admin view to create HR users."""
+    
+    if request.method == "POST":
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        full_name = request.POST.get("full_name", "")
+        
+        try:
+            # Create HR user
+            user = User.objects.create_user(
+                username=username,
+                email=email,
+                password=password,
+                is_staff=True  # HR users are staff
+            )
+            
+            first, *rest = full_name.split(" ", 1) if full_name else ["", ""]
+            user.first_name = first
+            user.last_name = rest[0] if rest else ""
+            user.save()
+            
+            # Add to HR group
+            hr_group, _ = Group.objects.get_or_create(name='HR')
+            user.groups.add(hr_group)
+            
+            messages.success(request, f"HR user '{username}' created successfully.")
+            return redirect("create_hr_user")
+        except Exception as e:
+            messages.error(request, f"Error creating HR user: {str(e)}")
+    
+    return render(request, "adminPages/create_hr_user.html")
+
+
+# ================= PUBLIC VIEWS =================
+
+
 def index(request):
-    return render(request, "core/index.html")
+    """Landing page - redirect based on user type."""
+    if request.user.is_authenticated:
+        if request.user.is_superuser:
+            return redirect("admin:index")
+        elif request.user.groups.filter(name='HR').exists():
+            return redirect("employee_directory")
+        else:
+            try:
+                profile = EmployeeProfile.objects.get(user=request.user)
+                return redirect("employee_dashboard", employee_id=profile.employee_id)
+            except EmployeeProfile.DoesNotExist:
+                pass
+    return redirect("login")
 
 
+@login_required
+@user_passes_test(is_hr_or_superuser)
 def employee_directory_view(request):
     """Display all employees in a directory/grid view."""
     employees = EmployeeProfile.objects.select_related('employeepersonalinfo').all()
@@ -55,6 +209,8 @@ def _generate_next_employee_id() -> str:
 
 
 @transaction.atomic
+@login_required
+@user_passes_test(is_hr_or_superuser)
 def employee_onboarding_view(request):
     """Create a new employee and all related records from the onboarding form."""
 
@@ -66,13 +222,25 @@ def employee_onboarding_view(request):
         employee_id = data.get("employee_id") or _generate_next_employee_id()
         username = employee_id or email or full_name.replace(" ", "_")
 
-        user = User.objects.create(username=username)
-        if email:
-            user.email = email
+        # Generate a random temporary password
+        temp_password = secrets.token_urlsafe(12)
+
+        # Create user with temporary password
+        user = User.objects.create_user(
+            username=username,
+            email=email,
+            password=temp_password,
+            is_staff=False  # Employees are not staff by default
+        )
+        
         first, *rest = full_name.split(" ", 1)
         user.first_name = first
         user.last_name = rest[0] if rest else ""
         user.save()
+
+        # Add user to Employee group
+        employee_group, _ = Group.objects.get_or_create(name='Employee')
+        user.groups.add(employee_group)
 
         # Employee profile
         from datetime import date
@@ -241,6 +409,14 @@ def employee_onboarding_view(request):
                 uploaded_by=request.user if request.user.is_authenticated else None,
             )
 
+        # Store temporary password in session for display
+        request.session['new_employee_credentials'] = {
+            'username': username,
+            'password': temp_password,
+            'email': email,
+            'full_name': full_name
+        }
+
         # Redirect to the General tab for the new employee
         return redirect("employee_general", employee_id=profile.employee_id)
 
@@ -314,6 +490,10 @@ def _ensure_current_month_payroll(employee: EmployeeProfile) -> Payroll | None:
 
 def employee_dashboard_view(request, employee_id):
     """Display employee dashboard."""
+    if not can_access_employee(request.user, employee_id):
+        messages.error(request, "You don't have permission to access this page.")
+        return redirect("login")
+    
     employee = _get_employee_or_404(employee_id)
     personal = getattr(employee, "employeepersonalinfo", None)
 
@@ -326,16 +506,29 @@ def employee_dashboard_view(request, employee_id):
 
 def employee_general_view(request, employee_id):
     """Display employee general/personal information."""
+    if not can_access_employee(request.user, employee_id):
+        messages.error(request, "You don't have permission to access this page.")
+        return redirect("login")
+    
     employee = _get_employee_or_404(employee_id)
     personal = getattr(employee, "employeepersonalinfo", None)
+    
+    # Check if there are new employee credentials to display
+    credentials = request.session.pop('new_employee_credentials', None)
+    
     context = {
         "employee": employee,
         "personal": personal,
+        "credentials": credentials,
     }
     return render(request, "employeePages/employee1.html", context)
 
 
 def employee_job_view(request, employee_id):
+    if not can_access_employee(request.user, employee_id):
+        messages.error(request, "You don't have permission to access this page.")
+        return redirect("login")
+    
     employee = _get_employee_or_404(employee_id)
     job_history = JobHistory.objects.filter(employee=employee).order_by("-effective_date")
     contracts = EmploymentContract.objects.filter(employee=employee).order_by("-start_date")
@@ -357,6 +550,10 @@ def employee_job_view(request, employee_id):
 
 
 def employee_payroll_view(request, employee_id):
+    if not can_access_employee(request.user, employee_id):
+        messages.error(request, "You don't have permission to access this page.")
+        return redirect("login")
+    
     employee = _get_employee_or_404(employee_id)
     earnings = SalaryComponent.objects.filter(employee=employee, component_type="EARNING")
     deductions = SalaryComponent.objects.filter(employee=employee, component_type="DEDUCTION")
@@ -390,6 +587,10 @@ def employee_payroll_view(request, employee_id):
 
 def employee_payslip_list_view(request, employee_id):
     """Display a list of all payslips for an employee."""
+    if not can_access_employee(request.user, employee_id):
+        messages.error(request, "You don't have permission to access this page.")
+        return redirect("login")
+    
     employee = _get_employee_or_404(employee_id)
     personal = getattr(employee, "employeepersonalinfo", None)
     _ensure_current_month_payroll(employee)
@@ -405,6 +606,10 @@ def employee_payslip_list_view(request, employee_id):
 
 def employee_payslip_detail_view(request, employee_id, payroll_id):
     """Display a single payslip detail."""
+    if not can_access_employee(request.user, employee_id):
+        messages.error(request, "You don't have permission to access this page.")
+        return redirect("login")
+    
     employee = _get_employee_or_404(employee_id)
     personal = getattr(employee, "employeepersonalinfo", None)
     bank = getattr(employee, "bankdetail", None)
@@ -439,6 +644,10 @@ def employee_payslip_detail_view(request, employee_id, payroll_id):
 
 
 def employee_documents_view(request, employee_id):
+    if not can_access_employee(request.user, employee_id):
+        messages.error(request, "You don't have permission to access this page.")
+        return redirect("login")
+    
     employee = _get_employee_or_404(employee_id)
     documents = EmployeeDocument.objects.filter(employee=employee).order_by("-uploaded_at")
 
@@ -463,6 +672,9 @@ def employee_documents_view(request, employee_id):
 
 def employee_attendance_view(request, employee_id):
     """Track daily attendance for an employee (check-in / check-out)."""
+    if not can_access_employee(request.user, employee_id):
+        messages.error(request, "You don't have permission to access this page.")
+        return redirect("login")
 
     employee = _get_employee_or_404(employee_id)
     personal = getattr(employee, "employeepersonalinfo", None)
@@ -577,6 +789,8 @@ def employee_attendance_view(request, employee_id):
 
 # ================= ADMIN VIEWS (Editable) =================
 
+@login_required
+@user_passes_test(is_hr_or_superuser)
 def employee_general_admin_view(request, employee_id):
     """Admin view for editing employee general/personal information."""
     employee = _get_employee_or_404(employee_id)
@@ -604,6 +818,8 @@ def employee_general_admin_view(request, employee_id):
     return render(request, "adminPages/employee1_admin.html", context)
 
 
+@login_required
+@user_passes_test(is_hr_or_superuser)
 def employee_job_admin_view(request, employee_id):
     """Admin view for editing employee job information."""
     employee = _get_employee_or_404(employee_id)
@@ -652,6 +868,8 @@ def employee_job_admin_view(request, employee_id):
     return render(request, "adminPages/employee2_admin.html", context)
 
 
+@login_required
+@user_passes_test(is_hr_or_superuser)
 def employee_payroll_admin_view(request, employee_id):
     """Admin view for editing employee payroll information."""
     employee = _get_employee_or_404(employee_id)
@@ -718,6 +936,8 @@ def employee_payroll_admin_view(request, employee_id):
     return render(request, "adminPages/employee3_admin.html", context)
 
 
+@login_required
+@user_passes_test(is_hr_or_superuser)
 def employee_documents_admin_view(request, employee_id):
     """Admin view for managing employee documents."""
     employee = _get_employee_or_404(employee_id)
@@ -743,6 +963,9 @@ def employee_documents_admin_view(request, employee_id):
 
 def employee_schedule_view(request, employee_id):
     """Employee schedule page with real current dates for the week."""
+    if not can_access_employee(request.user, employee_id):
+        messages.error(request, "You don't have permission to access this page.")
+        return redirect("login")
 
     from datetime import timedelta
 

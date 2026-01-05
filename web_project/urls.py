@@ -22,17 +22,26 @@ from django.conf import settings
 from core import views as core_views
 
 urlpatterns = [
+    # Authentication
+    path("login/", core_views.login_view, name="login"),
+    path("logout/", core_views.logout_view, name="logout"),
+    path("change-password/", core_views.change_password_view, name="change_password"),
+    
+    # Admin/Superuser only
+    path("hr/create/", core_views.create_hr_user_view, name="create_hr_user"),
+    
+    # Landing page
     path("", core_views.index, name="index"),
     path("admin/", admin.site.urls),
 
-    # Employee Directory
+    # HR/Admin views - Employee Directory
     path(
         "employees/directory/",
         core_views.employee_directory_view,
         name="employee_directory",
     ),
 
-    # Onboarding
+    # HR/Admin views - Onboarding
     path(
         "employees/onboarding/",
         core_views.employee_onboarding_view,
