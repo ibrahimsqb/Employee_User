@@ -92,20 +92,62 @@
             </div>
 
             <!-- Camera Box -->
-            <div class="h-48 sm:h-56 bg-slate-800 rounded-lg flex items-center justify-center mb-4">
-              <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-black flex items-center justify-center">
+            <div class="relative h-48 sm:h-56 bg-slate-800 rounded-lg flex items-center justify-center mb-4 overflow-hidden">
+              <!-- Webcam Video -->
+              <video id="webcam" autoplay playsinline class="absolute inset-0 w-full h-full object-cover hidden"></video>
+
+              <!-- Canvas for capturing -->
+              <canvas id="canvas" class="hidden"></canvas>
+
+              <!-- Placeholder when camera is off -->
+              <div id="camera-placeholder" class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-black flex items-center justify-center">
                 <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full border-4 border-green-400"></div>
               </div>
+
+              <!-- Preview captured image -->
+              <img id="preview" class="absolute inset-0 w-full h-full object-cover hidden" />
             </div>
 
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-              <div class="text-xs text-gray-500 flex items-center gap-1">Simple time tracking. Facial recognition will be added later.</div>
+              <div class="text-xs text-gray-500 flex items-center gap-1">
+                <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                </svg>
+                Face recognition enabled for secure attendance tracking
+              </div>
 
               {% if primary_action %}
-              <form method="post" class="w-full sm:w-auto flex justify-end">
+              <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                <!-- Start Camera Button -->
+                <button type="button" id="start-camera-btn" onclick="startWebcam()" class="w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium px-5 py-2 rounded-lg transition flex items-center justify-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  </svg>
+                  Start Camera
+                </button>
+
+                <!-- Capture Button (shown when camera is on) -->
+                <button type="button" id="capture-btn" onclick="captureImage()" class="hidden w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium px-5 py-2 rounded-lg transition flex items-center justify-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                    <circle cx="12" cy="13" r="3"></circle>
+                  </svg>
+                  Capture Face
+                </button>
+
+                <!-- Retake Button (shown after capture) -->
+                <button type="button" id="retake-btn" onclick="retakePhoto()" class="hidden w-full sm:w-auto bg-gray-500 hover:bg-gray-600 text-white text-sm font-medium px-5 py-2 rounded-lg transition">Retake</button>
+
+                <!-- Submit Button (shown after capture) -->
+                <button type="button" id="submit-btn" onclick="submitAttendance()" class="hidden w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium px-5 py-2 rounded-lg transition">{{ primary_label }}</button>
+              </div>
+
+              <!-- Hidden form for submission -->
+              <form id="attendance-form" method="POST" class="hidden">
                 {% csrf_token %}
-                <input type="hidden" name="action" value="{{ primary_action }}" />
-                <button type="submit" class="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium px-5 py-2 rounded-lg transition">{{ primary_label }}</button>
+                <input type="hidden" name="action" id="attendance_action" value="{{ primary_action }}" />
+                <input type="hidden" name="captured_image" id="captured_image_input" />
               </form>
               {% else %}
               <button disabled class="w-full sm:w-auto bg-gray-300 text-gray-600 text-sm font-medium px-5 py-2 rounded-lg cursor-default">Shift Completed</button>
@@ -208,5 +250,109 @@
         </div>
       </main>
     </div>
+
+    <script>
+      let videoStream = null;
+      let capturedImage = null;
+
+      async function startWebcam() {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({
+            video: {
+              facingMode: "user",
+              width: { ideal: 1280 },
+              height: { ideal: 720 },
+            },
+          });
+
+          const video = document.getElementById("webcam");
+          video.srcObject = stream;
+          videoStream = stream;
+
+          // Show video, hide placeholder
+          video.classList.remove("hidden");
+          document.getElementById("camera-placeholder").classList.add("hidden");
+
+          // Update buttons
+          document.getElementById("start-camera-btn").classList.add("hidden");
+          document.getElementById("capture-btn").classList.remove("hidden");
+        } catch (err) {
+          alert("Error accessing webcam: " + err.message + "\\n\\nPlease ensure you have granted camera permissions.");
+        }
+      }
+
+      function captureImage() {
+        const video = document.getElementById("webcam");
+        const canvas = document.getElementById("canvas");
+        const context = canvas.getContext("2d");
+
+        // Set canvas dimensions to match video
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+
+        // Draw the video frame to canvas
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        // Get base64 image data
+        capturedImage = canvas.toDataURL("image/jpeg", 0.95);
+        document.getElementById("captured_image_input").value = capturedImage;
+
+        // Show preview
+        const preview = document.getElementById("preview");
+        preview.src = capturedImage;
+        preview.classList.remove("hidden");
+
+        // Hide video
+        video.classList.add("hidden");
+
+        // Stop camera
+        stopWebcam();
+
+        // Update buttons
+        document.getElementById("capture-btn").classList.add("hidden");
+        document.getElementById("retake-btn").classList.remove("hidden");
+        document.getElementById("submit-btn").classList.remove("hidden");
+      }
+
+      function retakePhoto() {
+        // Hide preview
+        document.getElementById("preview").classList.add("hidden");
+        document.getElementById("camera-placeholder").classList.remove("hidden");
+
+        // Reset captured image
+        capturedImage = null;
+        document.getElementById("captured_image_input").value = "";
+
+        // Update buttons
+        document.getElementById("retake-btn").classList.add("hidden");
+        document.getElementById("submit-btn").classList.add("hidden");
+        document.getElementById("start-camera-btn").classList.remove("hidden");
+      }
+
+      function stopWebcam() {
+        if (videoStream) {
+          videoStream.getTracks().forEach((track) => track.stop());
+          videoStream = null;
+        }
+      }
+
+      function submitAttendance() {
+        if (!capturedImage) {
+          alert("Please capture your face first.");
+          return;
+        }
+
+        // Show loading state
+        const submitBtn = document.getElementById("submit-btn");
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<svg class="animate-spin h-5 w-5 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
+
+        // Submit the form
+        document.getElementById("attendance-form").submit();
+      }
+
+      // Clean up when page is closed
+      window.addEventListener("beforeunload", stopWebcam);
+    </script>
   </body>
 </html>

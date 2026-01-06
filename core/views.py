@@ -418,7 +418,7 @@ def employee_onboarding_view(request):
         }
 
         # Redirect to the employee directory
-        return redirect("employee_directory")
+        return redirect("employee_general", employee_id=profile.employee_id)
 
     # GET: just render the static onboarding form
     default_employee_id = _generate_next_employee_id()

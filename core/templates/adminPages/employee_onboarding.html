@@ -13,157 +13,75 @@
     <header class="fixed top-0 left-0 right-0 z-50 bg-white border-b">
       <div class="flex items-center justify-between px-6 h-16">
         <!-- Logo -->
-        <img
-          src="{% static 'assets/img/brand/OfficeFlowAi.png' %}"
-          class="h-20 w-20"
-          alt="OfficeFlowAi Logo"
-        />
+        <img src="{% static 'assets/img/brand/OfficeFlowAi.png' %}" class="h-20 w-20" alt="OfficeFlowAi Logo" />
 
         <div class="flex items-center gap-3">
-          <div
-            class="hidden md:flex items-center bg-gray-100 rounded-full px-4 py-2 w-72"
-          >
-            <input
-              type="text"
-              placeholder="Search for something"
-              class="bg-transparent outline-none text-sm w-full"
-            />
+          <div class="hidden md:flex items-center bg-gray-100 rounded-full px-4 py-2 w-72">
+            <input type="text" placeholder="Search for something" class="bg-transparent outline-none text-sm w-full" />
           </div>
 
           <!-- Settings -->
-          <button
-            class="w-10 h-10 flex items-center justify-center border rounded-full"
-          >
-            <img
-              src="{% static 'assets/img/icons/common/settings 1.png' %}"
-              class="w-5"
-              alt="Settings"
-            />
+          <button class="w-10 h-10 flex items-center justify-center border rounded-full">
+            <img src="{% static 'assets/img/icons/common/settings 1.png' %}" class="w-5" alt="Settings" />
           </button>
 
           <!-- Notifications -->
-          <button
-            class="w-10 h-10 flex items-center justify-center border rounded-full"
-          >
-            <img
-              src="{% static 'assets/img/icons/common/002-notification-1.png' %}"
-              class="w-5"
-              alt="Notifications"
-            />
+          <button class="w-10 h-10 flex items-center justify-center border rounded-full">
+            <img src="{% static 'assets/img/icons/common/002-notification-1.png' %}" class="w-5" alt="Notifications" />
           </button>
 
           <!-- Avatar -->
-          <img
-            src="https://i.pravatar.cc/40"
-            class="w-9 h-9 rounded-full"
-            alt="User Avatar"
-          />
+          <img src="https://i.pravatar.cc/40" class="w-9 h-9 rounded-full" alt="User Avatar" />
         </div>
       </div>
     </header>
 
     <div class="flex pt-16">
       <!-- ================= SIDEBAR (UNCHANGED) ================= -->
-      <aside
-        class="hidden lg:block w-64 bg-emerald-900 min-h-screen fixed text-white"
-      >
+      <aside class="hidden lg:block w-64 bg-emerald-900 min-h-screen fixed text-white">
         <nav class="px-4 py-6 space-y-2">
-          <a
-            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
-          >
-            <img
-              src="{% static 'assets/img/icons/common/home 2.png' %}"
-              class="w-5"
-              alt="Dashboard"
-            />
+          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/home 2.png' %}" class="w-5" alt="Dashboard" />
             Dashboard
           </a>
 
-          <a
-            class="flex items-center gap-3 px-4 py-2 rounded-lg bg-emerald-800"
-          >
-            <img
-              src="{% static 'assets/img/icons/common/transfer 1.png' %}"
-              class="w-5"
-              alt="Employees"
-            />
+          <a class="flex items-center gap-3 px-4 py-2 rounded-lg bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/transfer 1.png' %}" class="w-5" alt="Employees" />
             Employees
           </a>
 
-          <a
-            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
-          >
-            <img
-              src="{% static 'assets/img/icons/common/user 3 1.png' %}"
-              class="w-5"
-              alt="Attendance"
-            />
+          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/user 3 1.png' %}" class="w-5" alt="Attendance" />
             Attendance
           </a>
 
-          <a
-            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
-          >
-            <img
-              src="{% static 'assets/img/icons/common/economic-investment 1.png' %}"
-              class="w-5"
-              alt="Leave Management"
-            />
+          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/economic-investment 1.png' %}" class="w-5" alt="Leave Management" />
             Leave Management
           </a>
 
-          <a
-            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
-          >
-            <img
-              src="{% static 'assets/img/icons/common/credit-card 1.png' %}"
-              class="w-5"
-              alt="Payroll"
-            />
+          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/credit-card 1.png' %}" class="w-5" alt="Payroll" />
             Payroll
           </a>
 
-          <a
-            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
-          >
-            <img
-              src="{% static 'assets/img/icons/common/loan 1.png' %}"
-              class="w-5"
-              alt="Performance"
-            />
+          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/loan 1.png' %}" class="w-5" alt="Performance" />
             Performance
           </a>
 
-          <a
-            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
-          >
-            <img
-              src="{% static 'assets/img/icons/common/service 1.png' %}"
-              class="w-5"
-              alt="Assets"
-            />
+          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/service 1.png' %}" class="w-5" alt="Assets" />
             Assets
           </a>
 
-          <a
-            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
-          >
-            <img
-              src="{% static 'assets/img/icons/common/econometrics 1.png' %}"
-              class="w-5"
-              alt="Recruitment"
-            />
+          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/econometrics 1.png' %}" class="w-5" alt="Recruitment" />
             Recruitment
           </a>
 
-          <a
-            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
-          >
-            <img
-              src="{% static 'assets/img/icons/common/settings solid 1.png' %}"
-              class="w-5"
-              alt="Settings"
-            />
+          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/settings solid 1.png' %}" class="w-5" alt="Settings" />
             Settings
           </a>
         </nav>
@@ -172,75 +90,40 @@
       <!-- ================= MAIN CONTENT ================= -->
       <main class="flex-1 lg:ml-64 p-6">
         <!-- Header -->
-        <div
-          class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4"
-        >
-          <h1 class="text-2xl font-semibold text-emerald-700">
-            New Employee Onboarding
-          </h1>
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
+          <h1 class="text-2xl font-semibold text-emerald-700">New Employee Onboarding</h1>
 
-          <button
-            class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-lg font-medium"
-          >
-            + Add New Employee
-          </button>
+          <button class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-lg font-medium">+ Add New Employee</button>
         </div>
 
         <!-- Progress indicator -->
         <div class="bg-white border rounded-xl p-4 mb-6">
-          <div
-            class="flex items-center justify-between text-sm font-medium text-gray-600"
-          >
+          <div class="flex items-center justify-between text-sm font-medium text-gray-600">
             <div class="flex-1 flex items-center gap-2">
-              <span
-                class="step-dot w-7 h-7 rounded-full flex items-center justify-center bg-emerald-600 text-white"
-                data-step-dot="1"
-                >1</span
-              >
+              <span class="step-dot w-7 h-7 rounded-full flex items-center justify-center bg-emerald-600 text-white" data-step-dot="1">1</span>
               <span>General</span>
             </div>
             <div class="flex-1 flex items-center gap-2">
-              <span
-                class="step-dot w-7 h-7 rounded-full flex items-center justify-center bg-gray-200 text-gray-700"
-                data-step-dot="2"
-                >2</span
-              >
+              <span class="step-dot w-7 h-7 rounded-full flex items-center justify-center bg-gray-200 text-gray-700" data-step-dot="2">2</span>
               <span>Job</span>
             </div>
             <div class="flex-1 flex items-center gap-2">
-              <span
-                class="step-dot w-7 h-7 rounded-full flex items-center justify-center bg-gray-200 text-gray-700"
-                data-step-dot="3"
-                >3</span
-              >
+              <span class="step-dot w-7 h-7 rounded-full flex items-center justify-center bg-gray-200 text-gray-700" data-step-dot="3">3</span>
               <span>Payroll & Docs</span>
             </div>
             <div class="flex-1 flex items-center gap-2">
-              <span
-                class="step-dot w-7 h-7 rounded-full flex items-center justify-center bg-gray-200 text-gray-700"
-                data-step-dot="4"
-                >4</span
-              >
+              <span class="step-dot w-7 h-7 rounded-full flex items-center justify-center bg-gray-200 text-gray-700" data-step-dot="4">4</span>
               <span>Overview</span>
             </div>
           </div>
 
           <div class="mt-3 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-            <div
-              class="h-full bg-emerald-600 transition-all duration-300"
-              id="step-progress"
-              style="width: 25%"
-            ></div>
+            <div class="h-full bg-emerald-600 transition-all duration-300" id="step-progress" style="width: 25%"></div>
           </div>
         </div>
 
         <!-- Onboarding Card (multi-step) -->
-        <form
-          method="post"
-          action="{% url 'employee_onboarding' %}"
-          enctype="multipart/form-data"
-          class="bg-white border rounded-xl p-6 space-y-8"
-        >
+        <form method="post" action="{% url 'employee_onboarding' %}" enctype="multipart/form-data" class="bg-white border rounded-xl p-6 space-y-8">
           {% csrf_token %}
 
           <!-- STEP 1: General -->
@@ -252,24 +135,13 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
-                <label class="text-sm font-medium">
-                  Full Name <span class="text-red-500">*</span>
-                </label>
-                <input
-                  name="full_name"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                  placeholder="Sarah Khan"
-                />
+                <label class="text-sm font-medium"> Full Name <span class="text-red-500">*</span> </label>
+                <input name="full_name" class="mt-1 w-full rounded-lg border px-3 py-2" placeholder="Sarah Khan" />
               </div>
 
               <div>
-                <label class="text-sm font-medium">
-                  Gender <span class="text-red-500">*</span>
-                </label>
-                <select
-                  name="gender"
-                  class="mt-1 w-full rounded-lg border px-3 py-2 bg-white"
-                >
+                <label class="text-sm font-medium"> Gender <span class="text-red-500">*</span> </label>
+                <select name="gender" class="mt-1 w-full rounded-lg border px-3 py-2 bg-white">
                   <option value="">Select</option>
                   <option>Female</option>
                   <option>Male</option>
@@ -278,90 +150,43 @@
               </div>
 
               <div>
-                <label class="text-sm font-medium">
-                  Date of Birth <span class="text-red-500">*</span>
-                </label>
-                <input
-                  type="date"
-                  name="date_of_birth"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                />
+                <label class="text-sm font-medium"> Date of Birth <span class="text-red-500">*</span> </label>
+                <input type="date" name="date_of_birth" class="mt-1 w-full rounded-lg border px-3 py-2" />
               </div>
 
               <div>
-                <label class="text-sm font-medium">
-                  Email <span class="text-red-500">*</span>
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                  placeholder="sarakhan@example.com"
-                />
+                <label class="text-sm font-medium"> Email <span class="text-red-500">*</span> </label>
+                <input type="email" name="email" class="mt-1 w-full rounded-lg border px-3 py-2" placeholder="sarakhan@example.com" />
               </div>
 
               <div>
-                <label class="text-sm font-medium">
-                  Phone Number <span class="text-red-500">*</span>
-                </label>
-                <input
-                  name="phone_number"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                  placeholder="0300-xxxxxxx"
-                />
+                <label class="text-sm font-medium"> Phone Number <span class="text-red-500">*</span> </label>
+                <input name="phone_number" class="mt-1 w-full rounded-lg border px-3 py-2" placeholder="0300-xxxxxxx" />
               </div>
 
               <div>
-                <label class="text-sm font-medium">
-                  Marital Status <span class="text-red-500">*</span>
-                </label>
-                <input
-                  name="marital_status"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                  placeholder="Single / Married / Other"
-                />
+                <label class="text-sm font-medium"> Marital Status <span class="text-red-500">*</span> </label>
+                <input name="marital_status" class="mt-1 w-full rounded-lg border px-3 py-2" placeholder="Single / Married / Other" />
               </div>
 
               <div>
-                <label class="text-sm font-medium">
-                  Personal ID / CNIC <span class="text-red-500">*</span>
-                </label>
-                <input
-                  name="personal_id"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                  placeholder="e.g. 3520-xxxxxxx-x"
-                />
+                <label class="text-sm font-medium"> Personal ID / CNIC <span class="text-red-500">*</span> </label>
+                <input name="personal_id" class="mt-1 w-full rounded-lg border px-3 py-2" placeholder="e.g. 3520-xxxxxxx-x" />
               </div>
 
               <div>
-                <label class="text-sm font-medium">
-                  Emergency Contact <span class="text-red-500">*</span>
-                </label>
-                <input
-                  name="emergency_contact"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                  placeholder="Name & phone number"
-                />
+                <label class="text-sm font-medium"> Emergency Contact <span class="text-red-500">*</span> </label>
+                <input name="emergency_contact" class="mt-1 w-full rounded-lg border px-3 py-2" placeholder="Name & phone number" />
               </div>
 
               <div>
                 <label class="text-sm font-medium"> Time Zone </label>
-                <input
-                  name="time_zone"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                  placeholder="UTC +5:00"
-                />
+                <input name="time_zone" class="mt-1 w-full rounded-lg border px-3 py-2" placeholder="UTC +5:00" />
               </div>
             </div>
 
             <div class="flex justify-end gap-3 pt-6 border-t mt-6">
-              <button
-                type="button"
-                class="px-5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm"
-                data-next
-              >
-                Next: Job
-              </button>
+              <button type="button" class="px-5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm" data-next>Next: Job</button>
             </div>
           </section>
 
@@ -374,48 +199,23 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
               <div>
-                <label class="text-sm font-medium">
-                  Employee ID <span class="text-red-500">*</span>
-                </label>
-                <input
-                  name="employee_id"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                  placeholder="EMP-001"
-                  value="{{ default_employee_id }}"
-                  readonly
-                />
+                <label class="text-sm font-medium"> Employee ID <span class="text-red-500">*</span> </label>
+                <input name="employee_id" class="mt-1 w-full rounded-lg border px-3 py-2" placeholder="EMP-001" value="{{ default_employee_id }}" readonly />
               </div>
 
               <div>
-                <label class="text-sm font-medium">
-                  Job Title <span class="text-red-500">*</span>
-                </label>
-                <input
-                  name="job_title"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                  placeholder="Web Developer"
-                />
+                <label class="text-sm font-medium"> Job Title <span class="text-red-500">*</span> </label>
+                <input name="job_title" class="mt-1 w-full rounded-lg border px-3 py-2" placeholder="Web Developer" />
               </div>
 
               <div>
-                <label class="text-sm font-medium">
-                  Position Type <span class="text-red-500">*</span>
-                </label>
-                <input
-                  name="position_type"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                  placeholder="Junior / Senior / Intern"
-                />
+                <label class="text-sm font-medium"> Position Type <span class="text-red-500">*</span> </label>
+                <input name="position_type" class="mt-1 w-full rounded-lg border px-3 py-2" placeholder="Junior / Senior / Intern" />
               </div>
 
               <div>
-                <label class="text-sm font-medium">
-                  Employment Type <span class="text-red-500">*</span>
-                </label>
-                <select
-                  name="employment_type"
-                  class="mt-1 w-full rounded-lg border px-3 py-2 bg-white"
-                >
+                <label class="text-sm font-medium"> Employment Type <span class="text-red-500">*</span> </label>
+                <select name="employment_type" class="mt-1 w-full rounded-lg border px-3 py-2 bg-white">
                   <option value="">Select</option>
                   <option>Full Time</option>
                   <option>Part Time</option>
@@ -425,17 +225,9 @@
               </div>
 
               <div>
-                <label class="text-sm font-medium">
-                  Department <span class="text-red-500">*</span>
-                </label>
-                <select
-                  name="department"
-                  required
-                  class="mt-1 w-full rounded-lg border px-3 py-2 bg-white outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="" disabled selected>
-                    Select a department
-                  </option>
+                <label class="text-sm font-medium"> Department <span class="text-red-500">*</span> </label>
+                <select name="department" required class="mt-1 w-full rounded-lg border px-3 py-2 bg-white outline-none focus:ring-2 focus:ring-blue-500">
+                  <option value="" disabled selected>Select a department</option>
                   <option value="Engineering">Engineering</option>
                   <option value="Procurement">Procurement</option>
                   <option value="Finance">Finance</option>
@@ -446,59 +238,32 @@
 
               <div>
                 <label class="text-sm font-medium"> Office / Location </label>
-                <input
-                  name="office"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                  placeholder="NIC Islamabad"
-                />
+                <input name="office" class="mt-1 w-full rounded-lg border px-3 py-2" placeholder="NIC Islamabad" />
               </div>
 
               <div>
-                <label class="text-sm font-medium">
-                  Line Manager <span class="text-red-500">*</span>
-                </label>
-                <input
-                  name="line_manager"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                  placeholder="Manager name"
-                />
+                <label class="text-sm font-medium"> Line Manager <span class="text-red-500">*</span> </label>
+                <input name="line_manager" class="mt-1 w-full rounded-lg border px-3 py-2" placeholder="Manager name" />
               </div>
 
               <div>
-                <label class="text-sm font-medium">
-                  Join Date <span class="text-red-500">*</span>
-                </label>
-                <input
-                  type="date"
-                  name="join_date"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                />
+                <label class="text-sm font-medium"> Join Date <span class="text-red-500">*</span> </label>
+                <input type="date" name="join_date" class="mt-1 w-full rounded-lg border px-3 py-2" />
               </div>
 
               <div>
                 <label class="text-sm font-medium">Working Hours</label>
-                <input
-                  name="working_hours"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                  placeholder="9:00am - 5:00pm"
-                />
+                <input name="working_hours" class="mt-1 w-full rounded-lg border px-3 py-2" placeholder="9:00am - 5:00pm" />
               </div>
 
               <div>
                 <label class="text-sm font-medium">Working Days</label>
-                <input
-                  name="working_days"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                  placeholder="Monday - Friday"
-                />
+                <input name="working_days" class="mt-1 w-full rounded-lg border px-3 py-2" placeholder="Monday - Friday" />
               </div>
 
               <div>
                 <label class="text-sm font-medium">Employment Status</label>
-                <select
-                  name="employment_status"
-                  class="mt-1 w-full rounded-lg border px-3 py-2 bg-white"
-                >
+                <select name="employment_status" class="mt-1 w-full rounded-lg border px-3 py-2 bg-white">
                   <option>Active</option>
                   <option>Probation</option>
                   <option>Inactive</option>
@@ -510,124 +275,64 @@
             <div class="mt-6 grid grid-cols-1 md:grid-cols-4 gap-5">
               <div>
                 <label class="text-sm font-medium">Contract #</label>
-                <input
-                  name="contract_number"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                  placeholder="#1234"
-                />
+                <input name="contract_number" class="mt-1 w-full rounded-lg border px-3 py-2" placeholder="#1234" />
               </div>
               <div>
                 <label class="text-sm font-medium">Contract Name</label>
-                <input
-                  name="contract_name"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                  placeholder="Full-time Remote"
-                />
+                <input name="contract_name" class="mt-1 w-full rounded-lg border px-3 py-2" placeholder="Full-time Remote" />
               </div>
               <div>
                 <label class="text-sm font-medium">Contract Type</label>
-                <input
-                  name="contract_type"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                  placeholder="Permanent / Contract / Internship"
-                />
+                <input name="contract_type" class="mt-1 w-full rounded-lg border px-3 py-2" placeholder="Permanent / Contract / Internship" />
               </div>
               <div>
                 <label class="text-sm font-medium">Contract Start Date</label>
-                <input
-                  type="date"
-                  name="contract_start"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                />
+                <input type="date" name="contract_start" class="mt-1 w-full rounded-lg border px-3 py-2" />
               </div>
               <div>
                 <label class="text-sm font-medium">Contract End Date</label>
-                <input
-                  type="date"
-                  name="contract_end"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                />
+                <input type="date" name="contract_end" class="mt-1 w-full rounded-lg border px-3 py-2" />
               </div>
             </div>
 
             <div class="flex justify-between gap-3 pt-6 border-t mt-6">
-              <button
-                type="button"
-                class="px-4 py-2 rounded-lg border text-gray-700 bg-gray-50 hover:bg-gray-100 text-sm"
-                data-prev
-              >
-                Back
-              </button>
-              <button
-                type="button"
-                class="px-5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm"
-                data-next
-              >
-                Next: Payroll
-              </button>
+              <button type="button" class="px-4 py-2 rounded-lg border text-gray-700 bg-gray-50 hover:bg-gray-100 text-sm" data-prev>Back</button>
+              <button type="button" class="px-5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm" data-next>Next: Payroll</button>
             </div>
           </section>
 
           <!-- STEP 3: Payroll & Documents -->
           <section class="step-section hidden" data-step="3">
             <div class="flex justify-between items-center mb-4">
-              <h2 class="font-semibold text-gray-800">
-                Payroll & Compensation
-              </h2>
+              <h2 class="font-semibold text-gray-800">Payroll & Compensation</h2>
               <span class="text-xs text-gray-500">Shown in Payroll tab</span>
             </div>
 
             <!-- Salary breakdown -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
               <div>
-                <label class="text-sm font-medium">
-                  Basic Salary (Monthly) <span class="text-red-500">*</span>
-                </label>
-                <input
-                  name="basic_salary"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                  placeholder="Rs. 50,000"
-                />
+                <label class="text-sm font-medium"> Basic Salary (Monthly) <span class="text-red-500">*</span> </label>
+                <input name="basic_salary" class="mt-1 w-full rounded-lg border px-3 py-2" placeholder="Rs. 50,000" />
               </div>
               <div>
                 <label class="text-sm font-medium">House Allowance</label>
-                <input
-                  name="house_allowance"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                  placeholder="Rs. 10,000"
-                />
+                <input name="house_allowance" class="mt-1 w-full rounded-lg border px-3 py-2" placeholder="Rs. 10,000" />
               </div>
               <div>
                 <label class="text-sm font-medium">Medical Allowance</label>
-                <input
-                  name="medical_allowance"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                  placeholder="Rs. 3,000"
-                />
+                <input name="medical_allowance" class="mt-1 w-full rounded-lg border px-3 py-2" placeholder="Rs. 3,000" />
               </div>
               <div>
                 <label class="text-sm font-medium">Transport Allowance</label>
-                <input
-                  name="transport_allowance"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                  placeholder="Rs. 2,000"
-                />
+                <input name="transport_allowance" class="mt-1 w-full rounded-lg border px-3 py-2" placeholder="Rs. 2,000" />
               </div>
               <div>
                 <label class="text-sm font-medium">Fixed Monthly Bonus</label>
-                <input
-                  name="bonus"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                  placeholder="Rs. 5,000 (optional)"
-                />
+                <input name="bonus" class="mt-1 w-full rounded-lg border px-3 py-2" placeholder="Rs. 5,000 (optional)" />
               </div>
               <div>
                 <label class="text-sm font-medium">Overtime Policy</label>
-                <input
-                  name="overtime_policy"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                  placeholder="e.g. hourly rate or none"
-                />
+                <input name="overtime_policy" class="mt-1 w-full rounded-lg border px-3 py-2" placeholder="e.g. hourly rate or none" />
               </div>
             </div>
 
@@ -635,21 +340,11 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
               <div>
                 <label class="text-sm font-medium">Tax Deduction Rule</label>
-                <input
-                  name="tax_deduction"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                  placeholder="e.g. fixed amount or %"
-                />
+                <input name="tax_deduction" class="mt-1 w-full rounded-lg border px-3 py-2" placeholder="e.g. fixed amount or %" />
               </div>
               <div>
-                <label class="text-sm font-medium"
-                  >Loan Deduction (if any)</label
-                >
-                <input
-                  name="loan_deduction"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                  placeholder="e.g. Rs. 2,000 / month"
-                />
+                <label class="text-sm font-medium">Loan Deduction (if any)</label>
+                <input name="loan_deduction" class="mt-1 w-full rounded-lg border px-3 py-2" placeholder="e.g. Rs. 2,000 / month" />
               </div>
             </div>
 
@@ -657,34 +352,19 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10">
               <div>
                 <label class="text-sm font-medium">Bank Name</label>
-                <input
-                  name="bank_name"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                  placeholder="HBL"
-                />
+                <input name="bank_name" class="mt-1 w-full rounded-lg border px-3 py-2" placeholder="HBL" />
               </div>
               <div>
                 <label class="text-sm font-medium">Account Title</label>
-                <input
-                  name="account_title"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                  placeholder="Sarah Khan"
-                />
+                <input name="account_title" class="mt-1 w-full rounded-lg border px-3 py-2" placeholder="Sarah Khan" />
               </div>
               <div>
                 <label class="text-sm font-medium">Account Number</label>
-                <input
-                  name="account_number"
-                  class="mt-1 w-full rounded-lg border px-3 py-2"
-                  placeholder="e.g. 1234-xxxx-xxxx"
-                />
+                <input name="account_number" class="mt-1 w-full rounded-lg border px-3 py-2" placeholder="e.g. 1234-xxxx-xxxx" />
               </div>
               <div>
                 <label class="text-sm font-medium">Payment Method</label>
-                <select
-                  name="payment_method"
-                  class="mt-1 w-full rounded-lg border px-3 py-2 bg-white"
-                >
+                <select name="payment_method" class="mt-1 w-full rounded-lg border px-3 py-2 bg-white">
                   <option>Bank Transfer</option>
                   <!-- <option>Cheque</option>
                   <option>Cash</option> -->
@@ -692,10 +372,7 @@
               </div>
               <div>
                 <label class="text-sm font-medium">Payment Frequency</label>
-                <select
-                  name="payment_frequency"
-                  class="mt-1 w-full rounded-lg border px-3 py-2 bg-white"
-                >
+                <select name="payment_frequency" class="mt-1 w-full rounded-lg border px-3 py-2 bg-white">
                   <option>Monthly</option>
                   <!-- <option>Bi-weekly</option>
                   <option>Weekly</option> -->
@@ -713,66 +390,106 @@
 
             <!-- Documents -->
             <div class="flex justify-between items-center mb-4">
-              <h2 class="font-semibold text-gray-800">Documents</h2>
-              <span class="text-xs text-gray-500">Shown in Documents tab</span>
+              <h2 class="font-semibold text-gray-800">Documents & Facial Data</h2>
+              <span class="text-xs text-gray-500">Used for verification & attendance</span>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+              <!-- CNIC -->
               <div>
-                <label class="text-sm font-medium">
-                  CNIC / ID Copy <span class="text-red-500">*</span>
-                </label>
-                <input
-                  type="file"
-                  name="cnic_file"
-                  class="mt-2 block w-full text-sm"
-                />
+                <label class="text-sm font-medium"> CNIC / ID Copy <span class="text-red-500">*</span> </label>
+                <input type="file" name="cnic_file" accept="image/*,application/pdf" class="mt-2 block w-full text-sm" required />
               </div>
 
+              <!-- Contract -->
               <div>
                 <label class="text-sm font-medium">
                   Employment Contract / Offer Letter
                   <span class="text-red-500">*</span>
                 </label>
-                <input
-                  type="file"
-                  name="contract_file"
-                  class="mt-2 block w-full text-sm"
-                />
+                <input type="file" name="contract_file" accept="image/*,application/pdf" class="mt-2 block w-full text-sm" required />
               </div>
             </div>
 
-            <!-- Generic dropzone matching employee4 documents UX -->
-            <!-- <div class="border-2 border-dashed rounded-lg p-6 text-center mb-8">
-              <p class="text-gray-700 text-sm font-semibold mb-1">
-                Drag & drop payslips or other files here
-              </p>
-              <p class="text-gray-500 text-xs mb-3">
-                These will appear under the employee's Documents tab
-              </p>
-              <button
-                type="button"
-                class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-md text-sm"
-              >
-                Select Files
-              </button>
-            </div> -->
+            <!-- Facial Images Upload -->
+            <div class="mb-6">
+              <label class="text-sm font-medium block mb-3">
+                Facial Images for Attendance Recognition
+                <span class="text-red-500">*</span>
+              </label>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                <!-- Photo 1 - Required -->
+                <div class="border-2 border-emerald-500 rounded-lg p-4 bg-emerald-50">
+                  <div class="flex items-center gap-2 mb-2">
+                    <span class="bg-emerald-600 text-white text-xs font-bold px-2 py-1 rounded">Required</span>
+                    <span class="text-sm font-medium text-gray-700">Photo 1</span>
+                  </div>
+                  <input type="file" name="face_images" accept="image/*" class="block w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-emerald-600 file:text-white hover:file:bg-emerald-700" required />
+                  <p class="text-xs text-gray-600 mt-2">Front-facing photo</p>
+                </div>
+
+                <!-- Photo 2 - Required -->
+                <div class="border-2 border-emerald-500 rounded-lg p-4 bg-emerald-50">
+                  <div class="flex items-center gap-2 mb-2">
+                    <span class="bg-emerald-600 text-white text-xs font-bold px-2 py-1 rounded">Required</span>
+                    <span class="text-sm font-medium text-gray-700">Photo 2</span>
+                  </div>
+                  <input type="file" name="face_images" accept="image/*" class="block w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-emerald-600 file:text-white hover:file:bg-emerald-700" required />
+                  <p class="text-xs text-gray-600 mt-2">Slightly angled view</p>
+                </div>
+
+                <!-- Photo 3 - Optional -->
+                <div class="border-2 border-gray-300 border-dashed rounded-lg p-4 bg-gray-50">
+                  <div class="flex items-center gap-2 mb-2">
+                    <span class="bg-gray-400 text-white text-xs font-bold px-2 py-1 rounded">Optional</span>
+                    <span class="text-sm font-medium text-gray-700">Photo 3</span>
+                  </div>
+                  <input type="file" name="face_images" accept="image/*" class="block w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-gray-600 file:text-white hover:file:bg-gray-700" />
+                  <p class="text-xs text-gray-600 mt-2">Different angle (recommended)</p>
+                </div>
+              </div>
+
+              <!-- Instructions -->
+              <div class="bg-blue-50 border-l-4 border-blue-500 rounded-r-lg p-4">
+                <div class="flex">
+                  <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                  <div class="ml-3">
+                    <p class="text-sm font-semibold text-blue-800 mb-2">📸 Photo Guidelines for Best Results</p>
+                    <ul class="text-xs text-blue-700 space-y-1">
+                      <li class="flex items-start">
+                        <span class="mr-2">✓</span>
+                        <span><strong>Well-lit environment</strong> – avoid shadows on face</span>
+                      </li>
+                      <li class="flex items-start">
+                        <span class="mr-2">✓</span>
+                        <span><strong>Clear face visibility</strong> – centered and in focus</span>
+                      </li>
+                      <li class="flex items-start">
+                        <span class="mr-2">✗</span>
+                        <span><strong>No accessories</strong> – remove sunglasses, masks, hats, caps</span>
+                      </li>
+                      <li class="flex items-start">
+                        <span class="mr-2">✓</span>
+                        <span><strong>Neutral expression</strong> – no filters or heavy makeup</span>
+                      </li>
+                      <li class="flex items-start">
+                        <span class="mr-2">💡</span>
+                        <span><strong>Multiple angles improve accuracy</strong> – upload 2-3 photos from different angles</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <div class="flex justify-between gap-3 pt-6 border-t mt-6">
-              <button
-                type="button"
-                class="px-4 py-2 rounded-lg border text-gray-700 bg-gray-50 hover:bg-gray-100 text-sm"
-                data-prev
-              >
-                Back
-              </button>
-              <button
-                type="button"
-                class="px-5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm"
-                data-next
-              >
-                Next: Overview
-              </button>
+              <button type="button" class="px-4 py-2 rounded-lg border text-gray-700 bg-gray-50 hover:bg-gray-100 text-sm" data-prev>Back</button>
+              <button type="button" class="px-5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm" data-next>Next: Overview</button>
             </div>
           </section>
 
@@ -783,16 +500,12 @@
                 <p class="text-xs text-gray-500">Review before creating</p>
                 <h2 class="font-semibold text-gray-800">Employee Overview</h2>
               </div>
-              <span class="text-xs text-gray-500"
-                >Auto-filled from previous steps</span
-              >
+              <span class="text-xs text-gray-500">Auto-filled from previous steps</span>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div class="border rounded-lg p-4 bg-gray-50">
-                <h3 class="font-semibold text-sm text-gray-800 mb-3">
-                  General
-                </h3>
+                <h3 class="font-semibold text-sm text-gray-800 mb-3">General</h3>
                 <dl class="space-y-2 text-sm text-gray-700">
                   <div class="flex justify-between">
                     <dt>Full Name</dt>
@@ -904,9 +617,7 @@
               </div>
 
               <div class="border rounded-lg p-4 bg-gray-50">
-                <h3 class="font-semibold text-sm text-gray-800 mb-3">
-                  Payroll
-                </h3>
+                <h3 class="font-semibold text-sm text-gray-800 mb-3">Payroll</h3>
                 <dl class="space-y-2 text-sm text-gray-700">
                   <div class="flex justify-between">
                     <dt>Basic Salary</dt>
@@ -968,9 +679,7 @@
               </div>
 
               <div class="border rounded-lg p-4 bg-gray-50">
-                <h3 class="font-semibold text-sm text-gray-800 mb-3">
-                  Documents
-                </h3>
+                <h3 class="font-semibold text-sm text-gray-800 mb-3">Documents</h3>
                 <dl class="space-y-2 text-sm text-gray-700">
                   <div class="flex justify-between">
                     <dt>CNIC / ID</dt>
@@ -989,27 +698,10 @@
             </div>
 
             <div class="flex justify-between gap-3 pt-6 border-t mt-6">
-              <button
-                type="button"
-                class="px-4 py-2 rounded-lg border text-gray-700 bg-gray-50 hover:bg-gray-100 text-sm"
-                data-prev
-              >
-                Back
-              </button>
+              <button type="button" class="px-4 py-2 rounded-lg border text-gray-700 bg-gray-50 hover:bg-gray-100 text-sm" data-prev>Back</button>
               <div class="flex gap-2">
-                <button
-                  type="button"
-                  class="px-4 py-2 rounded-lg border text-gray-700 bg-gray-50 hover:bg-gray-100 text-sm"
-                  data-prev
-                >
-                  Edit Details
-                </button>
-                <button
-                  type="submit"
-                  class="px-5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm"
-                >
-                  Save & Create Employee
-                </button>
+                <button type="button" class="px-4 py-2 rounded-lg border text-gray-700 bg-gray-50 hover:bg-gray-100 text-sm" data-prev>Edit Details</button>
+                <button type="submit" class="px-5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm">Save & Create Employee</button>
               </div>
             </div>
           </section>
@@ -1025,9 +717,7 @@
       const progress = document.getElementById("step-progress");
       let currentStep = 1;
 
-      const inputMap = Array.from(
-        document.querySelectorAll("input, select")
-      ).reduce((acc, el) => {
+      const inputMap = Array.from(document.querySelectorAll("input, select")).reduce((acc, el) => {
         if (el.name) acc[el.name] = el;
         return acc;
       }, {});
@@ -1035,10 +725,7 @@
       function showStep(step) {
         currentStep = step;
         sections.forEach((section) => {
-          section.classList.toggle(
-            "hidden",
-            Number(section.dataset.step) !== step
-          );
+          section.classList.toggle("hidden", Number(section.dataset.step) !== step);
         });
 
         dots.forEach((dot) => {
@@ -1059,10 +746,7 @@
 
       function readValue(el) {
         if (!el) return "";
-        if (el.type === "file")
-          return el.files && el.files.length
-            ? el.files[0].name
-            : "No file selected";
+        if (el.type === "file") return el.files && el.files.length ? el.files[0].name : "No file selected";
         if (el.type === "checkbox") return el.checked ? "Yes" : "No";
         return el.value || "—";
       }
@@ -1072,11 +756,7 @@
         summaryFields.forEach((node) => {
           const key = node.dataset.summary;
           if (key === "orientation_summary") {
-            const parts = [
-              "orientation_welcome",
-              "orientation_safety",
-              "orientation_culture",
-            ]
+            const parts = ["orientation_welcome", "orientation_safety", "orientation_culture"]
               .filter((name) => inputMap[name]?.checked)
               .map((name) => {
                 if (name === "orientation_welcome") return "Welcome session";
@@ -1084,9 +764,7 @@
                 if (name === "orientation_culture") return "Culture & values";
                 return "";
               });
-            node.textContent = parts.length
-              ? parts.join(", ")
-              : "No sessions selected";
+            node.textContent = parts.length ? parts.join(", ") : "No sessions selected";
             return;
           }
 
