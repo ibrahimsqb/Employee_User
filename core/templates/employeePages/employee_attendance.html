@@ -63,6 +63,14 @@
 
       <!-- ================= MAIN CONTENT ================= -->
       <main class="flex-1 lg:ml-64 p-4 sm:p-6 bg-gray-100 min-h-screen">
+        {% if messages %}
+        <div class="mb-4 space-y-2">
+          {% for message in messages %}
+          <div class="px-3 py-2 rounded border text-sm {% if message.tags == 'success' %}bg-emerald-50 border-emerald-200 text-emerald-800{% elif message.tags == 'error' %}bg-red-50 border-red-200 text-red-800{% elif message.tags == 'warning' %}bg-amber-50 border-amber-200 text-amber-800{% else %}bg-gray-50 border-gray-200 text-gray-800{% endif %}">{{ message }}</div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
         <!-- Header -->
         <div class="mb-6 flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
           <div>
@@ -71,7 +79,7 @@
             <p class="text-sm text-gray-500">Ready to start your day? Scan your face to check-in.</p>
 
             <div class="flex flex-wrap gap-2 mt-3">
-              <span class="px-3 py-1 text-xs rounded-full bg-gray-200 text-gray-700"> Role: Employee </span>
+              <!-- <span class="px-3 py-1 text-xs rounded-full bg-gray-200 text-gray-700"> Role: Employee </span> -->
               <span class="px-3 py-1 text-xs rounded-full bg-green-100 text-green-700"> Working Day </span>
             </div>
           </div>
@@ -293,8 +301,8 @@
         // Draw the video frame to canvas
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-        // Get base64 image data
-        capturedImage = canvas.toDataURL("image/jpeg", 0.95);
+        // Get base64 image data (slightly lower quality to reduce payload)
+        capturedImage = canvas.toDataURL("image/jpeg", 0.85);
         document.getElementById("captured_image_input").value = capturedImage;
 
         // Show preview

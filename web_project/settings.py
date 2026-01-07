@@ -130,3 +130,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'login'
+
+# External face recognition API
+FACE_API_BASE_URL = os.getenv('FACE_API_BASE_URL', 'http://13.50.238.213:8000')
+# Separate connect/read timeouts for long image processing
+FACE_API_CONNECT_TIMEOUT = float(os.getenv('FACE_API_CONNECT_TIMEOUT', '5'))
+FACE_API_READ_TIMEOUT = float(os.getenv('FACE_API_READ_TIMEOUT', '60'))
+FACE_API_ENABLED = os.getenv('FACE_API_ENABLED', 'true').lower() in {'1', 'true', 'yes'}

@@ -6,6 +6,7 @@ from django.db import transaction
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 import secrets
+import base64
 
 from .forms import BankDetailForm, EmployeeDocumentForm
 from .models import (
@@ -21,6 +22,7 @@ from .models import (
     SalaryComponent,
     WorkSchedule,
 )
+from . import face_api
 
 
 # ================= PERMISSION HELPERS =================
@@ -409,6 +411,31 @@ def employee_onboarding_view(request):
                 uploaded_by=request.user if request.user.is_authenticated else None,
             )
 
+        # Enroll facial data with external face recognition API
+        face_images = [img for img in request.FILES.getlist("face_images") if img]
+        if face_images:
+            try:
+                # Use employee_id as the canonical person_name for matching
+                face_api.add_person(profile.employee_id, face_images)
+                # Rebuild internal index and run migrations after enrollment
+                try:
+                    face_api.rebuild_db()
+                    face_api.migrate()
+                except face_api.FaceAPIError:
+                    # Non-critical; enrollment already done, can retry later
+                    pass
+                messages.success(request, "Facial data enrolled for attendance.")
+            except face_api.FaceAPIError as exc:
+                messages.warning(
+                    request,
+                    f"Employee created but face enrollment failed: {exc}",
+                )
+        else:
+            messages.warning(
+                request,
+                "Employee created but no facial images were uploaded for attendance enrollment.",
+            )
+
         # Store temporary password in session for display
         request.session['new_employee_credentials'] = {
             'username': username,
@@ -687,13 +714,69 @@ def employee_attendance_view(request, employee_id):
         date=today,
     )
 
+    def _decode_base64_image(data_uri: str) -> bytes:
+        if not data_uri:
+            raise ValueError("No image data provided")
+        if "," in data_uri:
+            data_uri = data_uri.split(",", 1)[1]
+        return base64.b64decode(data_uri)
+
     if request.method == "POST":
         action = request.POST.get("action")
+        captured_image = request.POST.get("captured_image")
+
+        if action not in {"check_in", "check_out"}:
+            messages.error(request, "Invalid attendance action.")
+            return redirect("employee_attendance", employee_id=employee.employee_id)
+
+        if not captured_image:
+            messages.error(request, "Please capture your face before submitting.")
+            return redirect("employee_attendance", employee_id=employee.employee_id)
+
+        try:
+            image_bytes = _decode_base64_image(captured_image)
+        except ValueError:
+            messages.error(request, "Unable to read the captured image. Please retake and try again.")
+            return redirect("employee_attendance", employee_id=employee.employee_id)
+
+        try:
+            identify_result = face_api.identify(image_bytes)
+            matched_name = face_api.extract_match_name(identify_result)
+        except face_api.FaceAPIError as exc:
+            messages.error(request, f"Face verification failed: {exc}")
+            return redirect("employee_attendance", employee_id=employee.employee_id)
+
+        expected_names = {employee.employee_id.lower()}
+        if personal and personal.full_name:
+            expected_names.add(personal.full_name.lower())
+        if employee.user:
+            user_full_name = f"{employee.user.first_name} {employee.user.last_name}".strip()
+            if user_full_name:
+                expected_names.add(user_full_name.lower())
+
+        matched_name_value = str(matched_name).strip().lower() if matched_name else ""
+
+        if not matched_name_value or matched_name_value not in expected_names:
+            messages.error(request, "Face does not match this employee. Please try again.")
+            return redirect("employee_attendance", employee_id=employee.employee_id)
+
+        confidence = (
+            identify_result.get("confidence")
+            or identify_result.get("score")
+            or identify_result.get("similarity")
+        )
+        if isinstance(confidence, (int, float)):
+            confidence_label = f" (confidence: {confidence:.2f})"
+        elif confidence:
+            confidence_label = f" (confidence: {confidence})"
+        else:
+            confidence_label = ""
 
         # Record check-in if not already set
         if action == "check_in" and attendance.check_in is None:
             attendance.check_in = now
             attendance.save()
+            messages.success(request, f"Check-in recorded after face verification{confidence_label}.")
 
         # Record/update check-out and compute total duration
         # Allow multiple clock-outs as a failsafe (user can update if they made a mistake)
@@ -701,6 +784,11 @@ def employee_attendance_view(request, employee_id):
             attendance.check_out = now
             attendance.total_duration = attendance.check_out - attendance.check_in
             attendance.save()
+            messages.success(request, f"Check-out recorded after face verification{confidence_label}.")
+        else:
+            messages.info(request, "No attendance change was applied.")
+
+        return redirect("employee_attendance", employee_id=employee.employee_id)
 
     # Prepare display values
     def _format_time(dt):
