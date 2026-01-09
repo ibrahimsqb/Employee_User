@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Employee Payslips</title>
+  </head>
+
+  <body class="bg-gray-100">
+    <!-- ================= TOPBAR ================= -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white border-b">
+      <div class="flex items-center justify-between px-6 h-16">
+        <!-- Logo -->
+        <img src="{% static 'assets/img/brand/OfficeFlowAi.png' %}" class="h-20 w-20" alt="OfficeFlowAi Logo" />
+
+        <div class="flex items-center gap-3">
+          <div class="hidden md:flex items-center bg-gray-100 rounded-full px-4 py-2 w-72">
+            <input type="text" placeholder="Search for something" class="bg-transparent outline-none text-sm w-full" />
+          </div>
+
+          <!-- Settings -->
+          <button class="w-10 h-10 flex items-center justify-center border rounded-full">
+            <img src="{% static 'assets/img/icons/common/settings 1.png' %}" class="w-5" alt="Settings" />
+          </button>
+
+          <!-- Notifications -->
+          <button class="w-10 h-10 flex items-center justify-center border rounded-full">
+            <img src="{% static 'assets/img/icons/common/002-notification-1.png' %}" class="w-5" alt="Notifications" />
+          </button>
+
+          <!-- Avatar -->
+          <img src="https://i.pravatar.cc/40" class="w-9 h-9 rounded-full" alt="User Avatar" />
+        </div>
+      </div>
+    </header>
+
+    <div class="flex pt-16">
+      <!-- ================= SIDEBAR ================= -->
+      <aside class="hidden lg:block w-64 bg-emerald-900 min-h-screen fixed text-white">
+        <nav class="px-4 py-6 space-y-2">
+          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/home 2.png' %}" class="w-5" alt="Dashboard" />
+            Dashboard
+          </a>
+
+          <a class="flex items-center gap-3 px-4 py-2 rounded-lg bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/transfer 1.png' %}" class="w-5" alt="Employees" />
+            Employees
+          </a>
+
+          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/user 3 1.png' %}" class="w-5" alt="Attendance" />
+            Attendance
+          </a>
+
+          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/economic-investment 1.png' %}" class="w-5" alt="Leave Management" />
+            Leave Management
+          </a>
+
+          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/credit-card 1.png' %}" class="w-5" alt="Payroll" />
+            Payroll
+          </a>
+
+          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/loan 1.png' %}" class="w-5" alt="Performance" />
+            Performance
+          </a>
+
+          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/service 1.png' %}" class="w-5" alt="Assets" />
+            Assets
+          </a>
+
+          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/econometrics 1.png' %}" class="w-5" alt="Recruitment" />
+            Recruitment
+          </a>
+
+          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
+            <img src="{% static 'assets/img/icons/common/settings solid 1.png' %}" class="w-5" alt="Settings" />
+            Settings
+          </a>
+        </nav>
+      </aside>
+
+      <!-- ================= MAIN CONTENT ================= -->
+      <main class="flex-1 lg:ml-64 p-6">
+        <!-- Back + Title -->
+        <div class="flex items-center gap-3 mb-6">
+          <a href="{% url 'employee_payroll_admin' employee.employee_id %}" class="text-gray-500 text-xl"> &#8592; </a>
+          <h1 class="text-xl font-semibold">{{ employee.employeepersonalinfo.full_name }} - Payslips</h1>
+        </div>
+
+        <div class="bg-white rounded-xl shadow p-6">
+          <h2 class="font-semibold mb-4">Payslip List</h2>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead class="bg-gray-50 border-b">
+                <tr>
+                  <th class="px-4 py-3 text-left font-medium text-gray-700">Period</th>
+                  <th class="px-4 py-3 text-left font-medium text-gray-700">Payment Date</th>
+                  <th class="px-4 py-3 text-left font-medium text-gray-700">Earnings</th>
+                  <th class="px-4 py-3 text-left font-medium text-gray-700">Deductions</th>
+                  <th class="px-4 py-3 text-left font-medium text-gray-700">Net Salary</th>
+                  <th class="px-4 py-3 text-left font-medium text-gray-700">Status</th>
+                  <th class="px-4 py-3 text-left font-medium text-gray-700">Action</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y">
+                {% for payroll in payroll_records %}
+                <tr class="hover:bg-gray-50">
+                  <td class="px-4 py-3">{{ payroll.period_start|date:'M d' }} - {{ payroll.period_end|date:'M d, Y' }}</td>
+                  <td class="px-4 py-3">{{ payroll.payment_date|date:'d M Y'|default:'—' }}</td>
+                  <td class="px-4 py-3">Rs. {{ payroll.gross_salary }}</td>
+                  <td class="px-4 py-3 text-red-600">Rs. {{ payroll.total_deductions }}</td>
+                  <td class="px-4 py-3 font-semibold">Rs. {{ payroll.net_salary }}</td>
+                  <td class="px-4 py-3">
+                    <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs"> Generated </span>
+                  </td>
+                  <td class="px-4 py-3">
+                    <a href="{% url 'employee_payslip_detail' employee.employee_id payroll.id %}" class="bg-emerald-600 text-white px-3 py-1 rounded text-xs hover:bg-emerald-700"> View </a>
+                  </td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="7" class="px-4 py-8 text-center text-gray-500">No payslips found.</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="mt-4 text-sm text-gray-600">Showing {{ payroll_records|length }} of {{ payroll_records|length }} payslips</div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

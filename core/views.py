@@ -416,7 +416,8 @@ def employee_onboarding_view(request):
         if face_images:
             try:
                 # Use employee_id as the canonical person_name for matching
-                face_api.add_person(profile.employee_id, face_images)
+                # face_api.add_person(profile.employee_id, face_images)
+                face_api.add_person(full_name, face_images)
                 # Rebuild internal index and run migrations after enrollment
                 try:
                     face_api.rebuild_db()
@@ -617,6 +618,10 @@ def employee_payslip_list_view(request, employee_id):
     if not can_access_employee(request.user, employee_id):
         messages.error(request, "You don't have permission to access this page.")
         return redirect("login")
+    
+    # If HR is accessing this, redirect them to admin view
+    if is_hr_or_superuser(request.user):
+        return redirect("employee_payslip_list_admin", employee_id=employee_id)
     
     employee = _get_employee_or_404(employee_id)
     personal = getattr(employee, "employeepersonalinfo", None)
@@ -1022,6 +1027,23 @@ def employee_payroll_admin_view(request, employee_id):
         "calculated_net_salary": calculated_net_salary,
     }
     return render(request, "adminPages/employee3_admin.html", context)
+
+
+@login_required
+@user_passes_test(is_hr_or_superuser)
+def employee_payslip_list_admin_view(request, employee_id):
+    """Admin view for displaying employee payslips."""
+    employee = _get_employee_or_404(employee_id)
+    personal = getattr(employee, "employeepersonalinfo", None)
+    _ensure_current_month_payroll(employee)
+    payroll_records = Payroll.objects.filter(employee=employee).order_by("-payment_date")
+
+    context = {
+        "employee": employee,
+        "personal": personal,
+        "payroll_records": payroll_records,
+    }
+    return render(request, "adminPages/payslip_list_admin.html", context)
 
 
 @login_required

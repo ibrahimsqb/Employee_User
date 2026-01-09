@@ -112,6 +112,11 @@ urlpatterns = [
         name="employee_payroll_admin",
     ),
     path(
+        "manage/employees/<str:employee_id>/payslips/",
+        core_views.employee_payslip_list_admin_view,
+        name="employee_payslip_list_admin",
+    ),
+    path(
         "manage/employees/<str:employee_id>/documents/",
         core_views.employee_documents_admin_view,
         name="employee_documents_admin",
