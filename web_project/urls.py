@@ -41,6 +41,13 @@ urlpatterns = [
         name="employee_directory",
     ),
 
+    # HR/Admin views - Leave Requests
+    path(
+        "hr/leaves/",
+        core_views.hr_leave_requests_view,
+        name="hr_leave_requests",
+    ),
+
     # HR/Admin views - Onboarding
     path(
         "employees/onboarding/",
@@ -53,6 +60,11 @@ urlpatterns = [
         "employees/<str:employee_id>/dashboard/",
         core_views.employee_dashboard_view,
         name="employee_dashboard",
+    ),
+    path(
+      "employees/<str:employee_id>/leaves/",
+      core_views.employee_leaves_view,
+      name="employee_leaves",
     ),
     path(
         "employees/<str:employee_id>/general/",

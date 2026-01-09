@@ -14,48 +14,107 @@
     <header class="fixed top-0 left-0 right-0 z-50 bg-white border-b">
       <div class="flex items-center justify-between px-6 h-16">
         <div class="flex items-center gap-3">
-          <img src="{% static 'assets/img/brand/OfficeFlowAi.png' %}" class="h-20 w-20" />
+          <img
+            src="{% static 'assets/img/brand/OfficeFlowAi.png' %}"
+            class="h-20 w-20"
+          />
         </div>
 
         <div class="flex items-center gap-3">
-          <div class="hidden md:flex items-center bg-gray-100 rounded-full px-4 py-2 w-72">
-            <input type="text" placeholder="Search for something" class="bg-transparent outline-none text-sm w-full" />
+          <div
+            class="hidden md:flex items-center bg-gray-100 rounded-full px-4 py-2 w-72"
+          >
+            <input
+              type="text"
+              placeholder="Search for something"
+              class="bg-transparent outline-none text-sm w-full"
+            />
           </div>
 
-          <button class="w-10 h-10 border rounded-full flex items-center justify-center">
-            <img src="{% static 'assets/img/icons/common/settings 1.png' %}" class="w-5" />
+          <button
+            class="w-10 h-10 border rounded-full flex items-center justify-center"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/settings 1.png' %}"
+              class="w-5"
+            />
           </button>
 
-          <button class="w-10 h-10 border rounded-full flex items-center justify-center">
-            <img src="{% static 'assets/img/icons/common/002-notification-1.png' %}" class="w-5" />
+          <button
+            class="w-10 h-10 border rounded-full flex items-center justify-center"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/002-notification-1.png' %}"
+              class="w-5"
+            />
           </button>
 
           <img src="https://i.pravatar.cc/40" class="w-9 h-9 rounded-full" />
+
+          <a
+            href="{% url 'logout' %}"
+            class="w-10 h-10 border rounded-full flex items-center justify-center hover:bg-gray-100 text-gray-600"
+            title="Logout"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+            </svg>
+          </a>
         </div>
       </div>
     </header>
 
     <div class="flex pt-16">
       <!-- ================= SIDEBAR ================= -->
-      <aside class="hidden lg:block w-64 bg-emerald-900 min-h-screen fixed text-white">
+      <aside
+        class="hidden lg:block w-64 bg-emerald-900 min-h-screen fixed text-white"
+      >
         <nav class="px-4 py-6 space-y-2">
-          <a href="{% url 'employee_dashboard' employee.employee_id %}" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
-            <img src="{% static 'assets/img/icons/common/home 2.png' %}" class="w-5" alt="Dashboard" />
+          <a
+            href="{% url 'employee_dashboard' employee.employee_id %}"
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/home 2.png' %}"
+              class="w-5"
+              alt="Dashboard"
+            />
             Dashboard
           </a>
 
-          <a href="{% url 'employee_general' employee.employee_id %}" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
-            <img src="{% static 'assets/img/icons/common/user 3 1.png' %}" class="w-5" alt="Employees" />
+          <a
+            href="{% url 'employee_general' employee.employee_id %}"
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/user 3 1.png' %}"
+              class="w-5"
+              alt="Employees"
+            />
             Profile
           </a>
 
-          <a href="{% url 'employee_attendance' employee.employee_id %}" class="flex items-center gap-3 px-4 py-2 rounded-lg bg-emerald-800">
-            <img src="{% static 'assets/img/icons/common/clock.png' %}" class="w-5 filter invert" alt="Attendance" />
+          <a
+            href="{% url 'employee_attendance' employee.employee_id %}"
+            class="flex items-center gap-3 px-4 py-2 rounded-lg bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/clock.png' %}"
+              class="w-5 filter invert"
+              alt="Attendance"
+            />
             Attendance
           </a>
 
-          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
-            <img src="{% static 'assets/img/icons/common/calendar.png' %}" class="w-5" alt="Leave Management" />
+          <a
+            href="{% url 'employee_leaves' employee.employee_id %}"
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/calendar.png' %}"
+              class="w-5"
+              alt="Leave Management"
+            />
             Leave Management
           </a>
         </nav>
@@ -66,21 +125,37 @@
         {% if messages %}
         <div class="mb-4 space-y-2">
           {% for message in messages %}
-          <div class="px-3 py-2 rounded border text-sm {% if message.tags == 'success' %}bg-emerald-50 border-emerald-200 text-emerald-800{% elif message.tags == 'error' %}bg-red-50 border-red-200 text-red-800{% elif message.tags == 'warning' %}bg-amber-50 border-amber-200 text-amber-800{% else %}bg-gray-50 border-gray-200 text-gray-800{% endif %}">{{ message }}</div>
+          <div
+            class="px-3 py-2 rounded border text-sm {% if message.tags == 'success' %}bg-emerald-50 border-emerald-200 text-emerald-800{% elif message.tags == 'error' %}bg-red-50 border-red-200 text-red-800{% elif message.tags == 'warning' %}bg-amber-50 border-amber-200 text-amber-800{% else %}bg-gray-50 border-gray-200 text-gray-800{% endif %}"
+          >
+            {{ message }}
+          </div>
           {% endfor %}
         </div>
         {% endif %}
 
         <!-- Header -->
-        <div class="mb-6 flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
+        <div
+          class="mb-6 flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4"
+        >
           <div>
-            <p class="text-xs text-gray-400 mb-1">Dashboard / <span class="text-gray-600">My Attendance</span></p>
-            <h1 class="text-xl sm:text-2xl font-semibold text-gray-800">Good Morning, {{ first_name }}</h1>
-            <p class="text-sm text-gray-500">Ready to start your day? Scan your face to check-in.</p>
+            <p class="text-xs text-gray-400 mb-1">
+              Dashboard / <span class="text-gray-600">My Attendance</span>
+            </p>
+            <h1 class="text-xl sm:text-2xl font-semibold text-gray-800">
+              Good Morning, {{ first_name }}
+            </h1>
+            <p class="text-sm text-gray-500">
+              Ready to start your day? Scan your face to check-in.
+            </p>
 
             <div class="flex flex-wrap gap-2 mt-3">
               <!-- <span class="px-3 py-1 text-xs rounded-full bg-gray-200 text-gray-700"> Role: Employee </span> -->
-              <span class="px-3 py-1 text-xs rounded-full bg-green-100 text-green-700"> Working Day </span>
+              <span
+                class="px-3 py-1 text-xs rounded-full bg-green-100 text-green-700"
+              >
+                Working Day
+              </span>
             </div>
           </div>
 
@@ -96,30 +171,59 @@
           <div class="lg:col-span-2 bg-white rounded-xl border p-4 sm:p-6">
             <div class="flex items-center gap-2 mb-4">
               <span class="w-2 h-2 rounded-full bg-blue-500"></span>
-              <h2 class="text-sm font-semibold text-gray-700">Facial Verification</h2>
+              <h2 class="text-sm font-semibold text-gray-700">
+                Facial Verification
+              </h2>
             </div>
 
             <!-- Camera Box -->
-            <div class="relative h-48 sm:h-56 bg-slate-800 rounded-lg flex items-center justify-center mb-4 overflow-hidden">
+            <div
+              class="relative h-48 sm:h-56 bg-slate-800 rounded-lg flex items-center justify-center mb-4 overflow-hidden"
+            >
               <!-- Webcam Video -->
-              <video id="webcam" autoplay playsinline class="absolute inset-0 w-full h-full object-cover hidden"></video>
+              <video
+                id="webcam"
+                autoplay
+                playsinline
+                class="absolute inset-0 w-full h-full object-cover hidden"
+              ></video>
 
               <!-- Canvas for capturing -->
               <canvas id="canvas" class="hidden"></canvas>
 
               <!-- Placeholder when camera is off -->
-              <div id="camera-placeholder" class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-black flex items-center justify-center">
-                <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full border-4 border-green-400"></div>
+              <div
+                id="camera-placeholder"
+                class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-black flex items-center justify-center"
+              >
+                <div
+                  class="w-7 h-7 sm:w-8 sm:h-8 rounded-full border-4 border-green-400"
+                ></div>
               </div>
 
               <!-- Preview captured image -->
-              <img id="preview" class="absolute inset-0 w-full h-full object-cover hidden" />
+              <img
+                id="preview"
+                class="absolute inset-0 w-full h-full object-cover hidden"
+              />
             </div>
 
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div
+              class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"
+            >
               <div class="text-xs text-gray-500 flex items-center gap-1">
-                <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                <svg
+                  class="w-4 h-4 text-blue-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                  ></path>
                 </svg>
                 Face recognition enabled for secure attendance tracking
               </div>
@@ -127,45 +231,110 @@
               {% if primary_action %}
               <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
                 <!-- Start Camera Button -->
-                <button type="button" id="start-camera-btn" onclick="startWebcam()" class="w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium px-5 py-2 rounded-lg transition flex items-center justify-center gap-2">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                <button
+                  type="button"
+                  id="start-camera-btn"
+                  onclick="startWebcam()"
+                  class="w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium px-5 py-2 rounded-lg transition flex items-center justify-center gap-2"
+                >
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                    ></path>
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                    ></path>
                   </svg>
                   Start Camera
                 </button>
 
                 <!-- Capture Button (shown when camera is on) -->
-                <button type="button" id="capture-btn" onclick="captureImage()" class="hidden w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium px-5 py-2 rounded-lg transition flex items-center justify-center gap-2">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                <button
+                  type="button"
+                  id="capture-btn"
+                  onclick="captureImage()"
+                  class="hidden w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium px-5 py-2 rounded-lg transition flex items-center justify-center gap-2"
+                >
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                    ></path>
                     <circle cx="12" cy="13" r="3"></circle>
                   </svg>
                   Capture Face
                 </button>
 
                 <!-- Retake Button (shown after capture) -->
-                <button type="button" id="retake-btn" onclick="retakePhoto()" class="hidden w-full sm:w-auto bg-gray-500 hover:bg-gray-600 text-white text-sm font-medium px-5 py-2 rounded-lg transition">Retake</button>
+                <button
+                  type="button"
+                  id="retake-btn"
+                  onclick="retakePhoto()"
+                  class="hidden w-full sm:w-auto bg-gray-500 hover:bg-gray-600 text-white text-sm font-medium px-5 py-2 rounded-lg transition"
+                >
+                  Retake
+                </button>
 
                 <!-- Submit Button (shown after capture) -->
-                <button type="button" id="submit-btn" onclick="submitAttendance()" class="hidden w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium px-5 py-2 rounded-lg transition">{{ primary_label }}</button>
+                <button
+                  type="button"
+                  id="submit-btn"
+                  onclick="submitAttendance()"
+                  class="hidden w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium px-5 py-2 rounded-lg transition"
+                >
+                  {{ primary_label }}
+                </button>
               </div>
 
               <!-- Hidden form for submission -->
               <form id="attendance-form" method="POST" class="hidden">
                 {% csrf_token %}
-                <input type="hidden" name="action" id="attendance_action" value="{{ primary_action }}" />
-                <input type="hidden" name="captured_image" id="captured_image_input" />
+                <input
+                  type="hidden"
+                  name="action"
+                  id="attendance_action"
+                  value="{{ primary_action }}"
+                />
+                <input
+                  type="hidden"
+                  name="captured_image"
+                  id="captured_image_input"
+                />
               </form>
               {% else %}
-              <button disabled class="w-full sm:w-auto bg-gray-300 text-gray-600 text-sm font-medium px-5 py-2 rounded-lg cursor-default">Shift Completed</button>
+              <button
+                disabled
+                class="w-full sm:w-auto bg-gray-300 text-gray-600 text-sm font-medium px-5 py-2 rounded-lg cursor-default"
+              >
+                Shift Completed
+              </button>
               {% endif %}
             </div>
           </div>
 
           <!-- Today's Summary -->
           <div class="bg-white rounded-xl border p-4 sm:p-6">
-            <h2 class="text-sm font-semibold text-gray-700 mb-4">Today’s Summary</h2>
+            <h2 class="text-sm font-semibold text-gray-700 mb-4">
+              Today’s Summary
+            </h2>
 
             <div class="grid grid-cols-2 gap-3">
               <div class="border rounded-lg p-3">
@@ -187,7 +356,9 @@
 
               <div class="border rounded-lg p-3">
                 <p class="text-xs text-gray-500">Status</p>
-                <p class="font-semibold text-sm text-gray-700">{{ status_label }}</p>
+                <p class="font-semibold text-sm text-gray-700">
+                  {{ status_label }}
+                </p>
               </div>
             </div>
           </div>
@@ -197,15 +368,23 @@
         <div class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
           <!-- Today's Log -->
           <div class="lg:col-span-2 bg-white rounded-xl border p-4 sm:p-6">
-            <h2 class="text-sm font-semibold text-gray-700 mb-4">Today’s Log</h2>
+            <h2 class="text-sm font-semibold text-gray-700 mb-4">
+              Today’s Log
+            </h2>
 
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 bg-emerald-50 border border-emerald-200 rounded-lg p-4">
+            <div
+              class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 bg-emerald-50 border border-emerald-200 rounded-lg p-4"
+            >
               <div>
-                <p class="text-sm font-medium text-gray-700">{{ log_message }}</p>
+                <p class="text-sm font-medium text-gray-700">
+                  {{ log_message }}
+                </p>
                 <p class="text-xs text-gray-500">{{ log_time_display }}</p>
               </div>
 
-              <span class="text-xs font-medium {{ log_status_color }}"> {{ log_status }} </span>
+              <span class="text-xs font-medium {{ log_status_color }}">
+                {{ log_status }}
+              </span>
             </div>
           </div>
 
@@ -217,42 +396,75 @@
             <div class="grid grid-cols-5 gap-2 mb-4">
               <div class="text-center">
                 <p class="text-xs text-gray-500 mb-1">M</p>
-                <div class="w-full h-8 flex items-center justify-center rounded border text-xs font-medium">21</div>
+                <div
+                  class="w-full h-8 flex items-center justify-center rounded border text-xs font-medium"
+                >
+                  21
+                </div>
               </div>
               <div class="text-center">
                 <p class="text-xs text-gray-500 mb-1">T</p>
-                <div class="w-full h-8 flex items-center justify-center rounded bg-emerald-600 text-white text-xs font-medium">22</div>
+                <div
+                  class="w-full h-8 flex items-center justify-center rounded bg-emerald-600 text-white text-xs font-medium"
+                >
+                  22
+                </div>
               </div>
               <div class="text-center">
                 <p class="text-xs text-gray-500 mb-1">W</p>
-                <div class="w-full h-8 flex items-center justify-center rounded border text-xs font-medium">23</div>
+                <div
+                  class="w-full h-8 flex items-center justify-center rounded border text-xs font-medium"
+                >
+                  23
+                </div>
               </div>
               <div class="text-center">
                 <p class="text-xs text-gray-500 mb-1">T</p>
-                <div class="w-full h-8 flex items-center justify-center rounded border text-xs font-medium">24</div>
+                <div
+                  class="w-full h-8 flex items-center justify-center rounded border text-xs font-medium"
+                >
+                  24
+                </div>
               </div>
               <div class="text-center">
                 <p class="text-xs text-gray-500 mb-1">F</p>
-                <div class="w-full h-8 flex items-center justify-center rounded border text-xs font-medium">25</div>
+                <div
+                  class="w-full h-8 flex items-center justify-center rounded border text-xs font-medium"
+                >
+                  25
+                </div>
               </div>
             </div>
 
             <!-- Schedule Items -->
             <div class="space-y-3">
               <div class="border-l-4 border-blue-500 pl-3 py-2">
-                <p class="text-sm font-medium text-gray-800">Downtown Office Tower</p>
-                <p class="text-xs text-gray-500">Electrical Installation • Phase 2</p>
+                <p class="text-sm font-medium text-gray-800">
+                  Downtown Office Tower
+                </p>
+                <p class="text-xs text-gray-500">
+                  Electrical Installation • Phase 2
+                </p>
               </div>
 
               <div class="border-l-4 border-purple-500 pl-3 py-2">
-                <p class="text-sm font-medium text-gray-800">Downtown Office Tower</p>
-                <p class="text-xs text-gray-500">Electrical Installation • Phase 3</p>
+                <p class="text-sm font-medium text-gray-800">
+                  Downtown Office Tower
+                </p>
+                <p class="text-xs text-gray-500">
+                  Electrical Installation • Phase 3
+                </p>
               </div>
             </div>
 
             <!-- Check Calendar Link -->
             <div class="mt-4 text-left">
-              <a href="{% url 'employee_schedule' employee.employee_id %}" class="text-sm text-blue-600 hover:underline"> Check Schedule </a>
+              <a
+                href="{% url 'employee_schedule' employee.employee_id %}"
+                class="text-sm text-blue-600 hover:underline"
+              >
+                Check Schedule
+              </a>
             </div>
           </div>
         </div>
@@ -285,7 +497,11 @@
           document.getElementById("start-camera-btn").classList.add("hidden");
           document.getElementById("capture-btn").classList.remove("hidden");
         } catch (err) {
-          alert("Error accessing webcam: " + err.message + "\\n\\nPlease ensure you have granted camera permissions.");
+          alert(
+            "Error accessing webcam: " +
+              err.message +
+              "\\n\\nPlease ensure you have granted camera permissions."
+          );
         }
       }
 
@@ -325,7 +541,9 @@
       function retakePhoto() {
         // Hide preview
         document.getElementById("preview").classList.add("hidden");
-        document.getElementById("camera-placeholder").classList.remove("hidden");
+        document
+          .getElementById("camera-placeholder")
+          .classList.remove("hidden");
 
         // Reset captured image
         capturedImage = null;
@@ -353,7 +571,8 @@
         // Show loading state
         const submitBtn = document.getElementById("submit-btn");
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<svg class="animate-spin h-5 w-5 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
+        submitBtn.innerHTML =
+          '<svg class="animate-spin h-5 w-5 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
 
         // Submit the form
         document.getElementById("attendance-form").submit();

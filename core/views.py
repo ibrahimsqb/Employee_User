@@ -3,10 +3,12 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.db import transaction
+from django.db.models import Sum
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 import secrets
 import base64
+from collections import defaultdict
 
 from .forms import BankDetailForm, EmployeeDocumentForm
 from .models import (
@@ -18,6 +20,8 @@ from .models import (
     EmployeeProfile,
     EmploymentContract,
     JobHistory,
+    LeaveRequest,
+    LEAVE_ALLOWANCES,
     Payroll,
     SalaryComponent,
     WorkSchedule,
@@ -470,6 +474,47 @@ def _mask_account(number: str) -> str:
     return num[:2] + "*" * (len(num) - 2)
 
 
+def _parse_date(date_str):
+    if not date_str:
+        return None
+    from datetime import date
+
+    try:
+        return date.fromisoformat(date_str)
+    except ValueError:
+        return None
+
+
+def _calculate_days(start_date, end_date) -> int:
+    if not start_date or not end_date:
+        return 0
+    delta = (end_date - start_date).days + 1
+    return max(delta, 0)
+
+
+def _leave_balances_for_employee(employee: EmployeeProfile):
+    """Return simple per-type allowance/used/remaining map."""
+    balances = {}
+    used = (
+        LeaveRequest.objects.filter(employee=employee)
+        .exclude(status="REJECTED")
+        .values("leave_type")
+        .annotate(total=Sum("days"))
+    )
+    used_map = {item["leave_type"]: item["total"] for item in used}
+
+    for code, _label in LeaveRequest.LEAVE_TYPES:
+        allowance = LEAVE_ALLOWANCES.get(code, 0)
+        taken = used_map.get(code, 0) or 0
+        remaining = max(allowance - taken, 0)
+        balances[code] = {
+            "allowance": allowance,
+            "used": taken,
+            "remaining": remaining,
+        }
+    return balances
+
+
 def _ensure_current_month_payroll(employee: EmployeeProfile) -> Payroll | None:
     """Guarantee a payroll exists for the current month; create it if missing."""
     from datetime import date
@@ -525,11 +570,288 @@ def employee_dashboard_view(request, employee_id):
     employee = _get_employee_or_404(employee_id)
     personal = getattr(employee, "employeepersonalinfo", None)
 
+    # Attendance snapshot for today
+    today = timezone.localdate()
+    now = timezone.localtime()
+    attendance = EmployeeAttendance.objects.filter(employee=employee, date=today).first()
+
+    def _fmt_time(dt):
+        if not dt:
+            return "--:--"
+        local_dt = timezone.localtime(dt)
+        return local_dt.strftime("%I:%M %p").lstrip("0")
+
+    check_in_display = _fmt_time(attendance.check_in) if attendance else "--:--"
+    check_out_display = _fmt_time(attendance.check_out) if attendance else "--:--"
+
+    total_hours_display = "0h 00m"
+    if attendance and attendance.total_duration:
+        total_seconds = int(attendance.total_duration.total_seconds())
+        hours = total_seconds // 3600
+        minutes = (total_seconds % 3600) // 60
+        total_hours_display = f"{hours}h {minutes:02d}m"
+
+    attendance_status = "Not Started"
+    if attendance:
+        if attendance.check_in and attendance.check_out:
+            attendance_status = "Completed"
+        elif attendance.check_in:
+            attendance_status = "In Progress"
+
+    # Schedule snapshot
+    from datetime import timedelta
+
+    schedule = getattr(employee, "workschedule", None)
+    shift_hours = schedule.working_hours if schedule and schedule.working_hours else "9:00 AM - 5:00 PM"
+    working_days = schedule.working_days if schedule and schedule.working_days else "Monday - Friday"
+
+    start_of_week = today - timedelta(days=today.weekday())
+    end_of_week = start_of_week + timedelta(days=6)
+    week_range_label = f"{start_of_week.strftime('%b %d')} - {end_of_week.strftime('%b %d')}"
+
+    # Leave balances
+    balances = _leave_balances_for_employee(employee)
+    leave_cards = []
+    for code, label in LeaveRequest.LEAVE_TYPES:
+        bal = balances.get(code, {"used": 0, "remaining": 0, "allowance": LEAVE_ALLOWANCES.get(code, 0)})
+        leave_cards.append(
+            {
+                "title": f"{label} Leave",
+                "code": code,
+                "used": bal.get("used", 0),
+                "remaining": bal.get("remaining", 0),
+                "allowance": bal.get("allowance", LEAVE_ALLOWANCES.get(code, 0)),
+            }
+        )
+
+    pending_leaves = LeaveRequest.objects.filter(employee=employee, status="APPLIED").count()
+    approved_leaves = LeaveRequest.objects.filter(employee=employee, status="APPROVED").count()
+
+    # Payroll snapshot
+    _ensure_current_month_payroll(employee)
+    last_pay = Payroll.objects.filter(employee=employee).order_by("-payment_date").first()
+
+    # Documents summary
+    documents_count = EmployeeDocument.objects.filter(employee=employee).count()
+
     context = {
         "employee": employee,
         "personal": personal,
+        "today": today,
+        "current_time": now.strftime("%I:%M %p").lstrip("0"),
+        "attendance_status": attendance_status,
+        "check_in_display": check_in_display,
+        "check_out_display": check_out_display,
+        "total_hours_display": total_hours_display,
+        "shift_hours": shift_hours,
+        "working_days": working_days,
+        "week_range_label": week_range_label,
+        "leave_cards": leave_cards,
+        "pending_leaves": pending_leaves,
+        "approved_leaves": approved_leaves,
+        "last_pay": last_pay,
+        "documents_count": documents_count,
     }
     return render(request, "employeePages/employee_dashboard.html", context)
+
+def employee_leaves_view(request, employee_id):
+    if not can_access_employee(request.user, employee_id):
+        messages.error(request, "You don't have permission to access this page.")
+        return redirect("login")
+    
+    employee = _get_employee_or_404(employee_id)
+    personal = getattr(employee, "employeepersonalinfo", None)
+    
+    if request.method == "POST":
+        action = request.POST.get("action", "create")
+        
+        # Handle delete action
+        if action == "delete":
+            leave_id = request.POST.get("leave_id")
+            leave = get_object_or_404(LeaveRequest, id=leave_id, employee=employee)
+            
+            # Allow deletion only if status is APPLIED or REJECTED
+            if leave.status not in ["APPLIED", "REJECTED"]:
+                messages.error(request, "You can only delete leave requests that are in 'Applied' or 'Rejected' status.")
+                return redirect("employee_leaves", employee_id=employee.employee_id)
+            
+            leave.delete()
+            messages.success(request, "Leave request deleted successfully.")
+            return redirect("employee_leaves", employee_id=employee.employee_id)
+        
+        # Handle edit action
+        elif action == "edit":
+            leave_id = request.POST.get("leave_id")
+            leave = get_object_or_404(LeaveRequest, id=leave_id, employee=employee)
+            
+            # Only allow editing if status is APPLIED or REJECTED
+            if leave.status not in ["APPLIED", "REJECTED"]:
+                messages.error(request, "You can only edit leave requests that are in 'Applied' or 'Rejected' status.")
+                return redirect("employee_leaves", employee_id=employee.employee_id)
+            
+            leave_type = request.POST.get("leave_type") or leave.leave_type
+            start_date = _parse_date(request.POST.get("start_date"))
+            end_date = _parse_date(request.POST.get("end_date"))
+            reason = (request.POST.get("reason") or "").strip()
+            
+            if not start_date or not end_date:
+                messages.error(request, "Please provide both start and end dates.")
+                return redirect("employee_leaves", employee_id=employee.employee_id)
+            
+            if end_date < start_date:
+                messages.error(request, "End date cannot be before start date.")
+                return redirect("employee_leaves", employee_id=employee.employee_id)
+            
+            days = _calculate_days(start_date, end_date)
+            
+            leave.leave_type = leave_type
+            leave.start_date = start_date
+            leave.end_date = end_date
+            leave.days = days
+            leave.reason = reason
+            leave.save()
+            messages.success(request, "Leave request updated successfully.")
+            return redirect("employee_leaves", employee_id=employee.employee_id)
+        
+        # Handle create action (default)
+        else:
+            leave_type = request.POST.get("leave_type") or "ANNUAL"
+            start_date = _parse_date(request.POST.get("start_date"))
+            end_date = _parse_date(request.POST.get("end_date"))
+            applied_date = _parse_date(request.POST.get("applied_date")) or timezone.localdate()
+            days_input = request.POST.get("days") or ""
+            reason = (request.POST.get("reason") or "").strip()
+
+            if not start_date or not end_date:
+                messages.error(request, "Please provide both start and end dates.")
+                return redirect("employee_leaves", employee_id=employee.employee_id)
+
+            if end_date < start_date:
+                messages.error(request, "End date cannot be before start date.")
+                return redirect("employee_leaves", employee_id=employee.employee_id)
+
+            try:
+                days = int(days_input) if days_input else 0
+            except ValueError:
+                days = 0
+
+            if days <= 0:
+                days = _calculate_days(start_date, end_date)
+
+            LeaveRequest.objects.create(
+                employee=employee,
+                leave_type=leave_type,
+                start_date=start_date,
+                end_date=end_date,
+                applied_date=applied_date,
+                days=days,
+                reason=reason,
+                status="APPLIED",
+            )
+            messages.success(request, "Leave request submitted for approval.")
+            return redirect("employee_leaves", employee_id=employee.employee_id)
+
+    leave_requests = (
+        LeaveRequest.objects.filter(employee=employee)
+        .select_related("approved_by")
+        .order_by("-applied_date", "-created_at")
+    )
+
+    balances = _leave_balances_for_employee(employee)
+
+    summary_cards = []
+    for code, label in LeaveRequest.LEAVE_TYPES:
+        balance = balances.get(code, {"used": 0, "remaining": 0})
+        summary_cards.append(
+            {
+                "title": f"{label} Leaves",
+                "code": code,
+                "used": balance.get("used", 0),
+                "remaining": balance.get("remaining", 0),
+            }
+        )
+
+    context = {
+        "employee": employee,
+        "personal": personal,
+        "leave_requests": leave_requests,
+        "summary_cards": summary_cards,
+        "balances": balances,
+    }
+    return render(request, "employeePages/employee_leaveManagement.html", context)
+
+
+@login_required
+@user_passes_test(is_hr_or_superuser)
+def hr_leave_requests_view(request):
+    """HR console for reviewing and acting on leave requests."""
+    if request.method == "POST":
+        leave_id = request.POST.get("leave_id")
+        action = (request.POST.get("action") or "").lower()
+        leave = get_object_or_404(LeaveRequest, id=leave_id)
+
+        if action not in {"approve", "reject"}:
+            messages.error(request, "Invalid action for leave request.")
+            return redirect("hr_leave_requests")
+
+        new_status = "APPROVED" if action == "approve" else "REJECTED"
+        leave.status = new_status
+        leave.approved_by = request.user
+        leave.decision_date = timezone.now()
+        leave.save(update_fields=["status", "approved_by", "decision_date", "updated_at"])
+
+        messages.success(request, f"Leave request marked as {new_status.title()}.")
+        return redirect("hr_leave_requests")
+
+    leaves_qs = (
+        LeaveRequest.objects.select_related(
+            "employee",
+            "employee__employeepersonalinfo",
+            "employee__user",
+            "approved_by",
+        )
+        .order_by("-applied_date", "-created_at")
+    )
+
+    employee_ids = list(leaves_qs.values_list("employee_id", flat=True))
+
+    balances_map = defaultdict(dict)
+    usage = (
+        LeaveRequest.objects.filter(employee_id__in=employee_ids)
+        .exclude(status="REJECTED")
+        .values("employee_id", "leave_type")
+        .annotate(total=Sum("days"))
+    )
+    for item in usage:
+        emp_id = item["employee_id"]
+        code = item["leave_type"]
+        balances_map[emp_id][code] = {
+            "used": item["total"] or 0,
+            "allowance": LEAVE_ALLOWANCES.get(code, 0),
+        }
+
+    for emp_id, per_type in balances_map.items():
+        for code, allowance in LEAVE_ALLOWANCES.items():
+            current = per_type.get(code, {"used": 0, "allowance": allowance})
+            remaining = max(current.get("allowance", allowance) - current.get("used", 0), 0)
+            per_type[code] = {
+                "used": current.get("used", 0),
+                "allowance": allowance,
+                "remaining": remaining,
+            }
+
+    leave_rows = []
+    for leave in leaves_qs:
+        balance = balances_map.get(leave.employee_id, {}).get(
+            leave.leave_type,
+            {"allowance": LEAVE_ALLOWANCES.get(leave.leave_type, 0), "used": 0, "remaining": LEAVE_ALLOWANCES.get(leave.leave_type, 0)},
+        )
+        leave_rows.append({"leave": leave, "balance": balance})
+
+    context = {
+        "leave_rows": leave_rows,
+    }
+    return render(request, "adminPages/hr_leave_requests.html", context)
 
 
 def employee_general_view(request, employee_id):

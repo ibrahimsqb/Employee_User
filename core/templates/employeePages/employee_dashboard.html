@@ -14,48 +14,117 @@
     <header class="fixed top-0 left-0 right-0 z-50 bg-white border-b">
       <div class="flex items-center justify-between px-6 h-16">
         <div class="flex items-center gap-3">
-          <img src="{% static 'assets/img/brand/OfficeFlowAi.png' %}" class="h-20 w-20" />
+          <img
+            src="{% static 'assets/img/brand/OfficeFlowAi.png' %}"
+            class="h-20 w-20"
+          />
         </div>
 
         <div class="flex items-center gap-3">
-          <div class="hidden md:flex items-center bg-gray-100 rounded-full px-4 py-2 w-72">
-            <input type="text" placeholder="Search for something" class="bg-transparent outline-none text-sm w-full" />
+          <div
+            class="hidden md:flex items-center bg-gray-100 rounded-full px-4 py-2 w-72"
+          >
+            <input
+              type="text"
+              placeholder="Search for something"
+              class="bg-transparent outline-none text-sm w-full"
+            />
           </div>
 
-          <button class="w-10 h-10 border rounded-full flex items-center justify-center">
-            <img src="{% static 'assets/img/icons/common/settings 1.png' %}" class="w-5" />
+          <button
+            class="w-10 h-10 border rounded-full flex items-center justify-center"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/settings 1.png' %}"
+              class="w-5"
+            />
           </button>
 
-          <button class="w-10 h-10 border rounded-full flex items-center justify-center">
-            <img src="{% static 'assets/img/icons/common/002-notification-1.png' %}" class="w-5" />
+          <button
+            class="w-10 h-10 border rounded-full flex items-center justify-center"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/002-notification-1.png' %}"
+              class="w-5"
+            />
           </button>
 
           <img src="https://i.pravatar.cc/40" class="w-9 h-9 rounded-full" />
+
+          <a
+            href="{% url 'logout' %}"
+            class="w-10 h-10 border rounded-full flex items-center justify-center hover:bg-gray-100 text-gray-600"
+            title="Logout"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+              ></path>
+            </svg>
+          </a>
         </div>
       </div>
     </header>
 
     <div class="flex pt-16">
       <!-- ================= SIDEBAR ================= -->
-      <aside class="hidden lg:block w-64 bg-emerald-900 min-h-screen fixed text-white">
+      <aside
+        class="hidden lg:block w-64 bg-emerald-900 min-h-screen fixed text-white"
+      >
         <nav class="px-4 py-6 space-y-2">
-          <a href="{% url 'employee_dashboard' employee.employee_id %}" class="flex items-center gap-3 px-4 py-2 rounded-lg bg-emerald-800">
-            <img src="{% static 'assets/img/icons/common/home 2.png' %}" class="w-5" alt="Dashboard" />
+          <a
+            href="{% url 'employee_dashboard' employee.employee_id %}"
+            class="flex items-center gap-3 px-4 py-2 rounded-lg bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/home 2.png' %}"
+              class="w-5"
+              alt="Dashboard"
+            />
             Dashboard
           </a>
 
-          <a href="{% url 'employee_general' employee.employee_id %}" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
-            <img src="{% static 'assets/img/icons/common/user 3 1.png' %}" class="w-5" alt="Employees" />
+          <a
+            href="{% url 'employee_general' employee.employee_id %}"
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/user 3 1.png' %}"
+              class="w-5"
+              alt="Employees"
+            />
             Profile
           </a>
 
-          <a href="{% url 'employee_attendance' employee.employee_id %}" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
-            <img src="{% static 'assets/img/icons/common/clock.png' %}" class="w-5 filter invert" alt="Attendance" />
+          <a
+            href="{% url 'employee_attendance' employee.employee_id %}"
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/clock.png' %}"
+              class="w-5 filter invert"
+              alt="Attendance"
+            />
             Attendance
           </a>
 
-          <a class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800">
-            <img src="{% static 'assets/img/icons/common/calendar.png' %}" class="w-5" alt="Leave Management" />
+          <a
+            href="{% url 'employee_leaves' employee.employee_id %}"
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/calendar.png' %}"
+              class="w-5"
+              alt="Leave Management"
+            />
             Leave Management
           </a>
         </nav>
@@ -66,75 +135,132 @@
         <!-- Header -->
         <div class="mb-6">
           <h1 class="text-xl font-semibold">Good Morning</h1>
-          <p class="text-sm text-gray-500">Welcome back, {{ personal.full_name|default:"User" }}. Here's your overview.</p>
+          <p class="text-sm text-gray-500">
+            Welcome back, {{ personal.full_name|default:"User" }}. Here's your
+            overview.
+          </p>
         </div>
 
         <!-- Shift Info -->
-        <div class="bg-white p-4 rounded-lg border flex flex-col md:flex-row justify-between gap-4 mb-6">
+        <div
+          class="bg-white p-4 rounded-lg border flex flex-col md:flex-row justify-between gap-4 mb-6"
+        >
           <div>
-            <p class="text-sm text-gray-500">Today's Shift</p>
-            <p class="font-semibold text-lg">9:00 AM - 5:00 PM</p>
-            <p class="text-sm text-gray-400">Design Team / Remote</p>
+            <p class="text-sm text-gray-500">This Week</p>
+            <p class="font-semibold text-lg">{{ week_range_label }}</p>
+            <p class="text-sm text-gray-400">{{ working_days }}</p>
           </div>
 
           <div class="flex items-center gap-4">
-            <span class="flex items-center gap-2 text-green-600 text-sm"> ✔ Checked in at 8:55 AM </span>
-            <a href="{% url 'employee_attendance' employee.employee_id %}" class="bg-emerald-600 text-white px-4 py-2 rounded-md inline-flex items-center justify-center text-sm"> Go to Attendance </a>
+            <div class="text-left">
+              <p class="text-sm text-gray-500">Today's Shift</p>
+              <p class="font-semibold text-lg">{{ shift_hours }}</p>
+            </div>
+            <a
+              href="{% url 'employee_attendance' employee.employee_id %}"
+              class="bg-emerald-600 text-white px-4 py-2 rounded-md inline-flex items-center justify-center text-sm"
+            >
+              View Attendance
+            </a>
           </div>
         </div>
 
         <!-- Stats -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
           <div class="bg-white p-4 rounded-lg border">
-            <p class="text-sm text-gray-500">Active Tasks</p>
-            <h3 class="text-xl font-semibold">8</h3>
+            <p class="text-sm text-gray-500">Attendance Status</p>
+            <h3 class="text-xl font-semibold">{{ attendance_status }}</h3>
+            <p class="text-xs text-gray-500 mt-1">
+              In: {{ check_in_display }} · Out: {{ check_out_display }}
+            </p>
           </div>
 
           <div class="bg-white p-4 rounded-lg border">
-            <p class="text-sm text-gray-500">Due This Week</p>
-            <h3 class="text-xl font-semibold text-red-500">2</h3>
+            <p class="text-sm text-gray-500">Hours Today</p>
+            <h3 class="text-xl font-semibold">{{ total_hours_display }}</h3>
+            <p class="text-xs text-gray-500 mt-1">As of {{ current_time }}</p>
           </div>
 
           <div class="bg-white p-4 rounded-lg border">
-            <p class="text-sm text-gray-500">Hours Logged</p>
-            <h3 class="text-xl font-semibold">32 / 40hrs</h3>
+            <p class="text-sm text-gray-500">Pending Leaves</p>
+            <h3 class="text-xl font-semibold">{{ pending_leaves }}</h3>
+            <p class="text-xs text-gray-500 mt-1">
+              Approved: {{ approved_leaves }}
+            </p>
           </div>
 
           <div class="bg-white p-4 rounded-lg border">
-            <p class="text-sm text-gray-500">Overtime Request</p>
-            <h3 class="text-xl font-semibold">1 Pending</h3>
+            <p class="text-sm text-gray-500">Annual Leave Left</p>
+            <h3 class="text-xl font-semibold">
+              {{ leave_cards.0.remaining }} / {{ leave_cards.0.allowance }}
+            </h3>
+            <p class="text-xs text-gray-500 mt-1">
+              Used: {{ leave_cards.0.used }}
+            </p>
           </div>
 
           <div class="bg-white p-4 rounded-lg border">
-            <p class="text-sm text-gray-500">Pending Timesheets</p>
-            <h3 class="text-xl font-semibold">1</h3>
+            <p class="text-sm text-gray-500">Last Pay</p>
+            <h3 class="text-xl font-semibold">
+              {% if last_pay %} {{ last_pay.net_salary }} {% else %} -- {% endif %}
+            </h3>
+            <p class="text-xs text-gray-500 mt-1">
+              {% if last_pay %} Paid {{ last_pay.payment_date|date:'M d, Y' }}
+              {% else %} No payslip yet {% endif %}
+            </p>
           </div>
         </div>
 
         <!-- Bottom Section -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <!-- Tasks -->
-          <div class="lg:col-span-2 bg-white p-4 rounded-lg border">
-            <div class="flex justify-between mb-4">
-              <h3 class="font-semibold">My Tasks</h3>
-              <a class="text-sm text-blue-600">View All</a>
+          <!-- Leave Balances & Attendance Detail -->
+          <div class="lg:col-span-2 space-y-4">
+            <div class="bg-white p-4 rounded-lg border">
+              <div class="flex justify-between mb-4">
+                <h3 class="font-semibold">Today's Attendance</h3>
+                <a
+                  href="{% url 'employee_attendance' employee.employee_id %}"
+                  class="text-sm text-blue-600"
+                >
+                  Open Attendance
+                </a>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+                <div class="border rounded-lg p-3">
+                  <p class="text-gray-500">Check-in</p>
+                  <p class="text-lg font-semibold">{{ check_in_display }}</p>
+                </div>
+                <div class="border rounded-lg p-3">
+                  <p class="text-gray-500">Check-out</p>
+                  <p class="text-lg font-semibold">{{ check_out_display }}</p>
+                </div>
+                <div class="border rounded-lg p-3">
+                  <p class="text-gray-500">Total Hours</p>
+                  <p class="text-lg font-semibold">{{ total_hours_display }}</p>
+                </div>
+              </div>
             </div>
 
-            <div class="space-y-3">
-              <div class="flex justify-between items-center border p-3 rounded">
-                <div>
-                  <p class="font-medium">Downtown Office Tower</p>
-                  <p class="text-sm text-gray-500">Electrical Installation</p>
-                </div>
-                <span class="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded"> In progress </span>
+            <div class="bg-white p-4 rounded-lg border">
+              <div class="flex justify-between mb-4">
+                <h3 class="font-semibold">Leave Balances</h3>
+                <a
+                  href="{% url 'employee_leaves' employee.employee_id %}"
+                  class="text-sm text-blue-600"
+                >
+                  Manage Leaves
+                </a>
               </div>
-
-              <div class="flex justify-between items-center border p-3 rounded">
-                <div>
-                  <p class="font-medium">Downtown Office Tower</p>
-                  <p class="text-sm text-gray-500">Electrical Installation</p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {% for card in leave_cards %}
+                <div class="border rounded-lg p-3">
+                  <p class="text-sm text-gray-500">{{ card.title }}</p>
+                  <p class="text-lg font-semibold">
+                    {{ card.remaining }} / {{ card.allowance }}
+                  </p>
+                  <p class="text-xs text-gray-500">Used: {{ card.used }}</p>
                 </div>
-                <span class="text-sm bg-gray-200 px-3 py-1 rounded"> To do </span>
+                {% endfor %}
               </div>
             </div>
           </div>

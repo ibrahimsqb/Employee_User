@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>HR | Leave Requests</title>
+  </head>
+  <body class="bg-gray-100">
+    <!-- ================= TOPBAR ================= -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white border-b">
+      <div class="flex items-center justify-between px-6 h-16">
+        <!-- Logo -->
+        <img
+          src="{% static 'assets/img/brand/OfficeFlowAi.png' %}"
+          class="h-20 w-20"
+          alt="OfficeFlowAi Logo"
+        />
+
+        <div class="flex items-center gap-3">
+          <div
+            class="hidden md:flex items-center bg-gray-100 rounded-full px-4 py-2 w-72"
+          >
+            <input
+              type="text"
+              placeholder="Search for something"
+              class="bg-transparent outline-none text-sm w-full"
+            />
+          </div>
+
+          <!-- Settings -->
+          <button
+            class="w-10 h-10 flex items-center justify-center border rounded-full"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/settings 1.png' %}"
+              class="w-5"
+              alt="Settings"
+            />
+          </button>
+
+          <!-- Notifications -->
+          <button
+            class="w-10 h-10 flex items-center justify-center border rounded-full"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/002-notification-1.png' %}"
+              class="w-5"
+              alt="Notifications"
+            />
+          </button>
+
+          <!-- Avatar -->
+          <img
+            src="https://i.pravatar.cc/40"
+            class="w-9 h-9 rounded-full"
+            alt="User Avatar"
+          />
+
+                    <!-- Logout -->
+          <a
+            href="{% url 'logout' %}"
+            class="w-10 h-10 border rounded-full flex items-center justify-center hover:bg-gray-100 text-gray-600"
+            title="Logout"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <div class="flex pt-16">
+      <!-- ================= SIDEBAR ================= -->
+      <aside
+        class="hidden lg:block w-64 bg-emerald-900 min-h-screen fixed text-white"
+      >
+        <nav class="px-4 py-6 space-y-2">
+          <a
+            href="{% url 'employee_directory' %}"
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/home 2.png' %}"
+              class="w-5"
+              alt="Dashboard"
+            />
+            Dashboard
+          </a>
+
+          <a
+            href="{% url 'employee_directory' %}"
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/transfer 1.png' %}"
+              class="w-5"
+              alt="Employees"
+            />
+            Employees
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/user 3 1.png' %}"
+              class="w-5"
+              alt="Attendance"
+            />
+            Attendance
+          </a>
+
+          <a
+            href="{% url 'hr_leave_requests' %}"
+            class="flex items-center gap-3 px-4 py-2 rounded-lg bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/economic-investment 1.png' %}"
+              class="w-5"
+              alt="Leave Management"
+            />
+            Leave Management
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/credit-card 1.png' %}"
+              class="w-5"
+              alt="Payroll"
+            />
+            Payroll
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/loan 1.png' %}"
+              class="w-5"
+              alt="Performance"
+            />
+            Performance
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/service 1.png' %}"
+              class="w-5"
+              alt="Assets"
+            />
+            Assets
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/econometrics 1.png' %}"
+              class="w-5"
+              alt="Recruitment"
+            />
+            Recruitment
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/settings solid 1.png' %}"
+              class="w-5"
+              alt="Settings"
+            />
+            Settings
+          </a>
+        </nav>
+      </aside>
+
+      <!-- ================= MAIN CONTENT ================= -->
+      <main class="flex-1 lg:ml-64 p-6">
+        <div class="mb-6">
+          <p class="text-xs text-gray-500">HR Console</p>
+          <h2 class="text-lg font-semibold text-gray-800">Leave Requests</h2>
+          <p class="text-sm text-gray-500 mt-1">Review and act on leave submissions</p>
+        </div>
+
+        <div class="bg-white rounded-xl border shadow-sm">
+
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-sm">
+            <thead class="bg-gray-50 text-gray-600">
+              <tr>
+                <th class="px-4 py-3 text-left">Employee</th>
+                <th class="px-4 py-3 text-left">Type</th>
+                <th class="px-4 py-3 text-left">From</th>
+                <th class="px-4 py-3 text-left">To</th>
+                <th class="px-4 py-3 text-left">Days</th>
+                <th class="px-4 py-3 text-left">Status</th>
+                <th class="px-4 py-3 text-left">Applied</th>
+                <th class="px-4 py-3 text-left">Approved By</th>
+                <th class="px-4 py-3 text-left">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in leave_rows %}
+              {% with leave=row.leave balance=row.balance %}
+              <tr class="border-t">
+                <td class="px-4 py-3 text-gray-800">
+                  {{leave.employee.employeepersonalinfo.full_name|default:leave.employee.employee_id}}
+                </td>
+                <td class="px-4 py-3">{{ leave.get_leave_type_display }}</td>
+                <td class="px-4 py-3">{{ leave.start_date }}</td>
+                <td class="px-4 py-3">{{ leave.end_date }}</td>
+                <td class="px-4 py-3">{{ leave.days }}</td>
+                <td class="px-4 py-3">
+                  {% if leave.status == 'APPROVED' %}
+                  <span
+                    class="px-2 py-1 rounded bg-emerald-100 text-emerald-700 text-xs"
+                    >Approved</span
+                  >
+                  {% elif leave.status == 'REJECTED' %}
+                  <span
+                    class="px-2 py-1 rounded bg-red-100 text-red-700 text-xs"
+                    >Rejected</span
+                  >
+                  {% else %}
+                  <span
+                    class="px-2 py-1 rounded bg-amber-100 text-amber-700 text-xs"
+                    >Applied</span
+                  >
+                  {% endif %}
+                </td>
+                <td class="px-4 py-3">{{ leave.applied_date }}</td>
+                <td class="px-4 py-3">
+                  {{ leave.approved_by.get_full_name|default:'--' }}
+                </td>
+                <td class="px-4 py-3">
+                  <button
+                    class="view-leave-btn px-3 py-2 text-xs rounded-md bg-slate-900 text-white hover:bg-slate-800"
+                    data-id="{{ leave.id }}"
+                    data-employee="{{ leave.employee.employeepersonalinfo.full_name|default:leave.employee.employee_id }}"
+                    data-type="{{ leave.get_leave_type_display }}"
+                    data-typecode="{{ leave.leave_type }}"
+                    data-start="{{ leave.start_date }}"
+                    data-end="{{ leave.end_date }}"
+                    data-days="{{ leave.days }}"
+                    data-status="{{ leave.status }}"
+                    data-applied="{{ leave.applied_date }}"
+                    data-approver="{{ leave.approved_by.get_full_name|default:'--' }}"
+                    data-reason="{{ leave.reason|default:'No reason provided.'|escapejs }}"
+                    data-bal-allowance="{{ balance.allowance|default:0 }}"
+                    data-bal-used="{{ balance.used|default:0 }}"
+                    data-bal-remaining="{{ balance.remaining|default:0 }}"
+                  >
+                    View
+                  </button>
+                </td>
+              </tr>
+              {% endwith %}
+              {% empty %}
+              <tr>
+                <td colspan="9" class="px-4 py-6 text-center text-gray-500">
+                  No leave requests found.
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </main>
+    </div>
+
+    <!-- Side Drawer -->
+    <div
+      id="leave-drawer"
+      class="fixed inset-y-0 right-0 w-full max-w-md bg-white shadow-2xl border-l transform translate-x-full transition-transform duration-200"
+    >
+      <div class="flex items-center justify-between px-5 py-4 border-b">
+        <div>
+          <p class="text-xs text-gray-500">Leave Request</p>
+          <h3 class="text-lg font-semibold text-gray-800" id="drawer-employee">
+            --
+          </h3>
+        </div>
+        <button id="drawer-close" class="text-gray-500 hover:text-gray-700">
+          ✕
+        </button>
+      </div>
+
+      <div class="px-5 py-4 space-y-4 overflow-y-auto h-[calc(100%-64px)]">
+        <div class="grid grid-cols-2 gap-3 text-sm">
+          <div>
+            <p class="text-xs text-gray-500">Type</p>
+            <p class="font-medium" id="drawer-type">--</p>
+          </div>
+          <div>
+            <p class="text-xs text-gray-500">Status</p>
+            <p class="font-medium" id="drawer-status">--</p>
+          </div>
+          <div>
+            <p class="text-xs text-gray-500">From</p>
+            <p class="font-medium" id="drawer-start">--</p>
+          </div>
+          <div>
+            <p class="text-xs text-gray-500">To</p>
+            <p class="font-medium" id="drawer-end">--</p>
+          </div>
+          <div>
+            <p class="text-xs text-gray-500">Days</p>
+            <p class="font-medium" id="drawer-days">--</p>
+          </div>
+          <div>
+            <p class="text-xs text-gray-500">Applied</p>
+            <p class="font-medium" id="drawer-applied">--</p>
+          </div>
+          <div>
+            <p class="text-xs text-gray-500">Approved By</p>
+            <p class="font-medium" id="drawer-approver">--</p>
+          </div>
+        </div>
+
+        <div class="bg-slate-50 border rounded-lg p-3 text-sm">
+          <p class="text-xs text-gray-500">Leave Balance (for this type)</p>
+          <div class="flex items-center gap-4 mt-2">
+            <div>
+              <p class="text-xs text-gray-500">Allowance</p>
+              <p class="font-semibold" id="drawer-allowance">0</p>
+            </div>
+            <div>
+              <p class="text-xs text-gray-500">Used</p>
+              <p class="font-semibold" id="drawer-used">0</p>
+            </div>
+            <div>
+              <p class="text-xs text-gray-500">Remaining</p>
+              <p class="font-semibold" id="drawer-remaining">0</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-sm">
+          <p class="text-xs text-gray-500 mb-1">Reason</p>
+          <p
+            id="drawer-reason"
+            class="text-gray-800 whitespace-pre-line bg-gray-50 border rounded p-3"
+          >
+            --
+          </p>
+        </div>
+
+        <form method="POST" class="pt-2 border-t">
+          {% csrf_token %}
+          <input type="hidden" name="leave_id" id="drawer-leave-id" />
+          <input type="hidden" name="action" id="drawer-action" />
+          <div class="flex items-center gap-3 mt-3">
+            <button
+              type="button"
+              data-action="reject"
+              class="action-btn px-4 py-2 border rounded-md text-sm text-red-700 border-red-300 hover:bg-red-50"
+            >
+              Reject
+            </button>
+            <button
+              type="button"
+              data-action="approve"
+              class="action-btn px-4 py-2 rounded-md text-sm text-white bg-emerald-600 hover:bg-emerald-700"
+            >
+              Approve
+            </button>
+          </div>
+          <button
+            type="button"
+            id="drawer-close-btn"
+            class="w-full mt-3 px-4 py-2 rounded-md text-sm text-gray-700 border border-gray-300 hover:bg-gray-50"
+          >
+            Close
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      const drawer = document.getElementById("leave-drawer");
+      const drawerClose = document.getElementById("drawer-close");
+      const actionButtons = document.querySelectorAll(".action-btn");
+      const viewButtons = document.querySelectorAll(".view-leave-btn");
+
+      const idField = document.getElementById("drawer-leave-id");
+      const actionField = document.getElementById("drawer-action");
+
+      function openDrawer() {
+        drawer.classList.remove("translate-x-full");
+      }
+
+      function closeDrawer() {
+        drawer.classList.add("translate-x-full");
+      }
+
+      viewButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document.getElementById("drawer-employee").textContent =
+            btn.dataset.employee;
+          document.getElementById("drawer-type").textContent = btn.dataset.type;
+          document.getElementById("drawer-status").textContent =
+            btn.dataset.status;
+          document.getElementById("drawer-start").textContent =
+            btn.dataset.start;
+          document.getElementById("drawer-end").textContent = btn.dataset.end;
+          document.getElementById("drawer-days").textContent = btn.dataset.days;
+          document.getElementById("drawer-applied").textContent =
+            btn.dataset.applied;
+          document.getElementById("drawer-approver").textContent =
+            btn.dataset.approver;
+          document.getElementById("drawer-reason").textContent =
+            btn.dataset.reason;
+          document.getElementById("drawer-allowance").textContent =
+            btn.dataset.balAllowance;
+          document.getElementById("drawer-used").textContent =
+            btn.dataset.balUsed;
+          document.getElementById("drawer-remaining").textContent =
+            btn.dataset.balRemaining;
+          idField.value = btn.dataset.id;
+          actionField.value = "";
+          openDrawer();
+        });
+      });
+
+      drawerClose.addEventListener("click", closeDrawer);
+
+      const drawerCloseBtn = document.getElementById("drawer-close-btn");
+      drawerCloseBtn.addEventListener("click", closeDrawer);
+
+      actionButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const action = btn.dataset.action;
+          actionField.value = action;
+          btn.closest("form").submit();
+        });
+      });
+    </script>
+  </body>
+</html>

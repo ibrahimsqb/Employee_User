@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils import timezone
 
 # Create your models here.
 
@@ -234,6 +235,64 @@ class EmployeeAttendance(models.Model):
         if self.check_in:
             return "IN_PROGRESS"
         return "NOT_STARTED"
+
+
+# Default annual allowances per leave type (simple fixed policy)
+LEAVE_ALLOWANCES = {
+    "ANNUAL": 12,
+    "MEDICAL": 12,
+    "CASUAL": 12,
+}
+
+
+class LeaveRequest(models.Model):
+    LEAVE_TYPES = [
+        ("ANNUAL", "Annual"),
+        ("MEDICAL", "Medical"),
+        ("CASUAL", "Casual"),
+    ]
+
+    STATUS_CHOICES = [
+        ("APPLIED", "Applied"),
+        ("APPROVED", "Approved"),
+        ("REJECTED", "Rejected"),
+    ]
+
+    employee = models.ForeignKey(
+        EmployeeProfile,
+        on_delete=models.CASCADE,
+        related_name="leave_requests",
+    )
+    leave_type = models.CharField(max_length=20, choices=LEAVE_TYPES)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    applied_date = models.DateField(default=timezone.localdate)
+    days = models.PositiveIntegerField(default=0)
+    reason = models.TextField(blank=True)
+    status = models.CharField(
+        max_length=20, choices=STATUS_CHOICES, default="APPLIED"
+    )
+    approved_by = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True, blank=True, related_name="approved_leaves"
+    )
+    decision_date = models.DateTimeField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["-applied_date", "-created_at"]
+
+    def __str__(self) -> str:
+        return f"{self.employee.employee_id} - {self.leave_type} ({self.status})"
+
+    @property
+    def total_days(self) -> int:
+        if self.days:
+            return self.days
+        if self.start_date and self.end_date:
+            delta = (self.end_date - self.start_date).days + 1
+            return max(delta, 0)
+        return 0
 
 
 

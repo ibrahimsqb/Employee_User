@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Dashboard</title>
+  </head>
+
+  <body class="bg-gray-100">
+    <!-- ================= TOP BAR ================= -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white border-b">
+      <div class="flex items-center justify-between px-6 h-16">
+        <div class="flex items-center gap-3">
+          <img
+            src="{% static 'assets/img/brand/OfficeFlowAi.png' %}"
+            class="h-20 w-20"
+          />
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div
+            class="hidden md:flex items-center bg-gray-100 rounded-full px-4 py-2 w-72"
+          >
+            <input
+              type="text"
+              placeholder="Search for something"
+              class="bg-transparent outline-none text-sm w-full"
+            />
+          </div>
+
+          <button
+            class="w-10 h-10 border rounded-full flex items-center justify-center"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/settings 1.png' %}"
+              class="w-5"
+            />
+          </button>
+
+          <button
+            class="w-10 h-10 border rounded-full flex items-center justify-center"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/002-notification-1.png' %}"
+              class="w-5"
+            />
+          </button>
+
+          <img src="https://i.pravatar.cc/40" class="w-9 h-9 rounded-full" />
+
+          <a
+            href="{% url 'logout' %}"
+            class="w-10 h-10 border rounded-full flex items-center justify-center hover:bg-gray-100 text-gray-600"
+            title="Logout"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <div class="flex pt-16">
+      <!-- ================= SIDEBAR ================= -->
+      <aside
+        class="hidden lg:block w-64 bg-emerald-900 min-h-screen fixed text-white"
+      >
+        <nav class="px-4 py-6 space-y-2">
+          <a
+            href="{% url 'employee_dashboard' employee.employee_id %}"
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/home 2.png' %}"
+              class="w-5"
+              alt="Dashboard"
+            />
+            Dashboard
+          </a>
+
+          <a
+            href="{% url 'employee_general' employee.employee_id %}"
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/user 3 1.png' %}"
+              class="w-5"
+              alt="Employees"
+            />
+            Profile
+          </a>
+
+          <a
+            href="{% url 'employee_attendance' employee.employee_id %}"
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/clock.png' %}"
+              class="w-5 filter invert"
+              alt="Attendance"
+            />
+            Attendance
+          </a>
+
+          <a
+            class="flex items-center gap-3 px-4 py-2 rounded-lg bg-emerald-800"
+          >
+            <img
+              src="{% static 'assets/img/icons/common/calendar.png' %}"
+              class="w-5"
+              alt="Leave Management"
+            />
+            Leave Management
+          </a>
+        </nav>
+      </aside>
+
+      <!-- ================= MAIN CONTENT ================= -->
+      <main class="flex-1 lg:ml-64 p-6">
+        <!-- Header -->
+        <div class="flex items-start justify-between mb-6">
+          <div>
+            <h1 class="text-xl font-semibold">Employee Leaves</h1>
+            <p class="text-sm text-gray-500">Leave Requests List</p>
+          </div>
+          <button
+            id="open-leave-modal"
+            class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-md text-sm font-medium shadow"
+          >
+            + Add Leave
+          </button>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="bg-white p-4 rounded-lg border shadow-sm mb-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {% for card in summary_cards %} {% if card.code != 'OTHER' %}
+            <div class="border rounded-lg p-4 shadow-sm">
+              <div class="flex items-center justify-between">
+                <h3 class="font-semibold">{{ card.title }}</h3>
+                {% if card.code == 'ANNUAL' %}
+                <span
+                  class="w-9 h-9 rounded-full bg-gray-900 text-white flex items-center justify-center text-lg"
+                  >🗓</span
+                >
+                {% elif card.code == 'MEDICAL' %}
+                <span
+                  class="w-9 h-9 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-lg"
+                  >💉</span
+                >
+                {% elif card.code == 'CASUAL' %}
+                <span
+                  class="w-9 h-9 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center text-lg"
+                  >🎁</span
+                >
+                {% endif %}
+              </div>
+              <p class="text-2xl font-bold mt-3">{{ card.used }}</p>
+              <p class="text-sm text-gray-500">
+                Remaining Leaves: {{ card.remaining }}
+              </p>
+            </div>
+            {% endif %} {% endfor %}
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="bg-white rounded-lg border shadow-sm">
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-sm">
+              <thead>
+                <tr class="bg-gray-100 text-gray-700">
+                  <th class="px-4 py-3 text-left">
+                    <input type="checkbox" class="rounded border-gray-300" />
+                  </th>
+                  <th class="px-4 py-3 text-left font-semibold">Employee</th>
+                  <th class="px-4 py-3 text-left font-semibold">Leave Type</th>
+                  <th class="px-4 py-3 text-left font-semibold">From</th>
+                  <th class="px-4 py-3 text-left font-semibold">To</th>
+                  <th class="px-4 py-3 text-left font-semibold">Days</th>
+                  <th class="px-4 py-3 text-left font-semibold">Status</th>
+                  <th class="px-4 py-3 text-left font-semibold">Approved By</th>
+                  <th class="px-4 py-3 text-left font-semibold">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% if leave_requests %} {% for leave in leave_requests %}
+                <tr class="border-t">
+                  <td class="px-4 py-3">
+                    <input type="checkbox" class="rounded border-gray-300" />
+                  </td>
+                  <td class="px-4 py-3 text-gray-800">
+                    {{leave.employee.employeepersonalinfo.full_name|default:leave.employee.employee_id}}
+                  </td>
+                  <td class="px-4 py-3">{{ leave.get_leave_type_display }}</td>
+                  <td class="px-4 py-3">{{ leave.start_date }}</td>
+                  <td class="px-4 py-3">{{ leave.end_date }}</td>
+                  <td class="px-4 py-3">{{ leave.days }}</td>
+                  <td class="px-4 py-3">
+                    {% if leave.status == 'APPROVED' %}
+                    <span
+                      class="px-2 py-1 rounded bg-emerald-100 text-emerald-700 text-xs"
+                      >Approved</span
+                    >
+                    {% elif leave.status == 'REJECTED' %}
+                    <span
+                      class="px-2 py-1 rounded bg-red-100 text-red-700 text-xs"
+                      >Rejected</span
+                    >
+                    {% else %}
+                    <span
+                      class="px-2 py-1 rounded bg-amber-100 text-amber-700 text-xs"
+                      >Applied</span
+                    >
+                    {% endif %}
+                  </td>
+                  <td class="px-4 py-3">
+                    {{ leave.approved_by.get_full_name|default:"--" }}
+                  </td>
+                  <td class="px-4 py-3">
+                    {% if leave.status == 'APPLIED' or leave.status == 'REJECTED' %}
+                    <div class="flex items-center gap-2">
+                      <button
+                        type="button"
+                        class="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded hover:bg-blue-200"
+                        onclick="editLeave('{{ leave.id }}', '{{ leave.leave_type }}', '{{ leave.start_date }}', '{{ leave.end_date }}', '{{ leave.reason|escapejs }}')"
+                      >
+                        Edit
+                      </button>
+                      <form
+                        method="POST"
+                        class="inline"
+                        onsubmit="return confirm('Are you sure you want to delete this leave request?');"
+                      >
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="delete" />
+                        <input type="hidden" name="leave_id" value="{{ leave.id }}" />
+                        <button
+                          type="submit"
+                          class="px-2 py-1 text-xs bg-red-100 text-red-700 rounded hover:bg-red-200"
+                        >
+                          Delete
+                        </button>
+                      </form>
+                    </div>
+                    {% else %}
+                    <span class="text-xs text-gray-500">Locked</span>
+                    {% endif %}
+                  </td>
+                  </td>
+                </tr>
+                {% endfor %} {% else %}
+                <tr>
+                  <td colspan="9" class="px-4 py-6 text-center text-gray-500">
+                    Showing 0 of 0 entries
+                  </td>
+                </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+
+          <div
+            class="flex items-center justify-end gap-2 px-4 py-3 border-t bg-gray-50"
+          >
+            <button
+              class="w-8 h-8 border rounded-md text-gray-400 cursor-not-allowed"
+              aria-label="Previous page"
+            >
+              ‹
+            </button>
+            <span
+              class="w-8 h-8 bg-emerald-500 text-white rounded-md flex items-center justify-center text-sm"
+            >
+              1
+            </span>
+            <button
+              class="w-8 h-8 border rounded-md text-gray-400 cursor-not-allowed"
+              aria-label="Next page"
+            >
+              ›
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Edit Leave Modal -->
+    <div
+      id="edit-leave-modal"
+      class="fixed inset-0 bg-black bg-opacity-40 items-center justify-center px-4 py-6 hidden"
+    >
+      <div class="bg-white rounded-lg shadow-xl w-full max-w-3xl relative">
+        <div class="flex items-center justify-between border-b px-6 py-4">
+          <h3 class="text-lg font-semibold">Edit Leave</h3>
+          <button
+            id="close-edit-modal"
+            class="text-gray-500 hover:text-gray-700"
+          >
+            ✕
+          </button>
+        </div>
+
+        <form
+          method="POST"
+          class="grid grid-cols-1 md:grid-cols-2 gap-4 px-6 py-4"
+        >
+          {% csrf_token %}
+          <input type="hidden" name="action" value="edit" />
+          <input type="hidden" name="leave_id" id="edit_leave_id" />
+
+          <div class="space-y-1">
+            <label class="text-sm text-gray-600">Employee</label>
+            <input
+              type="text"
+              value="{{ personal.full_name|default:employee.employee_id }}"
+              class="w-full border rounded-md px-3 py-2 text-sm bg-gray-100"
+              disabled
+            />
+          </div>
+
+          <div class="space-y-1">
+            <label class="text-sm text-gray-600">Leave Type</label>
+            <select
+              id="edit_leave_type"
+              name="leave_type"
+              class="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              required
+            >
+              {% for card in summary_cards %}
+              <option value="{{ card.code }}">{{ card.title }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="space-y-1">
+            <label class="text-sm text-gray-600">From</label>
+            <input
+              id="edit_start_date"
+              name="start_date"
+              type="date"
+              class="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              required
+            />
+          </div>
+
+          <div class="space-y-1">
+            <label class="text-sm text-gray-600">To</label>
+            <input
+              id="edit_end_date"
+              name="end_date"
+              type="date"
+              class="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              required
+            />
+          </div>
+
+          <div class="space-y-1 md:col-span-2">
+            <label class="text-sm text-gray-600">Reason</label>
+            <textarea
+              id="edit_reason"
+              name="reason"
+              rows="3"
+              class="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              placeholder="Add a short note"
+            ></textarea>
+          </div>
+
+          <div
+            class="md:col-span-2 flex items-center justify-end gap-3 pt-2 border-t"
+          >
+            <button
+              type="button"
+              id="cancel-edit-modal"
+              class="px-4 py-2 text-sm border rounded-md text-gray-700 hover:bg-gray-100"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="px-4 py-2 text-sm bg-emerald-500 hover:bg-emerald-600 text-white rounded-md"
+            >
+              Update
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Add Leave Modal -->
+    <div
+      id="leave-modal"
+      class="fixed inset-0 bg-black bg-opacity-40 items-center justify-center px-4 py-6 hidden"
+    >
+      <div class="bg-white rounded-lg shadow-xl w-full max-w-3xl relative">
+        <div class="flex items-center justify-between border-b px-6 py-4">
+          <h3 class="text-lg font-semibold">Add Leave</h3>
+          <button
+            id="close-leave-modal"
+            class="text-gray-500 hover:text-gray-700"
+          >
+            ✕
+          </button>
+        </div>
+
+        <form
+          method="POST"
+          class="grid grid-cols-1 md:grid-cols-2 gap-4 px-6 py-4"
+        >
+          {% csrf_token %}
+          <div class="space-y-1">
+            <label class="text-sm text-gray-600">Employee</label>
+            <input
+              type="text"
+              value="{{ personal.full_name|default:employee.employee_id }}"
+              class="w-full border rounded-md px-3 py-2 text-sm bg-gray-100"
+              disabled
+            />
+          </div>
+
+          <div class="space-y-1">
+            <label class="text-sm text-gray-600">Leave Type</label>
+            <select
+              name="leave_type"
+              class="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              required
+            >
+              {% for card in summary_cards %}
+              <option value="{{ card.code }}">{{ card.title }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="space-y-1">
+            <label class="text-sm text-gray-600">From</label>
+            <input
+              name="start_date"
+              type="date"
+              class="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              required
+            />
+          </div>
+
+          <div class="space-y-1">
+            <label class="text-sm text-gray-600">To</label>
+            <input
+              name="end_date"
+              type="date"
+              class="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              required
+            />
+          </div>
+
+          <div class="space-y-1">
+            <label class="text-sm text-gray-600">Applied Date</label>
+            <input
+              name="applied_date"
+              type="date"
+              value="{% now 'Y-m-d' %}"
+              class="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            />
+          </div>
+
+          <div class="space-y-1">
+            <label class="text-sm text-gray-600">No. of Days</label>
+            <input
+              name="days"
+              type="number"
+              min="1"
+              class="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              placeholder="Auto-calculated"
+            />
+          </div>
+
+          <div class="space-y-1 md:col-span-2">
+            <label class="text-sm text-gray-600">Reason</label>
+            <textarea
+              name="reason"
+              rows="3"
+              class="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              placeholder="Add a short note"
+            ></textarea>
+          </div>
+
+          <div
+            class="md:col-span-2 flex items-center justify-end gap-3 pt-2 border-t"
+          >
+            <button
+              type="button"
+              id="cancel-leave-modal"
+              class="px-4 py-2 text-sm border rounded-md text-gray-700 hover:bg-gray-100"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="px-4 py-2 text-sm bg-emerald-500 hover:bg-emerald-600 text-white rounded-md"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      const openModalBtn = document.getElementById("open-leave-modal");
+      const closeModalBtn = document.getElementById("close-leave-modal");
+      const cancelModalBtn = document.getElementById("cancel-leave-modal");
+      const modal = document.getElementById("leave-modal");
+
+      const closeEditModalBtn = document.getElementById("close-edit-modal");
+      const cancelEditModalBtn = document.getElementById("cancel-edit-modal");
+      const editModal = document.getElementById("edit-leave-modal");
+
+      function toggleModal(show) {
+        if (!modal) return;
+        if (show) {
+          modal.classList.add("flex");
+          modal.classList.remove("hidden");
+        } else {
+          modal.classList.add("hidden");
+          modal.classList.remove("flex");
+        }
+      }
+
+      function toggleEditModal(show) {
+        if (!editModal) return;
+        if (show) {
+          editModal.classList.add("flex");
+          editModal.classList.remove("hidden");
+        } else {
+          editModal.classList.add("hidden");
+          editModal.classList.remove("flex");
+        }
+      }
+
+      function editLeave(leaveId, leaveType, startDate, endDate, reason) {
+        document.getElementById("edit_leave_id").value = leaveId;
+        document.getElementById("edit_leave_type").value = leaveType;
+        document.getElementById("edit_start_date").value = startDate;
+        document.getElementById("edit_end_date").value = endDate;
+        document.getElementById("edit_reason").value = reason;
+        toggleEditModal(true);
+      }
+
+      openModalBtn?.addEventListener("click", () => toggleModal(true));
+      closeModalBtn?.addEventListener("click", () => toggleModal(false));
+      cancelModalBtn?.addEventListener("click", () => toggleModal(false));
+      modal?.addEventListener("click", (e) => {
+        if (e.target === modal) toggleModal(false);
+      });
+
+      closeEditModalBtn?.addEventListener("click", () => toggleEditModal(false));
+      cancelEditModalBtn?.addEventListener("click", () => toggleEditModal(false));
+      editModal?.addEventListener("click", (e) => {
+        if (e.target === editModal) toggleEditModal(false);
+      });
+    </script>
+  </body>
+</html>

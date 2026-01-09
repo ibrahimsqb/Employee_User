@@ -58,6 +58,17 @@
             class="w-9 h-9 rounded-full"
             alt="User Avatar"
           />
+
+                    <!-- Logout -->
+          <a
+            href="{% url 'logout' %}"
+            class="w-10 h-10 border rounded-full flex items-center justify-center hover:bg-gray-100 text-gray-600"
+            title="Logout"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+            </svg>
+          </a>
         </div>
       </div>
     </header>
@@ -80,6 +91,7 @@
           </a>
 
           <a
+            href="{% url 'employee_directory' %}"
             class="flex items-center gap-3 px-4 py-2 rounded-lg bg-emerald-800"
           >
             <img
@@ -102,6 +114,7 @@
           </a>
 
           <a
+            href="{% url 'hr_leave_requests' %}"
             class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-emerald-800"
           >
             <img
@@ -253,7 +266,7 @@
                 <a class="pb-3 border-b-2 border-emerald-600 text-emerald-600"
                   >Documents</a
                 >
-                <a class="pb-3 text-gray-500 hover:text-gray-700">Settings</a>
+                <!-- <a class="pb-3 text-gray-500 hover:text-gray-700">Settings</a> -->
               </nav>
             </div>
 
